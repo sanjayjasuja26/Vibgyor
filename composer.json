@@ -1,0 +1,78 @@
+{
+	"name" : "Vibgyor",
+	"description" : "College Management System",
+	"authors" : [{
+			"name" : "test",
+			"email" : "test@gmail.com",
+			"homepage" : "http://www.test.com"
+		}
+	],
+	"keywords" : [
+		"yii2"
+	],
+	"homepage" : "http://yourUrl.com/",
+	"type" : "project",
+	"license" : "commercial",
+	"support" : {
+		"issues" : "https://github.com/yiisoft/yii2/issues?state=open",
+		"forum" : "http://www.yiiframework.com/forum/",
+		"wiki" : "http://www.yiiframework.com/wiki/",
+		"irc" : "irc://irc.freenode.net/yii",
+		"source" : "https://github.com/yiisoft/yii2"
+	},
+	"minimum-stability" : "stable",
+	"require" : {
+		"php" : ">=7.0.0",
+		"yiisoft/yii2" : "*",
+		"yiisoft/yii2-bootstrap4" : "^1.0@dev",
+		"yiisoft/yii2-swiftmailer" : "*",
+		"yiisoft/yii2-jui" : "*",
+		"yiisoft/yii2-imagine" : "*",
+		"yiisoft/yii2-authclient" : "*",
+		"2amigos/yii2-ckeditor-widget" : "*",
+		"miloschuman/yii2-highcharts-widget" : "*",
+		"sunhater/kcfinder" : "dev-master",
+		"iutbay/yii2-kcfinder" : "dev-master",
+		"iutbay/yii2-fontawesome" : "dev-master",
+		"himiklab/yii2-sortable-grid-view-widget" : "*",
+		"bryglen/yii2-apns-gcm" : "*",
+		"phpoffice/phpspreadsheet" : "*",
+		"guzzlehttp/guzzle" : ">=4.1.4 <7.0",
+		"alexantr/yii2-ckeditor" : "^2.1@dev",
+		"lajax/yii2-language-picker" : "dev-master",
+		"trntv/probe" : "dev-master",
+		"yii2-starter-kit/yii2-file-kit" : "dev-master",
+		"npm-asset/flot" : "dev-master",
+		"kartik-v/yii2-widget-fileinput" : "@dev",
+		"trntv/yii2-datetime-widget" : "^1.1",
+		"yiisoft/yii2-queue" : "^2.3",
+		"2amigos/yii2-file-upload-widget" : "~1.0",
+		"onmotion/yii2-gallery" : "*",
+		"bizley/contenttools" : "^1.4",
+		"alexantr/yii2-elfinder" : "^1.7",
+		"devgroup/yii2-jsoneditor" : "*",
+		"lesha724/yii2-document-viewer": "*",
+		"perminder-klair/yii2-videojs": "dev-master",
+		"yii2assets/yii2-pdfjs": ">=1.0",
+		"thyseus/yii2-files": "^0.1.0"
+	},
+	"require-dev" : {
+		"yiisoft/yii2-debug" : "*",
+		"yiisoft/yii2-gii" : "*",
+		"yiisoft/yii2-faker" : "*",
+		"codeception/base" : "^2.2.3",
+		"codeception/verify" : "~0.3.1",
+		"codeception/specify" : "~0.4.3"
+	},
+	"config" : {
+		"process-timeout" : 1800,
+		"fxp-asset" : {
+			"enabled" : false
+		}
+	},
+	"repositories" : [{
+			"type" : "composer",
+			"url" : "https://asset-packagist.org"
+		}
+	]
+}

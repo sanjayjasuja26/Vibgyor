@@ -1,0 +1,61 @@
+.right-notification {
+	position: relative;
+}
+
+.notification-menu .notification-menu-container {
+	width: 350px !important;
+	right: 100% !important;
+	border: none;
+}
+
+.notification-menu>li {
+	position: static !important;
+}
+
+.right-notification .notification-menu li a i {
+	position: static !important;
+}
+
+.notification-menu .dropdown-menu li:first-child {
+	background: #000;
+}
+
+.content {
+	display: inline-block;
+	padding: 10px 15px !important;
+	border-bottom: 1px solid #dddede;
+	width: 100%;
+}
+
+.item-title {
+	color: #444;
+	font-size: 12px;
+}
+
+.message-center {
+	overflow-y: scroll;
+	height: 350px;
+}
+
+.notification-menu .dropdown-menu li:last-child {
+	background: #f7f7f7;
+	color: #000;
+}
+
+.dropdown-menu.pull-right {
+	right: 24px;
+	left: auto;
+}
+
+.notification-menu .dropdown-usermenu li:last-child {
+	background: #fff !important;
+}
+
+.notification-menu .dropdown-usermenu li:first-child {
+	background: #fff !important;
+}
+
+.notification-menu>li.open .dropdown-usermenu {
+	height: auto;
+	overflow-y: auto;
+}

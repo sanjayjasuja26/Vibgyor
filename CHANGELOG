@@ -1,0 +1,25 @@
+Change Log: `yii2-base-admin-panel`
+====================================
+
+## version 1.0.0
+
+**Date:** 22-Nov-2019
+
+- Base upgraded with the new modules. 
+
+**Date:** 17-June-2019
+
+- Added New Api2 changes  
+- Sub repo split from [API-2](http://192.168.10.21/yii2/modules/api2.git)
+
+
+**Date:** 15-June-2019
+
+- Added New Bootstrap4 Base  
+- Sub repo split from [yii2-base-admin-panel](http://192.168.10.21/yii2/yii2-base-admin-panel-api-578/tree/bootstrap4)
+
+**Date:** 15-Nov-2018
+
+- Initial release 
+- Sub repo split from [yii2-base-admin-panel](http://192.168.10.21/yii2/yii2-base-admin-panel-api-578/tree/bootstrap4)
+
