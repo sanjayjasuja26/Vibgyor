@@ -105,7 +105,8 @@ AppAsset::register($this);
                                 <span class="icon-bar"></span>
                             </button>
                             <div class="logo-normal">
-                                <a class="navbar-brand" href="index.html"><img src="<?= $this->theme->getUrl('frontend/images/logo.png'); ?>" alt=""></a>
+                                <a class="navbar-brand" href="index.html"><h3>Vibgyor</h3>
+                                </a>
                             </div>
                         </div>
 
@@ -151,6 +152,8 @@ AppAsset::register($this);
                                                                                                 </li>-->
                                 <li><a href="events.html">Events</a></li>
                                 <li><a href="page-contact.html">Contact</a></li>
+                                <li><a href="<?= Url::toRoute(['/user/signup']) ?>">Signup</a></li>
+                                <li><a href="<?= Url::toRoute(['/user/login']) ?>">Login</a></li>
                                 <li class="iconitem"><a href="#" data-toggle="modal" data-target="#login-modal"><i class="fa fa-search"></i></a></li>
                                 <li class="iconitem"><a class="shopicon" href="shop-cart.html"><i class="fa fa-shopping-basket"></i> &nbsp;(0)</a></li>
                             </ul>
