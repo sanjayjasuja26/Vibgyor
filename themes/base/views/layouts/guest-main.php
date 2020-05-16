@@ -1,145 +1,204 @@
 <?php
+
 use app\assets\AppAsset;
 use app\components\FlashMessage;
 use yii\helpers\Html;
 use yii\helpers\Url;
+
 /* @var $this \yii\web\View */
 /* @var $content string */
 
 AppAsset::register($this);
-
 ?>
-<?php
-
-$this->beginPage()?>
+<?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?=Yii::$app->language?>">
+<html lang="<?= Yii::$app->language ?>">
 
-<head>
- <?php
+    <head>
+        <?php //$this->head() ?>
+        <meta charset="<?= Yii::$app->charset ?>" />
+        <?= Html::csrfMetaTags() ?>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-$this->head()?>
-   <meta charset="<?=Yii::$app->charset?>" />
-    <?=Html::csrfMetaTags()?>
-    <!-- Tell the browser to be responsive to screen width -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Favicon icon -->
-<link rel="icon" type="image/png" sizes="16x16"
-	href="../assets/images/favicon.png">
-<title><?=Html::encode($this->title)?></title>
+        <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,400i,700,700i" rel="stylesheet"> 
+
+        <link rel="stylesheet" href="<?= $this->theme->getUrl('frontend/css/bootstrap.min.css'); ?>">
+        <link rel="stylesheet" href="<?= $this->theme->getUrl('frontend/css/font-awesome.min.css'); ?>">
+        <link rel="stylesheet" href="<?= $this->theme->getUrl('frontend/css/carousel.css'); ?>">
+        <link rel="stylesheet" href="<?= $this->theme->getUrl('frontend/css/animate.css'); ?>">
+        <link rel="stylesheet" href="<?= $this->theme->getUrl('frontend/style.css'); ?>">
+        <!-- Favicon icon -->
+        <title><?= Html::encode($this->title) ?></title>
+
+    </head>
+
+    <body>
+        <?php $this->beginBody() ?>
+        <!-- ============================================================== -->
+        <!-- Preloader - style you can find in spinners.css -->
+        <!-- ============================================================== -->
+        <!-- LOADER -->
+        <div id="preloader">
+            <img class="preloader" src="<?= $this->theme->getUrl('frontend/images/loader.gif'); ?>" alt="">
+        </div><!-- end loader -->
+        <!-- END LOADER -->
+        <div id="wrapper">
+            <!-- BEGIN # MODAL LOGIN -->
+            <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <!-- Begin # DIV Form -->
+                        <div id="div-forms">
+                            <form id="login-form">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span class="flaticon-add" aria-hidden="true"></span>
+                                </button>
+                                <div class="modal-body">
+                                    <input class="form-control" type="text" placeholder="What you are looking for?" required>
+                                </div>
+                            </form><!-- End # Login Form -->
+                        </div><!-- End # DIV Form -->
+                    </div>
+                </div>
+            </div>
+            <!-- END # MODAL LOGIN -->
+
+            <header class="header <?php echo (Yii::$app->controller->id != 'site' && Yii::$app->controller->action->id = 'index') ? 'header-normal' : ''; ?>">
+                <div class="topbar clearfix">
+                    <div class="container">
+                        <div class="row-fluid">
+                            <div class="col-md-6 col-sm-6 text-left">
+                                <p>
+                                    <strong><i class="fa fa-phone"></i></strong> +90 543 123 45 67 &nbsp;&nbsp;
+                                    <strong><i class="fa fa-envelope"></i></strong> <a href="mailto:#">info@yoursite.com</a>
+                                </p>
+                            </div><!-- end left -->
+                            <div class="col-md-6 col-sm-6 hidden-xs text-right">
+                                <div class="social">
+                                    <a class="facebook" href="#" data-tooltip="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook"></i></a>              
+                                    <a class="twitter" href="#" data-tooltip="tooltip" data-placement="bottom" title="Twitter"><i class="fa fa-twitter"></i></a>
+                                    <a class="google" href="#" data-tooltip="tooltip" data-placement="bottom" title="Google Plus"><i class="fa fa-google-plus"></i></a>
+                                    <a class="linkedin" href="#" data-tooltip="tooltip" data-placement="bottom" title="Linkedin"><i class="fa fa-linkedin"></i></a>
+                                    <a class="pinterest" href="#" data-tooltip="tooltip" data-placement="bottom" title="Pinterest"><i class="fa fa-pinterest"></i></a>
+                                </div><!-- end social -->
+                            </div><!-- end left -->
+                        </div><!-- end row -->
+                    </div><!-- end container -->
+                </div><!-- end topbar -->
+
+                <div class="container">
+                    <nav class="navbar navbar-default yamm">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <div class="logo-normal">
+                                <a class="navbar-brand" href="index.html"><img src="<?= $this->theme->getUrl('frontend/images/logo.png'); ?>" alt=""></a>
+                            </div>
+                        </div>
+
+                        <div id="navbar" class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="index.html">Home</a></li>
+                                <!--                                                                <li class="dropdown yamm-fw yamm-half"><a href="#" data-toggle="dropdown" class="dropdown-toggle active">Mega Menu <b class="fa fa-angle-down"></b></a>
+                                                                                                    <ul class="dropdown-menu">
+                                                                                                        <li>
+                                                                                                            <div class="yamm-content clearfix">
+                                                                                                                <div class="row-fluid">
+                                                                                                                    <div class="col-md-6 col-sm-6">
+                                                                                                                        <h4>Course Pages</h4>
+                                                                                                                        <ul>
+                                                                                                                            <li><a href="#">Courses Name 01</a></li>
+                                                                                                                            <li><a href="#">Courses Name 02</a></li>
+                                                                                                                            <li><a href="#">Courses Name 03</a></li>
+                                                                                                                            <li><a href="#">Courses Name 04</a></li>
+                                                                                                                            <li><a href="#">Courses Name 05</a></li>
+                                                                                                                            <li><a href="#">Courses Name 06</a></li>
+                                                                                                                            <li><a href="#">Courses Name 07</a></li>
+                                                                                                                            <li><a href="#">Courses Name 08</a></li>
+                                                                                                                            <li><a href="#">Courses Name 09</a></li>
+                                                                                                                        </ul>
+                                                                                                                    </div>
+                                                                                                                    <div class="col-md-6 col-sm-6">
+                                                                                                                        <div class="menu-widget text-center">
+                                                                                                                            <div class="image-wrap entry">
+                                                                                                                                <img src="<?= $this->theme->getUrl('frontend/upload/course_01.jpg'); ?>" alt="" class="img-responsive">
+                                                                                                                                <div class="magnifier">
+                                                                                                                                    <a href="#" title=""><i class="flaticon-add"></i></a>
+                                                                                                                                </div>
+                                                                                                                            </div> end image-wrap 
+                                                                                                                            <h5><a href="#">Learning Bootstrap Framework</a></h5>
+                                                                                                                            <small>$22.00</small>
+                                                                                                                            <a href="#" class="menu-button">View Course</a>
+                                                                                                                        </div> end widget 
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>-->
+                                <li><a href="events.html">Events</a></li>
+                                <li><a href="page-contact.html">Contact</a></li>
+                                <li class="iconitem"><a href="#" data-toggle="modal" data-target="#login-modal"><i class="fa fa-search"></i></a></li>
+                                <li class="iconitem"><a class="shopicon" href="shop-cart.html"><i class="fa fa-shopping-basket"></i> &nbsp;(0)</a></li>
+                            </ul>
+                        </div>
+                    </nav><!-- end navbar -->
+                </div><!-- end container -->
+            </header>
+            <?php
+            if (Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'index') {
+                ?>
+                <section id="home" class="video-section js-height-full">
+                    <div class="overlay"></div>
+                    <div class="home-text-wrapper relative container">
+                        <div class="home-message">
+                            <p>Learning Management System</p>
+                            <small>Edulogy is the ideal choice for your organization, your business and your online education system. Create your online course now with unlimited page templates, color options, and menu features.</small>
+                            <div class="btn-wrapper">
+                                <div class="text-center">
+                                    <a href="#" class="btn btn-primary wow slideInLeft">Read More</a> &nbsp;&nbsp;&nbsp;<a href="#" class="btn btn-default wow slideInRight">Buy Now</a>
+                                </div>
+                            </div><!-- end row -->
+                        </div>
+                    </div>
+                    <div class="slider-bottom">
+                        <span>Explore <i class="fa fa-angle-down"></i></span>
+                    </div>
+                </section>
+            <?php } ?>  
+            <section id="wrapper">
+                <?= FlashMessage::widget() ?>
+                <?= $content ?>
+
+            </section>
 
 
-<!-- Custom CSS -->
-<link href="<?=$this->theme->getUrl('css/style.css')?>" rel="stylesheet">
-<link href="<?=$this->theme->getUrl('css/customStyle.css')?>"
-	rel="stylesheet">
-<link href="<?=$this->theme->getUrl('css/glyphicon.css')?>"
-	rel="stylesheet">
-<!-- You can change the theme colors from here -->
-<link href="<?=$this->theme->getUrl('css/colors/blue.css')?>" id="theme"
-	rel="stylesheet">
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
-</head>
+            <?= $this->render('footer.php'); ?>
+            <script src="<?= $this->theme->getUrl('frontend/js/jquery.min.js') ?>"></script>
+            <script src="<?= $this->theme->getUrl('frontend/js/bootstrap.min.js') ?>"></script>
+            <!-- jQuery Files -->
+            <script src="<?= $this->theme->getUrl('frontend/js/jquery.slimscroll.js') ?>"></script>
 
-<body>
-<?php
+            <script src="<?= $this->theme->getUrl('frontend/js/carousel.js') ?>"></script>
+            <script src="<?= $this->theme->getUrl('frontend/js/animate.js') ?>"></script>
+            <script src="<?= $this->theme->getUrl('frontend/js/custom.js') ?>"></script>
+            <!-- VIDEO BG PLUGINS -->
+            <script src="<?= $this->theme->getUrl('frontend/js/videobg.js') ?>"></script>
 
-$this->beginBody()?>
-    <!-- ============================================================== -->
-	<!-- Preloader - style you can find in spinners.css -->
-	<!-- ============================================================== -->
-	<div class="preloader">
-		<svg class="circular" viewBox="25 25 50 50">
-            <circle class="path" cx="50" cy="50" r="20" fill="none"
-				stroke-width="2" stroke-miterlimit="10" /> </svg>
-	</div>
-	<!-- ============================================================== -->
-	<!-- Main wrapper - style you can find in pages.scss -->
-	<!-- ============================================================== -->
-	<!-- ADD HEADER -->
-	<nav
-		class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light ftco-navbar-light-2
-	"
-		id="ftco-navbar">
-		<div class="container">
-			<a class="navbar-brand" href="<?=Url::home();?>"><img
-				src="<?=$this->theme->getUrl('img/dummylogo.png')?>"></a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#ftco-nav" aria-controls="ftco-nav"
-				aria-expanded="false" aria-label="Toggle navigation ">
-				<span class="oi oi-menu "> </span>Menu
-			</button>
-			<div class="collapse navbar-collapse " id="ftco-nav">
-				<ul class="navbar-nav ml-auto ">
-					<li class="nav-item active "><a href="<?=Url::home();?>" class="nav-link">Home </a></li>
-					<li class="nav-item"><a href="<?=Url::toRoute(['/site/about'])?> " class="nav-link">About
-							Us </a></li>
-					<li class="nav-item dropdown "><a class="nav-link dropdown-toggle "
-						href="shop.php " id="dropdown04" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false">Pages</a>
-						<div class="dropdown-menu" aria-labelledby="dropdown04">
-							<a class="dropdown-item" href="<?=Url::toRoute(['/site/privacy'])?>">Privacy </a> <a
-								class="dropdown-item" href="<?=Url::toRoute(['/site/terms'])?>">Terms </a>
-						</div></li>
-
-					<li class="nav-item"><a href="<?=Url::toRoute(['/site/contact'])?>" class="nav-link">Contact Us</a></li>
-					<li class="nav-item cta cta-colored "><a
-						href="<?=Url::toRoute(['/user/login'])?>" class="nav-link">Log In
-							<i class="fas fa-sign-in-alt "> </i>
-					</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-	<section id="wrapper">
-       	 <?=FlashMessage::widget()?>
-         <?=$content?>
-        
-    </section>
-    
-    
-    <?=$this->render('_footer.php');?>
-    	
-			
-			
-    <!-- ADD FOOTER -->
-
-	<!-- ============================================================== -->
-	<!-- End Wrapper -->
-	<!-- ============================================================== -->
-	<!-- ============================================================== -->
-	<!-- All Jquery -->
-	<!-- ============================================================== -->
-	<script
-		src="<?=$this->theme->getUrl('assets/plugins/bootstrap/js/tether.min.js')?>"></script>
-	<!-- slimscrollbar scrollbar JavaScript -->
-	<script src="<?=$this->theme->getUrl('js/jquery.slimscroll.js')?>"></script>
-	<!--Wave Effects -->
-	<script src="<?=$this->theme->getUrl('js/waves.js')?>"></script>
-	<!--Menu sidebar -->
-	<script src="<?=$this->theme->getUrl('js/sidebarmenu.js')?>"></script>
-	<!--stickey kit -->
-	<script
-		src="<?=$this->theme->getUrl('assets/plugins/sticky-kit-master/dist/sticky-kit.min.js')?>"></script>
-	<!--Custom JavaScript -->
-	<script src="<?=$this->theme->getUrl('js/custom.min.js')?>"></script>
-	<!-- ============================================================== -->
-	<!-- Style switcher -->
-	<!-- ============================================================== -->
-	<script
-		src="<?=$this->theme->getUrl('assets/plugins/styleswitcher/jQuery.style.switcher.js')?>"></script>
-
-
-    <?php
-
-    $this->endBody()?>
-</body>
-<?php
-
-$this->endPage()?>
+            <?php $this->endBody() ?>
+    </body>
+    <?php $this->endPage() ?>
 </html>
