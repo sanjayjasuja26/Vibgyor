@@ -1,9 +1,5 @@
 <?php
 
-/**
-*@copyright :Amusoftech Pvt. Ltd. < www.amusoftech.com >
-*@author     : Ram mohamad Singh< er.amudeep@gmail.com >
-*/
 namespace app\controllers;
 
 use app\components\TActiveForm;
@@ -12,7 +8,7 @@ use app\models\Feed;
 use app\models\User;
 use app\models\search\Feed as FeedSearch;
 use Yii;
- use app\components\filters\AccessControl;
+use app\components\filters\AccessControl;
 use app\components\filters\AccessRule;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
@@ -20,11 +16,9 @@ use yii\web\NotFoundHttpException;
 /**
  * FeedController implements the CRUD actions for Feed model.
  */
-class FeedController extends TController
-{
+class FeedController extends TController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -65,8 +59,7 @@ class FeedController extends TController
      * @param string $action
      * @return string
      */
-    public function actionMass($action = 'delete')
-    {
+    public function actionMass($action = 'delete') {
         \Yii::$app->response->format = 'json';
         $response['status'] = 'NOK';
         $status = Feed::massDelete();
@@ -81,14 +74,13 @@ class FeedController extends TController
      *
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new FeedSearch();
         $this->updateMenuItems();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider
         ]);
     }
 
@@ -98,8 +90,7 @@ class FeedController extends TController
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         $model = $this->findModel($id);
         $url = $model->getModel()->getUrl();
         return $this->redirect($url);
@@ -111,8 +102,7 @@ class FeedController extends TController
      *
      * @return mixed
      */
-    public function actionAdd()
-    {
+    public function actionAdd() {
         $model = new Feed();
         $model->loadDefaultValues();
         $model->state_id = Feed::STATE_ACTIVE;
@@ -123,12 +113,12 @@ class FeedController extends TController
         }
         if ($model->load($post) && $model->save()) {
             return $this->redirect([
-                'view',
-                'id' => $model->id
+                        'view',
+                        'id' => $model->id
             ]);
         }
         return $this->render('add', [
-            'model' => $model
+                    'model' => $model
         ]);
     }
 
@@ -139,8 +129,7 @@ class FeedController extends TController
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
 
         $post = \yii::$app->request->post();
@@ -150,12 +139,12 @@ class FeedController extends TController
         }
         if ($model->load($post) && $model->save()) {
             return $this->redirect([
-                'view',
-                'id' => $model->id
+                        'view',
+                        'id' => $model->id
             ]);
         }
         return $this->render('update', [
-            'model' => $model
+                    'model' => $model
         ]);
     }
 
@@ -166,13 +155,12 @@ class FeedController extends TController
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $model = $this->findModel($id);
 
         $model->delete();
         return $this->redirect([
-            'index'
+                    'index'
         ]);
     }
 
@@ -184,11 +172,10 @@ class FeedController extends TController
      * @return Feed the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id, $accessCheck = true)
-    {
+    protected function findModel($id, $accessCheck = true) {
         if (($model = Feed::findOne($id)) !== null) {
 
-            if ($accessCheck && ! ($model->isAllowed()))
+            if ($accessCheck && !($model->isAllowed()))
                 throw new HttpException(403, Yii::t('app', 'You are not allowed to access this page.'));
 
             return $model;
@@ -197,24 +184,21 @@ class FeedController extends TController
         }
     }
 
-    protected function updateMenuItems($model = null)
-    {
+    protected function updateMenuItems($model = null) {
         switch (\Yii::$app->controller->action->id) {
-            case 'index':
-                {
+            case 'index': {
                     $this->menu['clear'] = array(
                         'label' => '<span class=" glyphicon glyphicon-remove"></span>',
                         'title' => Yii::t('app', 'Clear'),
                         'url' => [
                             'clear'
-                            /* 'id' => $model->id */
+                        /* 'id' => $model->id */
                         ],
                         'visible' => User::isAdmin()
                     );
                 }
                 break;
-            case 'view':
-                {
+            case 'view': {
                     $this->menu['manage'] = array(
                         'label' => '<span class="glyphicon glyphicon-list"></span>',
                         'title' => Yii::t('app', 'Manage'),
@@ -238,12 +222,12 @@ class FeedController extends TController
         }
     }
 
-    public function actionMore()
-    {
+    public function actionMore() {
         $searchModel = new Feed();
         $dataProvider = $searchModel->search(\Yii::$app->request->params);
         return $this->render('more', [
-            'dataProvider' => $dataProvider
+                    'dataProvider' => $dataProvider
         ]);
     }
+
 }

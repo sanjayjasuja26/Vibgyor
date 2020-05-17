@@ -1,8 +1,9 @@
 <?php
+
 /**
- *@copyright   : ToXSL Technologies Pvt. Ltd < https://toxsl.com >
- *@author      : Shiv Charan Panjeta  < shiv@toxsl.com >
+ * @author      : Sanjay Jasuja  < sanjayjasuja26@gmail.com >
  */
+
 namespace app\modules\installer\controllers;
 
 use app\models\User;
@@ -17,22 +18,19 @@ use app\modules\installer\models\Mail;
 /**
  * Default controller for the `install` module
  */
-class DefaultController extends Controller
-{
+class DefaultController extends Controller {
 
     public $setup;
-
     public $setupDone = false;
 
-    public function beforeAction($action)
-    {
+    public function beforeAction($action) {
         $this->setup = new SetupDb();
-        
+
         $this->setup->db_name = Yii::$app->request->get('db_name', Yii::$app->id);
         $this->setup->username = Yii::$app->request->get('username', 'root');
         $this->setup->password = Yii::$app->request->get('password', '');
         $this->setup->host = Yii::$app->request->get('host', '127.0.0.1');
-        
+
         if (Yii::$app->request->get('db_name')) {
             $this->setupDone = true;
         }
@@ -46,7 +44,7 @@ class DefaultController extends Controller
                 $this->setupDone = true;
             }
         }
-        
+
         return parent::beforeAction($action);
     }
 
@@ -55,47 +53,44 @@ class DefaultController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         if ($this->setupDone) {
             return $this->handleSetup($this->setup);
         }
         return $this->render('index');
     }
 
-    public function actionGo()
-    {
+    public function actionGo() {
         $checks = SystemCheck::getResults($this->module, false);
-        
+
         $hasError = $checks['summary']['errors'];
-        
+
         // Render template
         return $this->render('check', [
-            'checks' => $checks['requirements'],
-            'hasError' => $hasError
+                    'checks' => $checks['requirements'],
+                    'hasError' => $hasError
         ]);
     }
 
-    public function checkDB($model)
-    {
+    public function checkDB($model) {
         $dbValid = true;
         // Connect to MySQL
         $link = @mysqli_connect($model->host, $model->username, $model->password);
-        if (! $link) {
+        if (!$link) {
             echo "Error: Unable to connect to MySQL." . PHP_EOL;
             echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
             echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
             exit();
         }
-        
+
         // Make my_db the current database
         $db_selected = @mysqli_select_db($link, $model->db_name);
-        
-        if (! $db_selected) {
+
+        if (!$db_selected) {
             $dbValid = false;
             // If we couldn't, then it either doesn't exist, or we can't see it.
             $sql = 'CREATE DATABASE ' . $model->db_name;
-            
+
             if (@mysqli_query($link, $sql)) {
                 echo "Database my_db created successfully\n";
                 $dbValid = true;
@@ -103,7 +98,7 @@ class DefaultController extends Controller
                 echo 'Error creating database: ' . mysqli_error($link) . "\n";
             }
         }
-        
+
         @mysqli_close($link);
         return $dbValid;
     }
@@ -113,8 +108,8 @@ class DefaultController extends Controller
      * CONFIGURE THE DATABASE FILE
      * Setupdb
      */
-    public function actionStep2()
-    {
+
+    public function actionStep2() {
         $model = new SetupDb();
         $mail = new Mail();
         $post = Yii::$app->request->post();
@@ -126,19 +121,18 @@ class DefaultController extends Controller
                 // $this->handleMailerProd($mail);
             }
         }
-        
+
         return $this->render('database', [
-            'model' => $model,
-            'mail' => $mail
+                    'model' => $model,
+                    'mail' => $mail
         ]);
     }
 
-    public function handleSetup($model, $mail = null)
-    {
+    public function handleSetup($model, $mail = null) {
         if ($this->checkDB($model)) {
             $success = true;
             try {
-                
+
                 $db = \Yii::$app->set('db', [
                     'class' => 'yii\db\Connection',
                     'dsn' => "mysql:host=$model->host;dbname=$model->db_name",
@@ -152,9 +146,9 @@ class DefaultController extends Controller
                 $success = false;
             }
         }
-        
+
         if ($success) {
-            
+
             $text_file = "<?php
 				return [
 				'class' => 'yii\db\Connection',
@@ -168,28 +162,28 @@ class DefaultController extends Controller
                 'schemaCacheDuration' => 3600,
                 'schemaCache' => 'cache',
 				];";
-            
+
             try {
-                
+
                 InstallerHelper::setCookie();
-                
+
                 file_put_contents(DB_CONFIG_FILE_PATH, $text_file);
-                
+
                 $message = InstallerHelper::execSqlFiles($this->module->sqlfile);
-                
+
                 if ($message != 'NOK') {
                     if ($mail != null && $mail->is_mail_prod == Mail::IS_MAIL) {
                         $this->handleMailerProd($mail);
                     }
-                    
+
                     $count = User::find()->count();
                     if ($count > 0) {
                         return $this->redirect([
-                            '/user/login'
+                                    '/user/login'
                         ]);
                     } else {
                         return $this->redirect([
-                            '/user/add-admin'
+                                    '/user/add-admin'
                         ]);
                     }
                 } else {
@@ -197,7 +191,7 @@ class DefaultController extends Controller
                     \Yii::$app->session->setFlash('error', $message);
                 }
             } catch (Exception $e) {
-                
+
                 unlink(DB_CONFIG_FILE_PATH);
                 \Yii::$app->session->setFlash('error', 'Unable to setup Database.');
                 // echo $e->getTraceAsString ();
@@ -207,8 +201,7 @@ class DefaultController extends Controller
         }
     }
 
-    function handleMailerProd($mail)
-    {
+    function handleMailerProd($mail) {
         if (isset(\Yii::$app->setting)) {
             // TODO Create mail config if setting component exist
         } else {
@@ -231,22 +224,23 @@ class DefaultController extends Controller
                                 ]
                             ],
                         ];";
-            
+
             $textFile = str_replace([
                 '{host}',
                 '{username}',
                 '{password}',
                 '{port}',
                 '{encryption}'
-            ], [
+                    ], [
                 $mail->host,
                 $mail->username,
                 $mail->password,
                 $mail->port,
                 $mail->encryption
-            ], $textFile);
-            
+                    ], $textFile);
+
             file_put_contents(DB_CONFIG_PATH . '/mailer-prod.php', $textFile);
         }
     }
+
 }

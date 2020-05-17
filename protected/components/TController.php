@@ -1,9 +1,5 @@
 <?php
 
-/**
-*@copyright :Amusoftech Pvt. Ltd. < www.amusoftech.com >
-*@author     : Ram mohamad Singh< er.amudeep@gmail.com >
-*/
 namespace app\components;
 
 use app\base\TBaseController;
@@ -21,11 +17,9 @@ use yii\jui\Tabs;
 use yii\web\HttpException;
 use yii\web\View;
 
-class TController extends TBaseController
-{
+class TController extends TBaseController {
 
-    public function actions()
-    {
+    public function actions() {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction'
@@ -37,8 +31,7 @@ class TController extends TBaseController
         ];
     }
 
-    public static function cleanRuntimeDir($dir, $delete = false)
-    {
+    public static function cleanRuntimeDir($dir, $delete = false) {
         if (is_dir($dir)) {
             $objects = scandir($dir);
 
@@ -56,23 +49,21 @@ class TController extends TBaseController
         }
     }
 
-    public function cleanAssetsDir()
-    {
+    public function cleanAssetsDir() {
         $assetsDirs = glob(Yii::getAlias($this->assetsDir) . '/*', GLOB_ONLYDIR);
         foreach ($assetsDirs as $dir) {
             if (in_array(basename($dir), $this->ignoreDirs)) {
                 continue;
             }
-            if (! $this->dryRun) {
+            if (!$this->dryRun) {
                 FileHelper::removeDirectory($dir);
             }
         }
         Yii::$app->session->setFlash('assets_clean', Yii::t('app', 'Assets cleaned'));
     }
 
-    public function processSEO($model = null)
-    {
-        if ($model != null && $model instanceof TActiveRecord && ! $model->isNewRecord) {
+    public function processSEO($model = null) {
+        if ($model != null && $model instanceof TActiveRecord && !$model->isNewRecord) {
 
             $this->_pageCaption = Html::encode(strip_tags($model));
             if ($model->hasAttribute('content'))
@@ -103,7 +94,7 @@ class TController extends TBaseController
                 $this->_pageKeywords = $seo->keywords;
             }
         }
-        if (! empty($this->_pageDescription))
+        if (!empty($this->_pageDescription))
             $this->_pageDescription = preg_replace("/[\\n\\r]+/", "", StringHelper::truncateWords(strip_tags($this->_pageDescription), 150)); // str_replace(PHP_EOL, '', StringHelper::truncateWords(strip_tags($model->content), 150));
 
         $this->getView()->registerMetaTag([
@@ -111,7 +102,7 @@ class TController extends TBaseController
             'content' => $this->_pageDescription
         ]);
         // hide site's keywords
-        if (! empty($this->_pageKeywords))
+        if (!empty($this->_pageKeywords))
             $this->getView()->registerMetaTag([
                 'name' => 'keywords',
                 'content' => $this->_pageKeywords
@@ -176,11 +167,10 @@ class TController extends TBaseController
         }
     }
 
-    protected function checkIPAccess()
-    {
+    protected function checkIPAccess() {
         $ip = Yii::$app->getRequest()->getUserIP();
         foreach ($this->allowedIPs as $filter) {
-            if ($filter === '*' || $filter === $ip || (($pos = strpos($filter, '*')) !== false && ! strncmp($ip, $filter, $pos))) {
+            if ($filter === '*' || $filter === $ip || (($pos = strpos($filter, '*')) !== false && !strncmp($ip, $filter, $pos))) {
                 return true;
             }
         }
@@ -189,8 +179,7 @@ class TController extends TBaseController
         return false;
     }
 
-    protected function checkDomain()
-    {
+    protected function checkDomain() {
         if (YII_ENV == 'prod') {
 
             if (strcasecmp(\Yii::$app->params['domain'], \Yii::$app->request->hostName) != 0) {
@@ -201,14 +190,13 @@ class TController extends TBaseController
         return true;
     }
 
-    public function beforeAction($action)
-    {
+    public function beforeAction($action) {
         // Validate domain name
-        if (isset(\Yii::$app->params['domain']) && ! $this->checkDomain()) {
+        if (isset(\Yii::$app->params['domain']) && !$this->checkDomain()) {
             return false;
         }
 
-        if (! file_exists(DB_CONFIG_FILE_PATH)) {
+        if (!file_exists(DB_CONFIG_FILE_PATH)) {
             if ($this->module->id != 'installer') {
                 $this->redirect([
                     "/installer"
@@ -219,26 +207,24 @@ class TController extends TBaseController
 
         if (User::find()->count() == 0 && \Yii::$app->controller->id != 'user' && $action != 'add-admin') {
             return $this->redirect([
-                '/user/add-admin'
+                        '/user/add-admin'
             ]);
         }
 
         return parent::beforeAction($action);
     }
 
-    public function startPanel($name = 'tabpanel1')
-    {
+    public function startPanel($name = 'tabpanel1') {
         $this->tabs_name = $name;
         $this->tabs_data = [];
     }
 
-    public function addPanelPage($title, $model, $view, $addMenu = true)
-    {
+    public function addPanelPage($title, $model, $view, $addMenu = true) {
         $this->tabs_data[] = [
             'label' => $title,
             /*  'url' => [
-             "/project/ajax-view?view=" . $view . "&id=" . $model->id
-             ], */
+              "/project/ajax-view?view=" . $view . "&id=" . $model->id
+              ], */
             'content' => $this->renderPartial($view, [
                 'model' => $model
             ]),
@@ -246,8 +232,7 @@ class TController extends TBaseController
         ];
     }
 
-    public function addPanel($title, $objects, $relation, $model = null, $module = null, $addMenu = true, $addAction = null)
-    {
+    public function addPanel($title, $objects, $relation, $model = null, $module = null, $addMenu = true, $addAction = null) {
         $view = Inflector::camel2id($relation);
 
         if ($objects) {
@@ -303,8 +288,7 @@ class TController extends TBaseController
         }
     }
 
-    public function endPanel()
-    {
+    public function endPanel() {
         $id = 'project-' . $this->tabs_name;
 
         echo Tabs::widget([
@@ -314,22 +298,21 @@ class TController extends TBaseController
                 'class' => 'ui-tabs ui-widget ui-widget-content',
                 'style' => "display:none;"
             ] /*
-               * 'itemOptions' => [
-               * 'class' => 'ui-state-default ui-corner-top',
-               * ]
-               */
+                 * 'itemOptions' => [
+                 * 'class' => 'ui-state-default ui-corner-top',
+                 * ]
+                 */
         ]);
         $this->getView()->registerJs("$( '#$id').show()", View::POS_READY, 'project-tabs');
     }
 
-    public function actionAjax($type, $id, $function, $grid = '_ajax-grid', $addMenu = true, $action = null)
-    {
+    public function actionAjax($type, $id, $function, $grid = '_ajax-grid', $addMenu = true, $action = null) {
         $model = $type::findOne([
-            'id' => $id
+                    'id' => $id
         ]);
-        if (! empty($model)) {
+        if (!empty($model)) {
 
-            if (! ($model->isAllowed()))
+            if (!($model->isAllowed()))
                 throw new \yii\web\HttpException(403, Yii::t('app', 'You are not allowed to access this page.'));
             $function = 'get' . ucfirst($function);
             $query = $model->$function();
@@ -347,7 +330,7 @@ class TController extends TBaseController
                 if ($action != null) {
                     if (strstr($action, '/')) {
                         $menu['url'] = Url::toRoute($action, [
-                            'id' => $model->id
+                                    'id' => $model->id
                         ]);
                     } else {
                         $menu['url'] = $model->getUrl($action);
@@ -364,16 +347,15 @@ class TController extends TBaseController
                 ];
             }
             return $this->renderAjax($grid, [
-                'dataProvider' => $dataProvider,
-                'searchModel' => null,
-                'id' => $id,
-                'menu' => $menu
+                        'dataProvider' => $dataProvider,
+                        'searchModel' => null,
+                        'id' => $id,
+                        'menu' => $menu
             ]);
         }
     }
 
-    public function render($view, $params = [])
-    {
+    public function render($view, $params = []) {
         if (array_key_exists('model', $params)) {
             $this->processSEO($params['model']);
         } else
@@ -383,7 +365,7 @@ class TController extends TBaseController
             $viewPath = $this->getViewPath();
             $file = ltrim($view, '/') . '.' . $this->getView()->defaultExtension;
             $path = $viewPath . '/' . $file;
-            if (! is_file($path)) {
+            if (!is_file($path)) {
                 $path2 = str_replace('admin/', '', $path);
                 $path3 = substr($path, strpos($path, 'admin/') + 6);
 
@@ -395,13 +377,11 @@ class TController extends TBaseController
         return parent::render($view, $params);
     }
 
-    protected function updateMenuItems($model = null)
-    {
+    protected function updateMenuItems($model = null) {
         switch (\Yii::$app->controller->action->id) {
 
             default:
-            case 'view':
-                {
+            case 'view': {
                     $this->menu['add'] = array(
                         'label' => '<span class="glyphicon glyphicon-plus"></span>',
                         'title' => Yii::t('app', 'Add'),
@@ -421,8 +401,7 @@ class TController extends TBaseController
                 }
                 break;
 
-            case 'index':
-                {
+            case 'index': {
                     $this->menu['add'] = array(
                         'label' => '<span class="glyphicon glyphicon-plus"></span>',
                         'title' => Yii::t('app', 'Add'),
@@ -444,7 +423,7 @@ class TController extends TBaseController
                         'title' => Yii::t('app', 'Clear'),
                         'url' => [
                             'clear'
-                            /* 'id' => $model->id */
+                        /* 'id' => $model->id */
                         ],
                         'visible' => User::isAdmin()
                     );
@@ -452,4 +431,5 @@ class TController extends TBaseController
                 break;
         }
     }
+
 }

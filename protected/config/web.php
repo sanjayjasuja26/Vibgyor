@@ -1,9 +1,8 @@
 <?php
 
 /**
-*@copyright :Amusoftech Pvt. Ltd. < www.amusoftech.com >
-*@author     : Ram mohamad Singh< er.amudeep@gmail.com >
-*/
+ * @author     : Sanjay Jasuja <sanjayjasuja26@gmail.com >
+ */
 $params = require (__DIR__ . '/params.php');
 $config = [
     'id' => PROJECT_ID,
@@ -11,7 +10,7 @@ $config = [
     'basePath' => PROTECTED_PATH,
     'runtimePath' => RUNTIME_PATH,
     'vendorPath' => VENDOR_PATH,
-     'defaultRoute' => 'site/index',
+    'defaultRoute' => 'site/index',
     'language' => 'en',
     'bootstrap' => [
         'log',
@@ -66,7 +65,6 @@ $config = [
         ],
         'urlManager' => [
             'class' => 'app\components\TUrlManager',
-
             'rules' => [
                 'file/file/files/<file>' => '/file/file/files',
                 '<controller:[A-Za-z-]+>/<action:[A-Za-z-]+>/<id:\d+>/<title>' => '<controller>/<action>',
@@ -77,7 +75,6 @@ $config = [
                 '<controller:[A-Za-z-]+>/<id:\d+>' => '<controller>/view',
                 '<controller:[A-Za-z-]+>/<action:[A-Za-z-]+>/<id:\d+>' => '<controller>/<action>',
                 '<action:about|contact|privacy|settings|copyright|terms>' => 'site/<action>',
-               
             ]
         ],
         'languagepicker' => [
@@ -95,16 +92,13 @@ $config = [
             ]
         ]
     ],
-
     'params' => $params,
     'modules' => [
-
         'sitemap' => [
             'class' => 'app\modules\sitemap\Module',
             'models' => [
                 'app\modules\blog\models\Post'
             ],
-
             'urls' => [
                 [
                     'loc' => '/site/about'
@@ -123,7 +117,7 @@ $config = [
         ]
     ],
     'on beforeRequest' => function () {
-     //   \Yii::$app->getModule('maintenance')->init();
+        //   \Yii::$app->getModule('maintenance')->init();
     }
 ];
 
@@ -157,12 +151,10 @@ if (YII_ENV == 'dev') {
         'errorAction' => 'site/error'
     ];
     $config['components']['assetManager']['forceCopy'] = true;
-    
 } else {
     $config['components']['errorHandler'] = [
         'errorAction' => 'logger/log/custom-error'
     ];
-    
 }
 
 /* You can use below modules for faster developement */
@@ -171,7 +163,7 @@ $config['modules']['logger'] = [
 ];
 $config['modules']['file'] = [
 //    'class' => 'app\modules\file\Module'
-   'class' => 'thyseus\files\FileWebModule',
+    'class' => 'thyseus\files\FileWebModule',
 //    
 ];
 $config['modules']['notification'] = [
@@ -197,7 +189,7 @@ $config['modules']['comment'] = [
 // 'class' => 'app\modules\rating\Module'
 // ];
 $config['modules']['translator'] = [
-'class' => 'app\modules\translator\Module'
+    'class' => 'app\modules\translator\Module'
 ];
 // $config['modules']['statistics'] = [
 // 'class' => 'app\modules\statistics\Module'

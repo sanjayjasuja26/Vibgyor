@@ -1,14 +1,13 @@
 <?php
 
 /**
-*@copyright :Amusoftech Pvt. Ltd. < www.amusoftech.com >
-*@author     : Ram mohamad Singh< er.amudeep@gmail.com >
-*/
+ * @author     : Sanjay Jasuja< sanjayjasuja26@gmail.com >
+ */
 return [
-    'adminEmail' => 'admin@toxsl.in',
-    'company' => 'ToXSL Technologies',
-    'companyUrl' => 'https://www.toxsl.com',
+    'adminEmail' => 'test@gmail.com',
+    'company' => 'Vibgyor Technologies',
+    'companyUrl' => 'https://www.vibgyor.com',
     'user.passwordResetTokenExpire' => 60 * 1024,
-    'bsVersion' => '4.3.1',
+    //'bsVersion' => '4.3.1',
     'useCrudModals' => true
 ];

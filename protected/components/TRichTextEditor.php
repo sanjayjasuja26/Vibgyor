@@ -1,20 +1,14 @@
 <?php
 
-/**
-*@copyright :Amusoftech Pvt. Ltd. < www.amusoftech.com >
-*@author     : Ram mohamad Singh< er.amudeep@gmail.com >
-*/
 namespace app\components;
 
 use alexantr\ckeditor\CKEditor;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
-class TRichTextEditor extends CKEditor
-{
+class TRichTextEditor extends CKEditor {
 
     public $enableKCFinder = true;
-
     public $clientOptions = [
         'extraPlugins' => 'autogrow,colorbutton,colordialog,iframe,justify,showblocks',
         'removePlugins' => 'resize',
@@ -24,8 +18,7 @@ class TRichTextEditor extends CKEditor
     /**
      * Registers CKEditor plugin
      */
-    protected function registerPlugin()
-    {
+    protected function registerPlugin() {
         if ($this->enableKCFinder) {
             $this->registerKCFinder();
         }
@@ -36,14 +29,12 @@ class TRichTextEditor extends CKEditor
     /**
      * Registers KCFinder
      */
-    protected function registerKCFinder()
-    {
+    protected function registerKCFinder() {
         $browseOptions = [
             'filebrowserImageBrowseUrl' => Url::to([
                 '/file/file/ckeditor',
                 'filter' => 'image'
             ]),
-
             'filebrowserImageUploadUrl' => Url::to([
                 '/file/file/upload'
             ])
@@ -53,4 +44,5 @@ class TRichTextEditor extends CKEditor
     }
 
     public $preset;
+
 }

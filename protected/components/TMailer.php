@@ -1,9 +1,5 @@
 <?php
 
-/**
-*@copyright :Amusoftech Pvt. Ltd. < www.amusoftech.com >
-*@author     : Ram mohamad Singh< er.amudeep@gmail.com >
-*/
 namespace app\components;
 
 use Yii;
@@ -11,8 +7,7 @@ use yii\mail\BaseMailer;
 use yii\base\InvalidConfigException;
 use yii\log\Logger;
 
-class TMailer extends BaseMailer
-{
+class TMailer extends BaseMailer {
 
     /**
      *
@@ -44,17 +39,15 @@ class TMailer extends BaseMailer
      *
      * @return array|\Swift_Mailer Swift mailer instance or array configuration.
      */
-    public function getSwiftMailer()
-    {
-        if (! is_object($this->_swiftMailer)) {
+    public function getSwiftMailer() {
+        if (!is_object($this->_swiftMailer)) {
             $this->_swiftMailer = $this->createSwiftMailer();
         }
 
         return $this->_swiftMailer;
     }
 
-    public function init()
-    {
+    public function init() {
         parent::init();
         $transport = [
             'class' => 'Swift_SmtpTransport',
@@ -63,7 +56,6 @@ class TMailer extends BaseMailer
             'password' => \Yii::$app->settings->smtp->config->password,
             'port' => \Yii::$app->settings->smtp->config->port,
             'encryption' => \Yii::$app->settings->smtp->config->encryption,
-
             'streamOptions' => [
                 'ssl' => [
                     'verify_peer' => false,
@@ -79,9 +71,8 @@ class TMailer extends BaseMailer
      *
      * @return array|\Swift_Transport
      */
-    public function getTransport()
-    {
-        if (! is_object($this->_transport)) {
+    public function getTransport() {
+        if (!is_object($this->_transport)) {
             $this->_transport = $this->createTransport($this->_transport);
         }
 
@@ -92,8 +83,7 @@ class TMailer extends BaseMailer
      *
      * @inheritdoc
      */
-    protected function sendMessage($message)
-    {
+    protected function sendMessage($message) {
         $address = $message->getTo();
         if (is_array($address)) {
             $address = implode(', ', array_keys($address));
@@ -108,8 +98,7 @@ class TMailer extends BaseMailer
      *
      * @return \Swift_Mailer mailer instance.
      */
-    protected function createSwiftMailer()
-    {
+    protected function createSwiftMailer() {
         if (method_exists('Swift_Mailer', 'newInstance')) {
             return \Swift_Mailer::newInstance($this->getTransport());
         }
@@ -124,9 +113,8 @@ class TMailer extends BaseMailer
      * @throws \yii\base\InvalidConfigException on invalid transport configuration.
      * @return \Swift_Transport transport instance.
      */
-    protected function createTransport(array $config)
-    {
-        if (! isset($config['class'])) {
+    protected function createTransport(array $config) {
+        if (!isset($config['class'])) {
             $config['class'] = 'Swift_MailTransport';
         }
         if (isset($config['plugins'])) {
@@ -149,7 +137,7 @@ class TMailer extends BaseMailer
 
         /* @var $transport */
         $transport = $this->createSwiftObject($config);
-        if (! empty($plugins)) {
+        if (!empty($plugins)) {
             foreach ($plugins as $plugin) {
                 if (is_array($plugin) && isset($plugin['class'])) {
                     $plugin = $this->createSwiftObject($plugin);
@@ -169,8 +157,7 @@ class TMailer extends BaseMailer
      * @return Object created object
      * @throws \yii\base\InvalidConfigException on invalid configuration.
      */
-    protected function createSwiftObject(array $config)
-    {
+    protected function createSwiftObject(array $config) {
         if (isset($config['class'])) {
             $className = $config['class'];
             unset($config['class']);
@@ -193,7 +180,7 @@ class TMailer extends BaseMailer
             $object = \Yii::createObject($className);
         }
 
-        if (! empty($config)) {
+        if (!empty($config)) {
             $reflection = new \ReflectionObject($object);
             foreach ($config as $name => $value) {
                 if ($reflection->hasProperty($name) && $reflection->getProperty($name)->isPublic()) {
@@ -210,4 +197,5 @@ class TMailer extends BaseMailer
         }
         return $object;
     }
+
 }

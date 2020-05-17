@@ -47,9 +47,9 @@ AppAsset::register($this);
         <!-- Preloader - style you can find in spinners.css -->
         <!-- ============================================================== -->
         <!-- LOADER -->
-        <div id="preloader">
-            <img class="preloader" src="<?= $this->theme->getUrl('frontend/images/loader.gif'); ?>" alt="">
-        </div><!-- end loader -->
+        <!--        <div id="preloader">
+                    <img class="preloader" src="<?= $this->theme->getUrl('frontend/images/loader.gif'); ?>" alt="">
+                </div> end loader -->
         <!-- END LOADER -->
         <div id="wrapper">
             <!-- BEGIN # MODAL LOGIN -->

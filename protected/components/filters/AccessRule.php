@@ -1,9 +1,5 @@
 <?php
 
-/**
-*@copyright :Amusoftech Pvt. Ltd. < www.amusoftech.com >
-*@author     : Ram mohamad Singh< er.amudeep@gmail.com >
- */
 namespace app\components\filters;
 
 use yii\base\InvalidConfigException;
@@ -11,11 +7,9 @@ use yii\web\Request;
 use yii\base\Action;
 use app\components\WebUser;
 
-class AccessRule extends \yii\filters\AccessRule
-{
+class AccessRule extends \yii\filters\AccessRule {
 
     public $ranks;
-
     public $groups;
 
     /**
@@ -28,16 +22,8 @@ class AccessRule extends \yii\filters\AccessRule
      * @param Request $request
      * @return bool|null `true` if the user is allowed, `false` if the user is denied, `null` if the rule does not apply to the user
      */
-    public function allows($action, $user, $request)
-    {
-        if ($this->matchAction($action) 
-            && $this->matchGroup($user) 
-            && $this->matchRoleRank($user) 
-            && $this->matchRole($user) 
-            && $this->matchIP($request->getUserIP()) 
-            && $this->matchVerb($request->getMethod()) 
-            && $this->matchController($action->controller) 
-            && $this->matchCustom($action)) {
+    public function allows($action, $user, $request) {
+        if ($this->matchAction($action) && $this->matchGroup($user) && $this->matchRoleRank($user) && $this->matchRole($user) && $this->matchIP($request->getUserIP()) && $this->matchVerb($request->getMethod()) && $this->matchController($action->controller) && $this->matchCustom($action)) {
             return $this->allow ? true : false;
         }
 
@@ -51,11 +37,10 @@ class AccessRule extends \yii\filters\AccessRule
      * @return bool whether the rule applies to the role
      * @throws InvalidConfigException if User component is detached
      */
-    protected function matchRole($user)
-    {
+    protected function matchRole($user) {
         $items = empty($this->roles) ? [] : $this->roles;
 
-        if (! empty($this->permissions)) {
+        if (!empty($this->permissions)) {
             $items = array_merge($items, $this->permissions);
         }
 
@@ -73,20 +58,19 @@ class AccessRule extends \yii\filters\AccessRule
                     return true;
                 }
             } elseif ($item === '@') {
-                if (! $user->getIsGuest()) {
+                if (!$user->getIsGuest()) {
                     return true;
                 }
             } else {
 
                 $accessChecker = $user->getAuthAccessChecker();
-                
+
                 foreach ($items as $item) {
                     $access = $accessChecker->checkAccessRole($user->getId(), $item);
                     if ($access) {
                         return true;
                     }
                 }
-              
             }
         }
 
@@ -100,14 +84,13 @@ class AccessRule extends \yii\filters\AccessRule
      * @return bool whether the rule applies to the role
      * @throws InvalidConfigException if User component is detached
      */
-    protected function matchRoleRank($user)
-    {
+    protected function matchRoleRank($user) {
         $items = empty($this->ranks) ? [] : $this->ranks;
 
         if (empty($items)) {
             return true;
         }
-           
+
         if ($user === false) {
             throw new InvalidConfigException('The user application component must be available to specify roles in AccessRule.');
         }
@@ -116,7 +99,7 @@ class AccessRule extends \yii\filters\AccessRule
         }
 
         $accessChecker = $user->getAuthAccessChecker();
-            
+
         foreach ($items as $item) {
             $access = $accessChecker->checkAccessRoleRank($user->getId(), $item);
             if ($access) {
@@ -134,8 +117,7 @@ class AccessRule extends \yii\filters\AccessRule
      * @return bool whether the rule applies to the role
      * @throws InvalidConfigException if User component is detached
      */
-    protected function matchGroup($user)
-    {
+    protected function matchGroup($user) {
         $items = empty($this->groups) ? [] : $this->groups;
 
         if (empty($items)) {
@@ -161,4 +143,5 @@ class AccessRule extends \yii\filters\AccessRule
 
         return false;
     }
+
 }

@@ -1,9 +1,5 @@
 <?php
 
-/**
-*@copyright :Amusoftech Pvt. Ltd. < www.amusoftech.com >
-*@author     : Ram mohamad Singh< er.amudeep@gmail.com >
-*/
 namespace app\controllers;
 
 use app\components\TActiveForm;
@@ -12,7 +8,7 @@ use app\models\Notice;
 use app\models\User;
 use app\models\search\Notice as NoticeSearch;
 use Yii;
- use app\components\filters\AccessControl;
+use app\components\filters\AccessControl;
 use app\components\filters\AccessRule;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
@@ -20,11 +16,9 @@ use yii\web\NotFoundHttpException;
 /**
  * NoticeController implements the CRUD actions for Notice model.
  */
-class NoticeController extends TController
-{
+class NoticeController extends TController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -76,8 +70,7 @@ class NoticeController extends TController
      * @param string $action
      * @return string
      */
-    public function actionMass($action = 'delete')
-    {
+    public function actionMass($action = 'delete') {
         \Yii::$app->response->format = 'json';
         $response['status'] = 'NOK';
         $status = Notice::massDelete();
@@ -92,14 +85,13 @@ class NoticeController extends TController
      *
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new NoticeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $this->updateMenuItems();
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider
         ]);
     }
 
@@ -109,19 +101,18 @@ class NoticeController extends TController
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id, $title = null)
-    {
+    public function actionView($id, $title = null) {
         $model = $this->findModel($id);
         if (is_null($title))
             $this->redirect($model->getUrl());
         $this->updateMenuItems($model);
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('view', [
-                'model' => $model
+                        'model' => $model
             ]);
         }
         return $this->render('view', [
-            'model' => $model
+                    'model' => $model
         ]);
     }
 
@@ -131,8 +122,7 @@ class NoticeController extends TController
      *
      * @return mixed
      */
-    public function actionAdd()
-    {
+    public function actionAdd() {
         $model = new Notice();
         $model->loadDefaultValues();
         $model->state_id = Notice::STATE_ACTIVE;
@@ -148,7 +138,7 @@ class NoticeController extends TController
         }
         $this->updateMenuItems();
         return $this->render('add', [
-            'model' => $model
+                    'model' => $model
         ]);
     }
 
@@ -159,8 +149,7 @@ class NoticeController extends TController
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
 
         $post = \yii::$app->request->post();
@@ -174,11 +163,11 @@ class NoticeController extends TController
         $this->updateMenuItems($model);
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('update', [
-                'model' => $model
+                        'model' => $model
             ]);
         }
         return $this->render('update', [
-            'model' => $model
+                    'model' => $model
         ]);
     }
 
@@ -189,15 +178,14 @@ class NoticeController extends TController
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $model = $this->findModel($id);
         $model->delete();
         if (\Yii::$app->request->isAjax) {
             return true;
         }
         return $this->redirect([
-            'index'
+                    'index'
         ]);
     }
 
@@ -209,11 +197,10 @@ class NoticeController extends TController
      * @return Notice the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id, $accessCheck = true)
-    {
+    protected function findModel($id, $accessCheck = true) {
         if (($model = Notice::findOne($id)) !== null) {
 
-            if ($accessCheck && ! ($model->isAllowed()))
+            if ($accessCheck && !($model->isAllowed()))
                 throw new HttpException(403, Yii::t('app', 'You are not allowed to access this page.'));
 
             return $model;
@@ -222,43 +209,39 @@ class NoticeController extends TController
         }
     }
 
-    protected function updateMenuItems($model = null)
-    {
+    protected function updateMenuItems($model = null) {
         switch (\Yii::$app->controller->action->id) {
 
-            case 'add':
-                {
+            case 'add': {
                     $this->menu['manage'] = [
                         'label' => '<span class="glyphicon glyphicon-list"></span>',
                         'title' => Yii::t('app', 'Manage'),
                         'url' => [
                             'index'
                         ]
-                        // 'visible' => User::isAdmin ()
+                            // 'visible' => User::isAdmin ()
                     ];
                 }
                 break;
-            case 'index':
-                {
+            case 'index': {
                     $this->menu['add'] = [
                         'label' => '<span class="glyphicon glyphicon-plus"></span>',
                         'title' => Yii::t('app', 'Add'),
                         'url' => [
                             'add'
                         ]
-                        // 'visible' => User::isAdmin ()
+                            // 'visible' => User::isAdmin ()
                     ];
                 }
                 break;
-            case 'update':
-                {
+            case 'update': {
                     $this->menu['add'] = [
                         'label' => '<span class="glyphicon glyphicon-plus"></span>',
                         'title' => Yii::t('app', 'add'),
                         'url' => [
                             'add'
                         ]
-                        // 'visible' => User::isAdmin ()
+                            // 'visible' => User::isAdmin ()
                     ];
                     $this->menu['manage'] = [
                         'label' => '<span class="glyphicon glyphicon-list"></span>',
@@ -266,13 +249,12 @@ class NoticeController extends TController
                         'url' => [
                             'index'
                         ]
-                        // 'visible' => User::isAdmin ()
+                            // 'visible' => User::isAdmin ()
                     ];
                 }
                 break;
             default:
-            case 'view':
-                {
+            case 'view': {
                     $this->menu['manage'] = [
                         'label' => '<span class="glyphicon glyphicon-list"></span>',
                         'title' => Yii::t('app', 'Manage'),
@@ -298,4 +280,5 @@ class NoticeController extends TController
                 }
         }
     }
+
 }

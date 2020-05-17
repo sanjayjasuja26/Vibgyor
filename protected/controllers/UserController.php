@@ -460,12 +460,14 @@ class UserController extends TController {
                     return $this->goBack([
                                 'dashboard/index'
                     ]);
+                } else {
+                    \Yii::$app->getSession()->setFlash('error', "Error !!" . $model->getErrorsString());
                 }
             }
             \Yii::$app->getSession()->setFlash('error', "Error !! Please verfiy your email first.");
-            return $this->goBack([
-                        'user/login'
-            ]);
+//            return $this->goBack([
+//                        'user/login'
+//            ]);
         }
         return $this->render('login', [
                     'model' => $model

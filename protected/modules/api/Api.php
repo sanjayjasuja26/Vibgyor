@@ -1,8 +1,5 @@
 <?php
-/**
- *@copyright : ToXSL Technologies Pvt. Ltd. < www.toxsl.com >
- *@author	 : Shiv Charan Panjeta < shiv@toxsl.com >
- */
+
 namespace app\modules\api;
 
 use Yii;
@@ -12,8 +9,7 @@ use app\models\AuthSession;
 /**
  * Api module definition class
  */
-class Api extends \yii\base\Module
-{
+class Api extends \yii\base\Module {
 
     /**
      * @inheritdoc
@@ -23,22 +19,21 @@ class Api extends \yii\base\Module
     /**
      * @inheritdoc
      */
-    public function init()
-    {
+    public function init() {
         parent::init();
-        
+
         // custom initialization code goes here
         Yii::$app->response->format = Response::FORMAT_JSON;
     }
 
-    public function beforeAction($action)
-    {
+    public function beforeAction($action) {
         if (parent::beforeAction($action)) {
-            
+
             AuthSession::authenticateSession();
-            
+
             return true;
         } else
             return false;
     }
+
 }

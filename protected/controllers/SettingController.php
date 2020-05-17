@@ -1,10 +1,5 @@
 <?php
 
-/**
-*@copyright :Amusoftech Pvt. Ltd. < www.amusoftech.com >
-*@author     : Ram mohamad Singh< er.amudeep@gmail.com >
-*/
-
 namespace app\controllers;
 
 use app\components\TActiveForm;
@@ -12,7 +7,7 @@ use app\components\TController;
 use app\models\Setting;
 use app\models\User;
 use Yii;
- use app\components\filters\AccessControl;
+use app\components\filters\AccessControl;
 use app\components\filters\AccessRule;
 use yii\helpers\Json;
 use yii\web\HttpException;
@@ -21,11 +16,9 @@ use yii\web\NotFoundHttpException;
 /**
  * SettingController implements the CRUD actions for Setting model.
  */
-class SettingController extends TController
-{
+class SettingController extends TController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -69,12 +62,11 @@ class SettingController extends TController
      *
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $model = Setting::find()->all();
         $this->updateMenuItems();
         return $this->render('index', [
-            'model' => $model
+                    'model' => $model
         ]);
     }
 
@@ -84,12 +76,11 @@ class SettingController extends TController
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         $model = $this->findModel($id);
         $this->updateMenuItems($model);
         return $this->render('view', [
-            'model' => $model
+                    'model' => $model
         ]);
     }
 
@@ -99,8 +90,7 @@ class SettingController extends TController
      *
      * @return mixed
      */
-    public function actionAdd()
-    {
+    public function actionAdd() {
         $model = new Setting();
         $model->loadDefaultValues();
         $model->state_id = Setting::STATE_ACTIVE;
@@ -112,8 +102,8 @@ class SettingController extends TController
         if ($model->load($post)) {
             if ($model->save()) {
                 return $this->redirect([
-                    'config',
-                    'id' => $model->id
+                            'config',
+                            'id' => $model->id
                 ]);
             } else {
                 Yii::$app->getSession()->setFlash('error', "Error! " . $model->getErrorsString());
@@ -121,12 +111,11 @@ class SettingController extends TController
         }
         $this->updateMenuItems();
         return $this->render('add', [
-            'model' => $model
+                    'model' => $model
         ]);
     }
 
-    public function actionConfig($id)
-    {
+    public function actionConfig($id) {
         $model = $this->findModel($id);
         $post = \yii::$app->request->post();
         if (\yii::$app->request->isAjax && $model->load($post)) {
@@ -135,7 +124,7 @@ class SettingController extends TController
         }
         if ($model->load($post)) {
             $config = [];
-            if (! empty($post['Setting']['keyName'])) {
+            if (!empty($post['Setting']['keyName'])) {
                 foreach ($post['Setting']['keyName'] as $key => $name) {
                     $live[$name] = [
                         'type' => $post['Setting']['keyType'][$key],
@@ -145,11 +134,11 @@ class SettingController extends TController
                 }
             }
             $model->value = Json::encode($live);
-            
+
             if ($model->save()) {
                 Yii::$app->getSession()->setFlash('success', \Yii::t('app', 'Setting Saved Successfully.'));
                 return $this->redirect([
-                    'index'
+                            'index'
                 ]);
             } else {
                 Yii::$app->getSession()->setFlash('error', \Yii::t('app', "Error! ") . $model->getErrorsString());
@@ -157,7 +146,7 @@ class SettingController extends TController
         }
         $this->updateMenuItems();
         return $this->render('config', [
-            'model' => $model
+                    'model' => $model
         ]);
     }
 
@@ -168,13 +157,12 @@ class SettingController extends TController
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id, false);
         $post = \yii::$app->request->post();
-        
+
         if ($model->load($post)) {
-            if (! empty($model->keyValue)) {
+            if (!empty($model->keyValue)) {
                 foreach ($model->keyValue as $key => $value) {
                     if (isset($value['type']) && ($value['type'] == Setting::KEY_TYPE_BOOL)) {
                         $val = isset($value['value']) ? 1 : 0;
@@ -183,7 +171,7 @@ class SettingController extends TController
                 }
             }
             $model->value = Json::encode($model->keyValue);
-            
+
             if ($model->save()) {
                 Yii::$app->getSession()->setFlash('success', 'Setting Updated Successfully.');
             } else {
@@ -191,18 +179,17 @@ class SettingController extends TController
             }
         }
         return $this->redirect([
-            'index'
+                    'index'
         ]);
     }
 
-    public function actionAjaxUpdate($key)
-    {
+    public function actionAjaxUpdate($key) {
         $model = $this->findModel([
             'key' => $key
         ]);
         return $this->renderPartial('_ajax-update', [
-            'model' => $model,
-            'key' => $key
+                    'model' => $model,
+                    'key' => $key
         ]);
     }
 
@@ -213,8 +200,7 @@ class SettingController extends TController
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $model = $this->findModel($id);
         $model->delete();
         if (\Yii::$app->request->isAjax) {
@@ -222,15 +208,14 @@ class SettingController extends TController
         }
         Yii::$app->getSession()->setFlash('success', 'Setting Deleted Successfully.');
         return $this->redirect([
-            'index'
+                    'index'
         ]);
     }
 
-    public function actionUpdateconfig()
-    {
+    public function actionUpdateconfig() {
         Setting::setDefaultConfig();
         return $this->redirect([
-            'index'
+                    'index'
         ]);
     }
 
@@ -242,24 +227,21 @@ class SettingController extends TController
      * @return Setting the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id, $accessCheck = true)
-    {
+    protected function findModel($id, $accessCheck = true) {
         if (($model = Setting::findOne($id)) !== null) {
-            
-            if ($accessCheck && ! ($model->isAllowed()))
+
+            if ($accessCheck && !($model->isAllowed()))
                 throw new HttpException(403, Yii::t('app', 'You are not allowed to access this page.'));
-            
+
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
 
-    protected function updateMenuItems($model = null)
-    {
+    protected function updateMenuItems($model = null) {
         switch (\Yii::$app->controller->action->id) {
-            case 'index':
-                {
+            case 'index': {
                     $this->menu['add'] = array(
                         'label' => '<span class="fa fa-download"></span>',
                         'title' => Yii::t('app', 'Update'),
@@ -272,4 +254,5 @@ class SettingController extends TController
                 break;
         }
     }
+
 }

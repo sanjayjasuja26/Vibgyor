@@ -1,32 +1,23 @@
 <?php
 
-/**
-*@copyright :Amusoftech Pvt. Ltd. < www.amusoftech.com >
-*@author     : Ram mohamad Singh< er.amudeep@gmail.com >
-*/
 namespace app\components;
 
 use Yii;
 
-class TBaseWidget extends \yii\base\Widget
-{
+class TBaseWidget extends \yii\base\Widget {
 
     public $route;
-
     public $params;
+    public $visible;
 
-    public $visible ;
-    
-    public function init()
-    {
+    public function init() {
         parent::init();
-        if (! isset($this->visible)) {
+        if (!isset($this->visible)) {
             $this->visible = true;
         }
     }
-    
-    public function run()
-    {
+
+    public function run() {
         if ($this->route === null && Yii::$app->controller !== null) {
             $this->route = Yii::$app->controller->getRoute();
         }
@@ -38,6 +29,8 @@ class TBaseWidget extends \yii\base\Widget
         }
     }
 
-    public function renderHtml()
-    {}
+    public function renderHtml() {
+        
+    }
+
 }

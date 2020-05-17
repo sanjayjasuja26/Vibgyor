@@ -1,21 +1,15 @@
 <?php
 
-/**
-*@copyright :Amusoftech Pvt. Ltd. < www.amusoftech.com >
-*@author     : Ram mohamad Singh< er.amudeep@gmail.com >
-*/
 namespace app\components;
 
 use Yii;
 use yii\helpers\Html;
 
-class TActionColumn extends \yii\grid\ActionColumn
-{
+class TActionColumn extends \yii\grid\ActionColumn {
 
     public $showModal;
 
-    function init()
-    {
+    function init() {
         $this->showModal = \Yii::$app->params['useCrudModals'];
         parent::init();
         $this->initDefaultButtons();
@@ -24,9 +18,8 @@ class TActionColumn extends \yii\grid\ActionColumn
         };
     }
 
-    protected function initDefaultButtons()
-    {
-        if (! isset($this->buttons['view'])) {
+    protected function initDefaultButtons() {
+        if (!isset($this->buttons['view'])) {
             $this->buttons['view'] = function ($url, $model, $key) {
                 $options = array_merge([
                     'title' => Yii::t('app', 'view'),
@@ -34,7 +27,7 @@ class TActionColumn extends \yii\grid\ActionColumn
                     'data-pjax' => '0',
                     'class' => 'btn btn-success btn-green',
                     'data-id' => $model->id
-                ], $this->buttonOptions);
+                        ], $this->buttonOptions);
                 if ($this->showModal) {
                     $options = array_merge($options, [
                         'class' => 'showActionModalButton btn btn-success',
@@ -45,7 +38,7 @@ class TActionColumn extends \yii\grid\ActionColumn
                 return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, $options);
             };
         }
-        if (! isset($this->buttons['update'])) {
+        if (!isset($this->buttons['update'])) {
             $this->buttons['update'] = function ($url, $model, $key) {
                 $options = array_merge([
                     'title' => Yii::t('app', 'Update'),
@@ -53,7 +46,7 @@ class TActionColumn extends \yii\grid\ActionColumn
                     'data-pjax' => '0',
                     'class' => 'btn btn-info btn-blue-info',
                     'data-id' => $model->id
-                ], $this->buttonOptions);
+                        ], $this->buttonOptions);
                 if ($this->showModal) {
                     $options = array_merge($options, [
                         'class' => 'showActionModalButton btn btn-success',
@@ -64,7 +57,7 @@ class TActionColumn extends \yii\grid\ActionColumn
                 return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, $options);
             };
         }
-        if (! isset($this->buttons['delete'])) {
+        if (!isset($this->buttons['delete'])) {
             $this->buttons['delete'] = function ($url, $model, $key) {
                 $options = array_merge([
                     'title' => Yii::t('app', 'Delete'),
@@ -75,9 +68,10 @@ class TActionColumn extends \yii\grid\ActionColumn
                     'data-url' => $url,
                     'class' => 'btn btn-danger btn-red',
                     'data-id' => $model->id
-                ], $this->buttonOptions);
+                        ], $this->buttonOptions);
                 return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, $options);
             };
         }
     }
+
 }

@@ -1,9 +1,5 @@
 <?php
 
-/**
- *@copyright : ToXSL Technologies Pvt. Ltd. < www.toxsl.com >
- *@author	 : Shiv Charan Panjeta < shiv@toxsl.com >
- */
 namespace app\modules\api\controllers;
 
 use Yii;
@@ -22,15 +18,13 @@ use yii\web\HttpException;
  * "status":500}
  *
  */
-abstract class ApiTxController extends Controller
-{
+
+abstract class ApiTxController extends Controller {
 
     const API_OK = 200;
-
     const API_NOK = 1000;
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -64,7 +58,6 @@ abstract class ApiTxController extends Controller
                     ]
                 ]
             ],
-            
             'verbs' => [
                 'class' => \yii\filters\VerbFilter::className(),
                 'actions' => [
@@ -78,48 +71,42 @@ abstract class ApiTxController extends Controller
     }
 
     public $enableCsrfValidation = false;
-
     private $response = array(
         'status' => self::API_NOK
     );
 
-    public function beforeAction($action)
-    {
+    public function beforeAction($action) {
         $this->response['url'] = \yii::$app->request->pathInfo;
         return parent::beforeAction($action);
     }
 
-    public function setResponse($data)
-    {
+    public function setResponse($data) {
         $this->response = ArrayHelper::merge($this->response, $data);
     }
 
-    public function sendResponse($data = null)
-    {
+    public function sendResponse($data = null) {
         if ($data != null)
             $this->setResponse($data);
-        
+
         return $this->response;
     }
 
-    public function txDelete($id, $modelClass)
-    {
+    public function txDelete($id, $modelClass) {
         $model = $this->findModel($id);
-        
+
         if ($model->delete()) {
             $data['status'] = self::API_OK;
             $data['msg'] = $modelClass . ' is deleted Successfully.';
             $this->setResponse($data);
         }
-        
+
         return $this->sendResponse();
     }
 
-    public function txSave($modelClass, $fileAttributes = [])
-    {
+    public function txSave($modelClass, $fileAttributes = []) {
         $model = new $modelClass();
         if ($model->load(Yii::$app->request->post())) {
-            
+
             foreach ($fileAttributes as $file) {
                 $model->saveUploadedFile($model, $file);
             }
@@ -139,8 +126,7 @@ abstract class ApiTxController extends Controller
         return $this->sendResponse();
     }
 
-    public function txGet($id, $modelClass)
-    {
+    public function txGet($id, $modelClass) {
         $model = $this->findModel($id);
         $data['detail'] = $model;
         $data['status'] = self::API_OK;
@@ -148,8 +134,7 @@ abstract class ApiTxController extends Controller
         return $this->sendResponse();
     }
 
-    public function txIndex($modelClass)
-    {
+    public function txIndex($modelClass) {
         $model = new $modelClass();
         $dataProvider = $model->search(\Yii::$app->request->queryParams);
         $data['list'] = array_map(function ($data) {
@@ -162,18 +147,18 @@ abstract class ApiTxController extends Controller
         return $this->sendResponse();
     }
 
-    protected function findModel($id , $isAllowed = true)
-    {
+    protected function findModel($id, $isAllowed = true) {
         $modelClass = Inflector::id2camel(\Yii::$app->controller->id);
         $modelClass = 'app\models\\' . $modelClass;
         if (($model = $modelClass::findOne($id)) !== null) {
-            
-            if ($isAllowed && ! ($model->isAllowed()))
+
+            if ($isAllowed && !($model->isAllowed()))
                 throw new HttpException(403, Yii::t('app', 'You are not allowed to access this page.'));
-            
+
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
 }

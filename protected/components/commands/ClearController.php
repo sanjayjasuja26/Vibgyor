@@ -1,9 +1,5 @@
 <?php
 
-/**
-*@copyright :Amusoftech Pvt. Ltd. < www.amusoftech.com >
-*@author     : Ram mohamad Singh< er.amudeep@gmail.com >
- */
 namespace app\components\commands;
 
 use app\base\TDefaultData;
@@ -14,27 +10,24 @@ use yii\helpers\FileHelper;
 use app\components\TConsoleController;
 use app\modules\file\models\File;
 
-class ClearController extends TConsoleController
-{
+class ClearController extends TConsoleController {
 
-    public function actionChar()
-    {
-        self::log('actionChar' );
+    public function actionChar() {
+        self::log('actionChar');
 
         foreach (\Yii::$app->db->schema->tableNames as $table) {
-            
+
             self::log("character " . $table);
             \Yii::$app->db->createCommand()
-            ->setSql("ALTER TABLE
+                    ->setSql("ALTER TABLE
                 $table
                 CONVERT TO CHARACTER SET utf8mb4
                 COLLATE utf8mb4_unicode_ci")
-                ->execute();
+                    ->execute();
         }
     }
 
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $this->actionRuntime();
         $this->actionAsset();
     }
@@ -42,8 +35,7 @@ class ClearController extends TConsoleController
     /**
      * Add default data
      */
-    public function actionDefault()
-    {
+    public function actionDefault() {
         $this->actionRuntime();
         $this->actionAsset();
         $this->actionUploads();
@@ -51,8 +43,7 @@ class ClearController extends TConsoleController
         TDefaultData::data();
     }
 
-    public static function actionRuntime($delete = false)
-    {
+    public static function actionRuntime($delete = false) {
         $dir = Yii::getAlias('@runtime');
         if (is_dir($dir)) {
             if ($delete) {
@@ -64,7 +55,7 @@ class ClearController extends TConsoleController
 
             $objects = FileHelper::findFiles($dir);
             foreach ($objects as $object) {
-                if (! unlink($object)) {
+                if (!unlink($object)) {
                     self::log('Unlink Error:' . $object);
                 }
             }
@@ -74,8 +65,7 @@ class ClearController extends TConsoleController
         }
     }
 
-    public function actionAsset()
-    {
+    public function actionAsset() {
         $assetsDirs = DB_CONFIG_PATH . '/../../assets/';
         if (is_dir($assetsDirs)) {
 
@@ -84,8 +74,7 @@ class ClearController extends TConsoleController
         self::log('Assets cleaned');
     }
 
-    public function actionUploads()
-    {
+    public function actionUploads() {
         $uploadDirs = UPLOAD_PATH;
         if (is_dir($uploadDirs)) {
 
@@ -94,8 +83,7 @@ class ClearController extends TConsoleController
         self::log('Uploads cleaned');
     }
 
-    public function actionDb($dontSkip = 0)
-    {
+    public function actionDb($dontSkip = 0) {
         self::log('clean db dontSkip:' . $dontSkip);
 
         if (YII_ENV == 'prod')
@@ -106,36 +94,35 @@ class ClearController extends TConsoleController
             'tbl_user'
         ];
         \Yii::$app->db->createCommand()
-            ->checkIntegrity(false)
-            ->execute();
+                ->checkIntegrity(false)
+                ->execute();
 
         foreach (\Yii::$app->db->schema->tableNames as $table) {
-            if (! $dontSkip && in_array($table, $skip_tables)) {
+            if (!$dontSkip && in_array($table, $skip_tables)) {
                 continue;
             }
             self::log("Cleaning " . $table);
             \Yii::$app->db->createCommand()
-                ->truncateTable($table)
-                ->execute();
+                    ->truncateTable($table)
+                    ->execute();
         }
         \Yii::$app->db->createCommand()
-            ->checkIntegrity(true)
-            ->execute();
+                ->checkIntegrity(true)
+                ->execute();
 
         FileHelper::removeDirectory(UPLOAD_PATH);
     }
 
-    public function actionEmailQueue($m = 12)
-    {
+    public function actionEmailQueue($m = 12) {
         $query = EmailQueue::find()->where([
-            'state_id' => EmailQueue::STATE_SENT
-        ])
-            ->andWhere([
-            '<',
-            'date_sent',
-            date('Y-m-d H:i:s', strtotime("-$m months"))
-        ])
-            ->orderBy('id asc');
+                    'state_id' => EmailQueue::STATE_SENT
+                ])
+                ->andWhere([
+                    '<',
+                    'date_sent',
+                    date('Y-m-d H:i:s', strtotime("-$m months"))
+                ])
+                ->orderBy('id asc');
 
         EmailQueue::log("Cleaning up emails : " . $query->count());
         foreach ($query->each() as $email) {
@@ -152,13 +139,12 @@ class ClearController extends TConsoleController
         }
     }
 
-    public function actionFiles($id = 0, $limit = 0)
-    {
+    public function actionFiles($id = 0, $limit = 0) {
         $query = File::find()->where([
-            '>',
-            'id',
-            $id
-        ])->orderBy('id asc');
+                    '>',
+                    'id',
+                    $id
+                ])->orderBy('id asc');
 
         if ($limit > 0) {
             $query->limit($limit);
@@ -175,5 +161,5 @@ class ClearController extends TConsoleController
             }
         }
     }
-}
 
+}

@@ -1,15 +1,5 @@
 <?php
 
-/**
-*@copyright :Amusoftech Pvt. Ltd. < www.amusoftech.com >
-*@author     : Ram mohamad Singh< er.amudeep@gmail.com >
- *
- * All Rights Reserved.
- * Proprietary and confidential :  All information contained herein is, and remains
- * the property of ToXSL Technologies Pvt. Ltd. and its partners.
- * Unauthorized copying of this file, via any medium is strictly prohibited.
- *
- */
 namespace app\components\commands;
 
 use app\models\User;
@@ -18,21 +8,15 @@ use yii\console\ExitCode;
 use yii\helpers\ArrayHelper;
 use app\components\TPasswordValidator;
 
-class UserController extends Controller
-{
+class UserController extends Controller {
 
     public $dryrun = false;
-
     public $email = null;
-
     public $password = null;
-
     public $role_id = null;
-
     public $length = 8;
 
-    public function options($actionID)
-    {
+    public function options($actionID) {
         return [
             'dryrun',
             'email',
@@ -41,8 +25,7 @@ class UserController extends Controller
         ];
     }
 
-    public function optionAliases()
-    {
+    public function optionAliases() {
         return [
             'd' => 'dryrun',
             'e' => 'email',
@@ -60,8 +43,7 @@ class UserController extends Controller
      *         
      * @return number
      */
-    public function actionPassword()
-    {
+    public function actionPassword() {
         if (is_null($this->password)) {
 
             User::log('Password required ! (Hint -p=)');
@@ -77,7 +59,7 @@ class UserController extends Controller
         }
 
         $model = User::findOne([
-            'email' => $this->email
+                    'email' => $this->email
         ]);
 
         if (is_null($model)) {
@@ -102,7 +84,7 @@ class UserController extends Controller
 
         $model->setPassword($this->password);
 
-        if (! $model->save()) {
+        if (!$model->save()) {
 
             User::log('Password not changed ');
 
@@ -122,13 +104,12 @@ class UserController extends Controller
      * @example php console.php user/role -e=user@jischool.com -r=2
      * @return number
      */
-    public function actionRole()
-    {      
+    public function actionRole() {
         foreach (USER::getRoleOptions() as $key => $val) {
-            
-            User::log("\n" . $val . ' Role-id is ' . $key."\n");
+
+            User::log("\n" . $val . ' Role-id is ' . $key . "\n");
         }
-        
+
         if (is_null($this->email)) {
 
             User::log('Email required ! (Hint -e=)');
@@ -137,7 +118,7 @@ class UserController extends Controller
         }
 
         $model = User::findOne([
-            'email' => $this->email
+                    'email' => $this->email
         ]);
 
         if (is_null($model)) {
@@ -146,26 +127,26 @@ class UserController extends Controller
 
             return ExitCode::NOUSER;
         }
-        
+
         if (is_null($this->role_id)) {
-            
-            User::log('Current Role Id is '.$model->role_id."\n");
-            User::log('Add correct Role id (Hint -r=)');            
-             
-            
+
+            User::log('Current Role Id is ' . $model->role_id . "\n");
+            User::log('Add correct Role id (Hint -r=)');
+
+
             return ExitCode::DATAERR;
         }
 
         if (is_null(ArrayHelper::getValue(USER::getRoleOptions(), $this->role_id))) {
 
-            User::log('Please enter correct role id :');           
+            User::log('Please enter correct role id :');
 
             return ExitCode::DATAERR;
         }
-        
+
         $model->role_id = $this->role_id;
 
-        if (! $model->save()) {
+        if (!$model->save()) {
 
             User::log('Please enter valid Role Id ');
 
@@ -176,5 +157,5 @@ class UserController extends Controller
 
         return ExitCode::OK;
     }
-}
 
+}

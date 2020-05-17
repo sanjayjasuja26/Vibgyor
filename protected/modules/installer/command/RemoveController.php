@@ -1,20 +1,19 @@
 <?php
+
 /**
- *@copyright   : ToXSL Technologies Pvt. Ltd < https://toxsl.com >
- *@author      : Shiv Charan Panjeta  < shiv@toxsl.com >
+ * @author      : Sanjay Jasuja < sanjayjasuja26@gmail.com >
  */
+
 namespace app\modules\installer\command;
 
+class RemoveController extends InstallController {
 
-class RemoveController extends InstallController
-{
-
-    public function actionIndex()
-    {
+    public function actionIndex() {
         return $this->actionRemove();
     }
-    public function actionModule()
-    {
+
+    public function actionModule() {
         return $this->actionRemoveModule();
     }
+
 }

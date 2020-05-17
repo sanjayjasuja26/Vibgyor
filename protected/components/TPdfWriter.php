@@ -1,24 +1,18 @@
 <?php
 
-/**
-*@copyright :Amusoftech Pvt. Ltd. < www.amusoftech.com >
-*@author     : Ram mohamad Singh< er.amudeep@gmail.com >
-*/
 namespace app\components;
 
 use Mpdf\Mpdf;
 use yii\helpers\ArrayHelper;
 
-class TPdfWriter extends Mpdf
-{
+class TPdfWriter extends Mpdf {
 
     public $data = [];
 
-    public function __construct($data = null)
-    {
+    public function __construct($data = null) {
         $this->data['tempDir'] = \Yii::getAlias('@runtime');
 
-        if (! empty($data) && is_array($data)) {
+        if (!empty($data) && is_array($data)) {
 
             $this->data = ArrayHelper::merge($this->data, $data);
         }
@@ -28,6 +22,7 @@ class TPdfWriter extends Mpdf
             'print'
         ]);
     }
+
 }
 
 ?>

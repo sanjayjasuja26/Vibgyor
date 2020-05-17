@@ -1,9 +1,5 @@
 <?php
 
-/**
-*@copyright :Amusoftech Pvt. Ltd. < www.amusoftech.com >
-*@author     : Ram mohamad Singh< er.amudeep@gmail.com >
-*/
 namespace app\components;
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -16,11 +12,9 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\Column;
 
-class TGridView extends GridView
-{
+class TGridView extends GridView {
 
     public $enableRowClick = true;
-
     public $responsive = true;
 
     /**
@@ -30,21 +24,13 @@ class TGridView extends GridView
     public $exportable = false;
 
     const DEFAULT_POINTER = 'A';
-
     const WRITER_XLS = 'Xls';
-
     const WRITER_XLSX = 'Xlsx';
-
     const WRITER_ODS = 'Ods';
-
     const WRITER_CSV = 'Csv';
-
     const WRITER_HTML = 'Html';
-
     const WRITER_TCPDF = 'Tcpdf';
-
     const WRITER_DOMPDF = 'Dompdf';
-
     const WRITER_MPDF = 'Mpdf';
 
     /**
@@ -136,16 +122,16 @@ class TGridView extends GridView
      *
      * @throws \yii\base\InvalidConfigException
      */
+
     /**
      *
      * @return bool whether a download is allowed and requested.
      */
-    protected function downloadRequested()
-    {
+    protected function downloadRequested() {
         $request = Yii::$app->getRequest();
-        
+
         $grid = $request->get('export');
-        
+
         return $this->exportable && $grid;
     }
 
@@ -153,40 +139,38 @@ class TGridView extends GridView
      *
      * @return string the export link tag.
      */
-    public function renderExportLink()
-    {
+    public function renderExportLink() {
         $label = ArrayHelper::remove($this->exportLinkOptions, 'label', 'Export');
         $encode = ArrayHelper::remove($this->exportLinkOptions, 'encode', true);
         $url = Url::current([
-            'export' => 1
+                    'export' => 1
         ]);
         $this->exportLinkOptions['data-pjax'] = 0;
-        
+
         return Html::a($encode ? Html::encode($label) : $label, $url, $this->exportLinkOptions);
     }
 
-    public function init()
-    {
+    public function init() {
         if ($this->exportable == false) {
             $this->layout = '{summary}{items}{pager}';
         }
         if ($this->fileName === null) {
             $this->fileName = \Yii::$app->controller->id . "_" . \Yii::$app->controller->action->id . '.xls';
         }
-        if (! isset($this->id)) {
+        if (!isset($this->id)) {
             $this->options['id'] = $this->getId();
         }
-        
-        if ($this->downloadRequested() && ! empty($this->exportColumns)) {
+
+        if ($this->downloadRequested() && !empty($this->exportColumns)) {
             $this->emptyCell = "";
             $this->columns = $this->exportColumns;
         }
-        
+
         if ($this->downloadRequested())
             $this->dataProvider->pagination = false;
-        
+
         parent::init();
-        
+
         if ($this->enableRowClick == true) {
             $this->view->registerJs($this->jsRow());
         }
@@ -207,12 +191,11 @@ class TGridView extends GridView
     /**
      * Runs the widget.
      */
-    public function run()
-    {
+    public function run() {
         if ($this->downloadRequested()) {
             if ($this->dataProvider->getCount() <= 0 || empty($this->columns))
                 throw new UserException('Nothing to export');
-            
+
             $response = Yii::$app->getResponse();
             $response->clearOutputBuffers();
             $response->setStatusCode(200);
@@ -223,7 +206,7 @@ class TGridView extends GridView
             Yii::$app->response->send();
             Yii::$app->end();
         }
-        
+
         if ($this->responsive) {
             echo "<div class='table-responsive'>";
         }
@@ -233,27 +216,24 @@ class TGridView extends GridView
         }
     }
 
-    protected function prepareExportArray()
-    {
+    protected function prepareExportArray() {
         $this->renderExportHeaders();
         $this->renderExportBody();
         $this->renderExportFooter();
         $this->cleanExportData();
     }
 
-    public function renderExportHeaders()
-    {
+    public function renderExportHeaders() {
         $cells = [];
         foreach ($this->columns as $column) {
             /* @var $column Column */
-            $cells[$this->columnIndex ++] = $column->renderHeaderCell();
+            $cells[$this->columnIndex++] = $column->renderHeaderCell();
         }
-        $this->data[$this->rowIndex ++] = $cells;
+        $this->data[$this->rowIndex++] = $cells;
         $this->columnIndex = self::DEFAULT_POINTER;
     }
 
-    public function renderExportBody()
-    {
+    public function renderExportBody() {
         $models = array_values($this->dataProvider->getModels());
         $keys = $this->dataProvider->getKeys();
         $rows = [];
@@ -263,35 +243,32 @@ class TGridView extends GridView
         }
     }
 
-    public function renderExportRow($model, $key, $index)
-    {
+    public function renderExportRow($model, $key, $index) {
         $cells = [];
         /* @var $column Column */
         foreach ($this->columns as $column) {
-            $cells[$this->columnIndex ++] = $column->renderDataCell($model, $key, $index);
+            $cells[$this->columnIndex++] = $column->renderDataCell($model, $key, $index);
         }
         $this->columnIndex = self::DEFAULT_POINTER;
-        
-        $this->data[$this->rowIndex ++] = $cells;
+
+        $this->data[$this->rowIndex++] = $cells;
     }
 
-    public function renderExportFooter()
-    {
+    public function renderExportFooter() {
         $cells = [];
-        
+
         foreach ($this->columns as $column) {
             /* @var $column Column */
-            $cells[$this->columnIndex ++] = $column->renderFooterCell();
+            $cells[$this->columnIndex++] = $column->renderFooterCell();
         }
-        $this->data[$this->rowIndex ++] = $cells;
+        $this->data[$this->rowIndex++] = $cells;
         $this->columnIndex = self::DEFAULT_POINTER;
     }
 
     /**
      * Removes all tags and encodes each cell to export.
      */
-    private function cleanExportData()
-    {
+    private function cleanExportData() {
         foreach ($this->data as $rowKey => $row) {
             foreach ($row as $colKey => $column) {
                 $cleanValue = Html::encode(strip_tags(trim(str_replace('&nbsp;', "", $column))));
@@ -304,12 +281,11 @@ class TGridView extends GridView
      *
      * @return \PhpOffice\PhpSpreadsheet\Spreadsheet spreadsheet document representation instance.
      */
-    public function getDocument()
-    {
-        if (! is_object($this->_document)) {
+    public function getDocument() {
+        if (!is_object($this->_document)) {
             $this->_document = new Spreadsheet();
         }
-        
+
         return $this->_document;
     }
 
@@ -329,25 +305,24 @@ class TGridView extends GridView
      *            
      * @return \yii\web\Response the response object.
      */
-    public function prepareSend($options = [])
-    {
+    public function prepareSend($options = []) {
         $writerType = $this->writerType;
         if ($writerType === null) {
             $fileExtension = strtolower(pathinfo($this->fileName, PATHINFO_EXTENSION));
             $writerType = ucfirst($fileExtension);
         }
-        
+
         $tmpResource = tmpfile();
         if ($tmpResource === false)
             throw new \Exception('Temporary file could not be created');
-        
+
         $tmpResourceMetaData = stream_get_meta_data($tmpResource);
         $tmpFileName = $tmpResourceMetaData['uri'];
-        
+
         $writer = IOFactory::createWriter($this->getDocument(), $writerType);
         $writer->save($tmpFileName);
         unset($writer);
-        
+
         return Yii::$app->getResponse()->sendStreamAsFile($tmpResource, $this->fileName, $options);
     }
 
@@ -355,16 +330,14 @@ class TGridView extends GridView
      *
      * @inheritdoc
      */
-    public function renderSection($name)
-    {
+    public function renderSection($name) {
         if ($name === '{export}' && $this->exportable)
             return $this->renderExportLink();
-        
+
         return parent::renderSection($name);
     }
 
-    protected function jsRow()
-    {
+    protected function jsRow() {
         return <<<JS
             $(document).on('click' , '.grid-view td' , function(e){
                 var id = $(this).closest('tr').data('id');
@@ -379,4 +352,5 @@ class TGridView extends GridView
             });
 JS;
     }
+
 }

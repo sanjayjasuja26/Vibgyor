@@ -1,31 +1,22 @@
 <?php
 
-/**
-*@copyright :Amusoftech Pvt. Ltd. < www.amusoftech.com >
-*@author     : Ram mohamad Singh< er.amudeep@gmail.com >
-*/
 namespace app\components;
 
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-class TDetailView extends DetailView
-{
+class TDetailView extends DetailView {
 
     public $columns = null;
-
     public $responsive = true;
-
     public $template = "<th>{label}</th><td  colspan = {cols}>{value}</td>";
-
     public $templateRow = "<tr>{data}</tr>";
 
-    public function init()
-    {
+    public function init() {
         parent::init();
 
-        if (! isset($this->columns)) {
+        if (!isset($this->columns)) {
             if (count($this->attributes) < 8) {
                 $this->columns = 1;
             } else {
@@ -34,8 +25,7 @@ class TDetailView extends DetailView
         }
     }
 
-    protected function renderAttribute2($attribute, $index, $cols)
-    {
+    protected function renderAttribute2($attribute, $index, $cols) {
         if (is_string($this->template)) {
             return strtr($this->template, [
                 '{label}' => $attribute['label'],
@@ -47,34 +37,33 @@ class TDetailView extends DetailView
         }
     }
 
-    public function run()
-    {
+    public function run() {
         $rows = [];
         $i = 0;
         $j = 0;
         $data2 = [];
 
         foreach ($this->attributes as $attribute) {
-            $data = $this->renderAttribute2($attribute, $i ++, 1);
+            $data = $this->renderAttribute2($attribute, $i++, 1);
             $len = strlen(strip_tags($data));
 
             if ($len > 100) {
-                $data = $this->renderAttribute2($attribute, $i ++, $this->columns * 2 - 1);
-                $rows[$j ++] = strtr($this->templateRow, [
+                $data = $this->renderAttribute2($attribute, $i++, $this->columns * 2 - 1);
+                $rows[$j++] = strtr($this->templateRow, [
                     '{data}' => $data
                 ]);
             } else {
                 $data2[] = $data;
 
                 if (count($data2) >= $this->columns) {
-                    $rows[$j ++] = strtr($this->templateRow, [
+                    $rows[$j++] = strtr($this->templateRow, [
                         '{data}' => implode('', $data2)
                     ]);
                     $data2 = [];
                 }
             }
         }
-        $rows[$j ++] = strtr($this->templateRow, [
+        $rows[$j++] = strtr($this->templateRow, [
             '{data}' => implode('', $data2)
         ]);
 
@@ -85,4 +74,5 @@ class TDetailView extends DetailView
         if ($this->responsive)
             echo "</div>";
     }
+
 }

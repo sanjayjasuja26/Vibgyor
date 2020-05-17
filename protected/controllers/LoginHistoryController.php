@@ -1,9 +1,5 @@
 <?php
 
-/**
-*@copyright :Amusoftech Pvt. Ltd. < www.amusoftech.com >
-*@author     : Ram mohamad Singh< er.amudeep@gmail.com >
-*/
 namespace app\controllers;
 
 use app\components\TController;
@@ -11,7 +7,7 @@ use app\models\LoginHistory;
 use app\models\User;
 use app\models\search\LoginHistory as LoginHistorySearch;
 use Yii;
- use app\components\filters\AccessControl;
+use app\components\filters\AccessControl;
 use app\components\filters\AccessRule;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
@@ -19,11 +15,9 @@ use yii\web\NotFoundHttpException;
 /**
  * LoginHistoryController implements the CRUD actions for LoginHistory model.
  */
-class LoginHistoryController extends TController
-{
+class LoginHistoryController extends TController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -64,8 +58,7 @@ class LoginHistoryController extends TController
      * @param string $action
      * @return string
      */
-    public function actionMass($action = 'delete')
-    {
+    public function actionMass($action = 'delete') {
         \Yii::$app->response->format = 'json';
         $response['status'] = 'NOK';
         $status = LoginHistory::massDelete();
@@ -80,14 +73,13 @@ class LoginHistoryController extends TController
      *
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new LoginHistorySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $this->updateMenuItems();
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider
         ]);
     }
 
@@ -97,17 +89,16 @@ class LoginHistoryController extends TController
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         $model = $this->findModel($id);
         $this->updateMenuItems($model);
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('view', [
-                'model' => $model
+                        'model' => $model
             ]);
         }
         return $this->render('view', [
-            'model' => $model
+                    'model' => $model
         ]);
     }
 
@@ -118,8 +109,7 @@ class LoginHistoryController extends TController
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $model = $this->findModel($id);
         $model->delete();
         if (\Yii::$app->request->isAjax) {
@@ -127,12 +117,11 @@ class LoginHistoryController extends TController
         }
         \Yii::$app->getSession()->setFlash('success', \Yii::t('app', 'Login History Deleted Successfully.'));
         return $this->redirect([
-            'index'
+                    'index'
         ]);
     }
 
-    public function actionClear($truncate = true)
-    {
+    public function actionClear($truncate = true) {
         $query = LoginHistory::find();
         foreach ($query->each() as $model) {
             $model->delete();
@@ -142,7 +131,7 @@ class LoginHistoryController extends TController
         }
         \Yii::$app->session->setFlash('success', 'Done !!!');
         return $this->redirect([
-            'index'
+                    'index'
         ]);
     }
 
@@ -154,11 +143,10 @@ class LoginHistoryController extends TController
      * @return LoginHistory the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = LoginHistory::findOne($id)) !== null) {
 
-            if (! ($model->isAllowed()))
+            if (!($model->isAllowed()))
                 throw new HttpException(403, Yii::t('app', 'You are not allowed to access this page.'));
 
             return $model;
@@ -167,11 +155,9 @@ class LoginHistoryController extends TController
         }
     }
 
-    protected function updateMenuItems($model = null)
-    {
+    protected function updateMenuItems($model = null) {
         switch (\Yii::$app->controller->action->id) {
-            case 'index':
-                {
+            case 'index': {
                     $this->menu['clear'] = [
                         'label' => '<span class=" glyphicon glyphicon-remove"></span>',
                         'title' => Yii::t('app', 'Clear'),
@@ -183,17 +169,17 @@ class LoginHistoryController extends TController
                 }
                 break;
             default:
-            case 'view':
-                {
+            case 'view': {
                     $this->menu['manage'] = [
                         'label' => '<span class="glyphicon glyphicon-list"></span>',
                         'title' => Yii::t('app', 'Manage'),
                         'url' => [
                             'index'
                         ]
-                        // 'visible' => User::isAdmin ()
+                            // 'visible' => User::isAdmin ()
                     ];
                 }
         }
     }
+
 }

@@ -1,9 +1,5 @@
 <?php
 
-/**
-*@copyright :Amusoftech Pvt. Ltd. < www.amusoftech.com >
-*@author     : Ram mohamad Singh< er.amudeep@gmail.com >
-*/
 if (php_sapi_name() != "cli") {
     echo 'Please run this file from command line interface !!!';
     exit();
@@ -11,14 +7,12 @@ if (php_sapi_name() != "cli") {
 $params = require (__DIR__ . '/params.php');
 
 $config = [
-
     'id' => PROJECT_ID,
     'name' => PROJECT_NAME,
     'basePath' => PROTECTED_PATH,
     'bootstrap' => [
         'log'
     ],
-
     'vendorPath' => VENDOR_PATH,
     'timeZone' => date_default_timezone_get(),
     'controllerNamespace' => 'app\commands',

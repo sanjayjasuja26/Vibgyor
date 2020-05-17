@@ -1,14 +1,5 @@
 <?php
-/**
- *@copyright   : ToXSL Technologies Pvt. Ltd < https://toxsl.com >
- *@author      : Shiv Charan Panjeta  < shiv@toxsl.com >
- */
 
-/**
- *
- * @copyright : ToXSL Technologies Pvt. Ltd. < www.toxsl.com >
- * @author : Shiv Charan Panjeta < shiv@toxsl.com >
- */
 namespace app\modules\tugii\generators\tucrud;
 
 use Yii;
@@ -31,38 +22,27 @@ use yii\helpers\FileHelper;
  * @property boolean|\yii\db\TableSchema $tableSchema This property is read-only.
  * @property string $viewPath The action view file path. This property is read-only.
  */
-class Generator extends \yii\gii\generators\crud\Generator
-{
+class Generator extends \yii\gii\generators\crud\Generator {
 
     public $modelClass;
-
     public $moduleID;
-
     public $controllerClass;
-
     public $baseControllerClass = 'app\components\TController';
-
     public $indexWidgetType = 'grid';
-
     public $searchModelClass;
-
     public $_models;
-
     public $_modulemodels = [];
-
     public $enablePjax = true;
-
     public $enableI18N = true;
 
-    public function beforeValidate()
-    {
-        
+    public function beforeValidate() {
+
         $modelClassPath = StringHelper::dirname($this->modelClass);
         $modelClass = StringHelper::basename($this->modelClass);
         $this->searchModelClass = $modelClassPath . "\\search\\" . $modelClass;
         $searchpath = StringHelper::dirname(Yii::getAlias('@' . str_replace('\\', '/', ltrim($this->searchModelClass, '\\') . '.php')));
-        
-        if (! file_exists($searchpath)) {
+
+        if (!file_exists($searchpath)) {
             mkdir($searchpath);
         }
         if (empty($this->controllerClass)) {
@@ -74,30 +54,27 @@ class Generator extends \yii\gii\generators\crud\Generator
             $modulePath = StringHelper::dirname($modelClassPath);
             $this->moduleID = StringHelper::basename($modulePath);
         }
-        
+
         $module = empty($this->moduleID) ? Yii::$app : Yii::$app->getModule($this->moduleID);
-        if ( $module == null) {
-            $this->addError('moduleID','Module not enabled , please check config/web ');
+        if ($module == null) {
+            $this->addError('moduleID', 'Module not enabled , please check config/web ');
             return false;
         }
-        
+
         return parent::beforeValidate();
     }
-
 
     /**
      * @inheritdoc
      */
-    public function getName()
-    {
+    public function getName() {
         return 'TuGii CRUD Generator';
     }
 
     /**
      * @inheritdoc
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return 'This generator generates a controller and views that implement CRUD (Create, Read, Update, Delete)
             operations for the specified data model.';
     }
@@ -105,8 +82,7 @@ class Generator extends \yii\gii\generators\crud\Generator
     /**
      * @inheritdoc
      */
-    public function requiredTemplates()
-    {
+    public function requiredTemplates() {
         return [
             'controller.php'
         ];
@@ -115,8 +91,7 @@ class Generator extends \yii\gii\generators\crud\Generator
     /**
      * @inheritdoc
      */
-    public function stickyAttributes()
-    {
+    public function stickyAttributes() {
         return array_merge(parent::stickyAttributes(), [
             'baseControllerClass',
             // 'moduleID',
@@ -127,8 +102,7 @@ class Generator extends \yii\gii\generators\crud\Generator
     /**
      * Checks if model class is valid
      */
-    public function validateModelClass()
-    {
+    public function validateModelClass() {
         /* @var $class ActiveRecord */
         $class = $this->modelClass;
         $pk = $class::primaryKey();
@@ -140,9 +114,8 @@ class Generator extends \yii\gii\generators\crud\Generator
     /**
      * Checks if model ID is valid
      */
-    public function validateModuleID()
-    {
-        if (! empty($this->moduleID)) {
+    public function validateModuleID() {
+        if (!empty($this->moduleID)) {
             $module = Yii::$app->getModule($this->moduleID);
             if ($module === null) {
                 $this->addError('moduleID', "Module '{$this->moduleID}' does not exist.");
@@ -153,19 +126,18 @@ class Generator extends \yii\gii\generators\crud\Generator
     /**
      * @inheritdoc
      */
-    public function generate()
-    {
+    public function generate() {
         // die ('generate');
         $controllerFile = Yii::getAlias('@' . str_replace('\\', '/', ltrim($this->controllerClass, '\\')) . '.php');
         $files = [
             new CodeFile($controllerFile, $this->render('controller.php'))
         ];
-        
-        if (! empty($this->searchModelClass)) {
+
+        if (!empty($this->searchModelClass)) {
             $searchModel = Yii::getAlias('@' . str_replace('\\', '/', ltrim($this->searchModelClass, '\\') . '.php'));
             $files[] = new CodeFile($searchModel, $this->render('search.php'));
         }
-        
+
         $viewPath = $this->getViewPath();
         $templatePath = $this->getTemplatePath() . '/views';
         foreach (scandir($templatePath) as $file) {
@@ -176,7 +148,7 @@ class Generator extends \yii\gii\generators\crud\Generator
                 $files[] = new CodeFile("$viewPath/$file", $this->render("views/$file"));
             }
         }
-        
+
         return $files;
     }
 
@@ -184,11 +156,10 @@ class Generator extends \yii\gii\generators\crud\Generator
      *
      * @return string the controller ID (without the module ID prefix)
      */
-    public function getControllerID()
-    {
+    public function getControllerID() {
         $pos = strrpos($this->controllerClass, '\\');
         $class = substr(substr($this->controllerClass, $pos + 1), 0, - 10);
-        
+
         return Inflector::camel2id($class);
     }
 
@@ -196,24 +167,22 @@ class Generator extends \yii\gii\generators\crud\Generator
      *
      * @return string the action view file path
      */
-    public function getViewPath()
-    {
+    public function getViewPath() {
         $module = empty($this->moduleID) ? Yii::$app : Yii::$app->getModule($this->moduleID);
-        
+
         return $module->getViewPath() . '/' . $this->getControllerID();
     }
 
-    public function getNameAttribute()
-    {
+    public function getNameAttribute() {
         foreach ($this->getColumnNames() as $name) {
-            if (! strcasecmp($name, 'name') || ! strcasecmp($name, 'title')) {
+            if (!strcasecmp($name, 'name') || !strcasecmp($name, 'title')) {
                 return $name;
             }
         }
         /* @var $class \yii\db\ActiveRecord */
         $class = $this->modelClass;
         $pk = $class::primaryKey();
-        
+
         return $pk[0];
     }
 
@@ -223,10 +192,9 @@ class Generator extends \yii\gii\generators\crud\Generator
      * @param string $attribute
      * @return string
      */
-    public function generateActiveField($attribute)
-    {
+    public function generateActiveField($attribute) {
         $tableSchema = $this->getTableSchema();
-        if ($tableSchema === false || ! isset($tableSchema->columns[$attribute])) {
+        if ($tableSchema === false || !isset($tableSchema->columns[$attribute])) {
             if (preg_match('/^(password|pass|passwd|passcode)$/i', $attribute)) {
                 return "\$form->field(\$model, '$attribute')->passwordInput()";
             } else {
@@ -234,7 +202,7 @@ class Generator extends \yii\gii\generators\crud\Generator
             }
         }
         $column = $tableSchema->columns[$attribute];
-        
+
         if ($column->phpType === 'boolean' || $column->dbType == 'tinyint(1)') {
             return "\$form->field(\$model, '$attribute')->checkbox()" . "//\$form->field(\$model, '$attribute')->widget(kartik\widgets\SwitchInput::className(),[])";
         } elseif ($column->type === 'text' || preg_match('/^description$/i', $column->name)) {
@@ -284,8 +252,7 @@ class Generator extends \yii\gii\generators\crud\Generator
      * @param string $attribute
      * @return string
      */
-    public function generateActiveSearchField($attribute)
-    {
+    public function generateActiveSearchField($attribute) {
         $tableSchema = $this->getTableSchema();
         if ($tableSchema === false) {
             return "\$form->field(\$model, '$attribute')";
@@ -304,8 +271,7 @@ class Generator extends \yii\gii\generators\crud\Generator
      * @param \yii\db\ColumnSchema $column
      * @return string
      */
-    public function generateColumnFormat($column)
-    {
+    public function generateColumnFormat($column) {
         if ($column->phpType === 'boolean' || $column->dbType === 'tinyint(1)') {
             return 'boolean';
         } elseif ($column->type === 'text') {
@@ -325,10 +291,9 @@ class Generator extends \yii\gii\generators\crud\Generator
         }
     }
 
-    public function generateDetailViewColumn($column)
-    {
+    public function generateDetailViewColumn($column) {
         $format = $this->generateColumnFormat($column);
-        
+
         if ($column->phpType === 'boolean') {
             return "'" . $column->name . ($format === 'text' ? "" : ":" . $format) . "'";
         } elseif ($column->type === 'text' || preg_match('/^description$/i', $column->name)) {
@@ -360,10 +325,9 @@ class Generator extends \yii\gii\generators\crud\Generator
         }
     }
 
-    public function generateGridViewColumn($column)
-    {
+    public function generateGridViewColumn($column) {
         $format = $this->generateColumnFormat($column);
-        
+
         if ($column->phpType === 'boolean') {
             return "'" . $column->name . ($format === 'text' ? "" : ":" . $format) . "'";
         } elseif ($column->type === 'text' || preg_match('/^description$/i', $column->name)) {
@@ -403,8 +367,7 @@ class Generator extends \yii\gii\generators\crud\Generator
      *
      * @return array the generated validation rules
      */
-    public function generateSearchRules()
-    {
+    public function generateSearchRules() {
         if (($table = $this->getTableSchema()) === false) {
             return [
                 "[['" . implode("', '", $this->getColumnNames()) . "'], 'safe']"
@@ -435,12 +398,12 @@ class Generator extends \yii\gii\generators\crud\Generator
                     break;
             }
         }
-        
+
         $rules = [];
         foreach ($types as $type => $columns) {
             $rules[] = "[['" . implode("', '", $columns) . "'], '$type']";
         }
-        
+
         return $rules;
     }
 
@@ -448,8 +411,7 @@ class Generator extends \yii\gii\generators\crud\Generator
      *
      * @return array searchable attributes
      */
-    public function getSearchAttributes()
-    {
+    public function getSearchAttributes() {
         return $this->getColumnNames();
     }
 
@@ -458,8 +420,7 @@ class Generator extends \yii\gii\generators\crud\Generator
      *
      * @return array the generated attribute labels (name => label)
      */
-    public function generateSearchLabels()
-    {
+    public function generateSearchLabels() {
         /* @var $model \yii\base\Model */
         $model = new $this->modelClass();
         $attributeLabels = $model->attributeLabels();
@@ -468,18 +429,18 @@ class Generator extends \yii\gii\generators\crud\Generator
             if (isset($attributeLabels[$name])) {
                 $labels[$name] = $attributeLabels[$name];
             } else {
-                if (! strcasecmp($name, 'id')) {
+                if (!strcasecmp($name, 'id')) {
                     $labels[$name] = 'ID';
                 } else {
                     $label = Inflector::camel2words($name);
-                    if (! empty($label) && substr_compare($label, ' id', - 3, 3, true) === 0) {
+                    if (!empty($label) && substr_compare($label, ' id', - 3, 3, true) === 0) {
                         $label = substr($label, 0, - 3) . ' ID';
                     }
                     $labels[$name] = $label;
                 }
             }
         }
-        
+
         return $labels;
     }
 
@@ -488,8 +449,7 @@ class Generator extends \yii\gii\generators\crud\Generator
      *
      * @return array
      */
-    public function generateSearchConditions()
-    {
+    public function generateSearchConditions() {
         $columns = [];
         if (($table = $this->getTableSchema()) === false) {
             $class = $this->modelClass;
@@ -503,7 +463,7 @@ class Generator extends \yii\gii\generators\crud\Generator
                 $columns[$column->name] = $column->type;
             }
         }
-        
+
         $likeConditions = [];
         $hashConditions = [];
         foreach ($columns as $column => $type) {
@@ -526,15 +486,15 @@ class Generator extends \yii\gii\generators\crud\Generator
                     break;
             }
         }
-        
+
         $conditions = [];
-        if (! empty($hashConditions)) {
+        if (!empty($hashConditions)) {
             $conditions[] = "\$query->andFilterWhere([\n" . str_repeat(' ', 12) . implode("\n" . str_repeat(' ', 12), $hashConditions) . "\n" . str_repeat(' ', 8) . "]);\n";
         }
-        if (! empty($likeConditions)) {
+        if (!empty($likeConditions)) {
             $conditions[] = "\$query" . implode("\n" . str_repeat(' ', 12), $likeConditions) . ";\n";
         }
-        
+
         return $conditions;
     }
 
@@ -543,8 +503,7 @@ class Generator extends \yii\gii\generators\crud\Generator
      *
      * @return string
      */
-    public function generateUrlParams()
-    {
+    public function generateUrlParams() {
         /* @var $class ActiveRecord */
         $class = $this->modelClass;
         $pks = $class::primaryKey();
@@ -563,7 +522,7 @@ class Generator extends \yii\gii\generators\crud\Generator
                     $params[] = "'$pk' => \$model->$pk";
                 }
             }
-            
+
             return implode(', ', $params);
         }
     }
@@ -573,8 +532,7 @@ class Generator extends \yii\gii\generators\crud\Generator
      *
      * @return string
      */
-    public function generateActionParams()
-    {
+    public function generateActionParams() {
         /* @var $class ActiveRecord */
         $class = $this->modelClass;
         $pks = $class::primaryKey();
@@ -590,8 +548,7 @@ class Generator extends \yii\gii\generators\crud\Generator
      *
      * @return array parameter tags for phpdoc
      */
-    public function generateActionParamComments()
-    {
+    public function generateActionParamComments() {
         /* @var $class ActiveRecord */
         $class = $this->modelClass;
         $pks = $class::primaryKey();
@@ -600,7 +557,7 @@ class Generator extends \yii\gii\generators\crud\Generator
             foreach ($pks as $pk) {
                 $params[] = '@param ' . (substr(strtolower($pk), - 2) == 'id' ? 'integer' : 'string') . ' $' . $pk;
             }
-            
+
             return $params;
         }
         if (count($pks) === 1) {
@@ -612,7 +569,7 @@ class Generator extends \yii\gii\generators\crud\Generator
             foreach ($pks as $pk) {
                 $params[] = '@param ' . $table->columns[$pk]->phpType . ' $' . $pk;
             }
-            
+
             return $params;
         }
     }
@@ -622,8 +579,7 @@ class Generator extends \yii\gii\generators\crud\Generator
      *
      * @return boolean|\yii\db\TableSchema
      */
-    public function getTableSchema()
-    {
+    public function getTableSchema() {
         /* @var $class ActiveRecord */
         $class = $this->modelClass;
         if (is_subclass_of($class, 'yii\db\ActiveRecord')) {
@@ -637,8 +593,7 @@ class Generator extends \yii\gii\generators\crud\Generator
      *
      * @return array model column names
      */
-    public function getColumnNames()
-    {
+    public function getColumnNames() {
         /* @var $class ActiveRecord */
         $class = $this->modelClass;
         if (is_subclass_of($class, 'yii\db\ActiveRecord')) {
@@ -646,20 +601,19 @@ class Generator extends \yii\gii\generators\crud\Generator
         } else {
             /* @var $model \yii\base\Model */
             $model = new $class();
-            
+
             return $model->attributes();
         }
     }
 
-    protected function getModels()
-    {
+    protected function getModels() {
         if ($this->_models == null) {
             $files = scandir(Yii::getAlias('@app/models'));
             foreach ($files as $file) {
                 if ($file[0] !== '.') {
                     $fileClassName = substr($file, 0, strpos($file, '.'));
                     // if (class_exists($fileClassName) && is_subclass_of($fileClassName, 'TActiveRecord')) {
-                    
+
                     $this->_models[] = 'app\\models\\' . $fileClassName;
                     // }
                 }
@@ -668,50 +622,48 @@ class Generator extends \yii\gii\generators\crud\Generator
         return $this->_models;
     }
 
-    protected function getModulesModels()
-    {
+    protected function getModulesModels() {
         if ($this->_modulemodels == null) {
             $files = FileHelper::findFiles(Yii::getAlias('@app/modules'), [
-                'recursive' => true,
-                'only' => [
-                    '*/models/*.php'
-                ]
+                        'recursive' => true,
+                        'only' => [
+                            '*/models/*.php'
+                        ]
             ]);
-            
+
             foreach ($files as $file) {
                 if (strstr($file, 'tugii'))
                     continue;
                 $file = substr($file, strlen(Yii::getAlias('@app/modules/')));
                 $fileClassName = substr($file, 0, strpos($file, '.'));
                 $fileClassName = 'app\\modules\\' . str_replace('/', '\\', $fileClassName);
-                
-                if (class_exists($fileClassName)  /* && is_subclass_of ( $fileClassName, 'app\\componenets\\TActiveRecord', true ) */ ) {
-                    
+
+                if (class_exists($fileClassName) /* && is_subclass_of ( $fileClassName, 'app\\componenets\\TActiveRecord', true ) */) {
+
                     $this->_modulemodels[] = $fileClassName;
                 }
             }
         }
         $all = array_merge($this->getModels(), $this->_modulemodels);
-        
+
         return $all;
     }
 
     /**
      * @inheritdoc
      */
-    public function autoCompleteData()
-    {
+    public function autoCompleteData() {
         return [
             'modelClass' => $this->getModulesModels()
         ];
     }
 
-    public function getCamelCaseColumn($columnName)
-    {
-        if (! empty($columnName) && substr_compare($columnName, '_id', - 3, 3, true) == 0) {
+    public function getCamelCaseColumn($columnName) {
+        if (!empty($columnName) && substr_compare($columnName, '_id', - 3, 3, true) == 0) {
             $columnName = substr($columnName, 0, - 3);
         }
         $columnName = Inflector::id2camel($columnName, '_');
         return $columnName;
     }
+
 }

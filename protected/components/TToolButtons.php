@@ -1,21 +1,14 @@
 <?php
 
-/**
-*@copyright :Amusoftech Pvt. Ltd. < www.amusoftech.com >
-*@author     : Ram mohamad Singh< er.amudeep@gmail.com >
-*/
 namespace app\components;
 
 use Closure;
 use Yii;
 use yii\helpers\Html;
 
-class TToolButtons extends TBaseWidget
-{
+class TToolButtons extends TBaseWidget {
 
     public $title;
-
-
     public $htmlOptions;
 
     /**
@@ -36,7 +29,6 @@ class TToolButtons extends TBaseWidget
         'delete' => '<span class="glyphicon glyphicon-trash"></span>'
     ];
 
-
     /**
      *
      * @var Closure Function can check whether action exist or not.
@@ -46,44 +38,41 @@ class TToolButtons extends TBaseWidget
     /**
      * @inheritdoc
      */
-    public function init()
-    {
+    public function init() {
         parent::init();
-        if (! $this->actionId) {
+        if (!$this->actionId) {
             $this->actionId = Yii::$app->controller->action->id;
         }
-        
     }
 
     /**
      * @inheritdoc
      */
-    public function run()
-    {
+    public function run() {
         echo '<div class="text-right">';
-        
+
         if (is_array(\Yii::$app->controller->menu))
             foreach (\Yii::$app->controller->menu as $key => $menu) {
-                
-                if (! $this->hasAction($menu['url']))
+
+                if (!$this->hasAction($menu['url']))
                     continue;
-                
+
                 if (isset($this->actions[$key])) {
-                    
+
                     if ($key == 'clean') {
-                        
+
                         $menu['class'] = 'btn btn-warning';
                     } elseif ($key == 'delete') {
-                        
+
                         $menu['class'] = 'btn btn-danger';
-                        
+
                         $menu['label'] = $this->actions[$key];
                         $menu['htmlOptions']['data'] = [
                             'method' => 'POST',
                             'confirm' => Yii::t('app', 'Are you sure you want to delete this ?')
                         ];
                     }
-                    if (! isset($menu['label'])) {
+                    if (!isset($menu['label'])) {
                         $menu['label'] = $this->actions[$key];
                     }
                 }
@@ -113,9 +102,8 @@ class TToolButtons extends TBaseWidget
      *            Action id
      * @return bool
      */
-    protected function hasAction($url)
-    {
-        
+    protected function hasAction($url) {
+
         /*
          * if ( is_array($url))
          * if ( $id == 'manage') $id = 'index';
@@ -136,4 +124,5 @@ class TToolButtons extends TBaseWidget
          */
         return true;
     }
+
 }

@@ -1,9 +1,5 @@
 <?php
 
-/**
-*@copyright :Amusoftech Pvt. Ltd. < www.amusoftech.com >
-*@author     : Ram mohamad Singh< er.amudeep@gmail.com >
- */
 namespace app\components\filters;
 
 use Yii;
@@ -12,8 +8,7 @@ use yii\base\Module;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
-class AccessControl extends \yii\filters\AccessControl
-{
+class AccessControl extends \yii\filters\AccessControl {
 
     /**
      *
@@ -31,8 +26,7 @@ class AccessControl extends \yii\filters\AccessControl
      *
      * @inheritdoc
      */
-    public function beforeAction($action): bool
-    {
+    public function beforeAction($action): bool {
         $fileaccess = parent::beforeAction($action);
 
         return Yii::$app->user->canRoute(Yii::$app->controller->module->id, $action->getUniqueId(), true, $fileaccess);
@@ -42,8 +36,7 @@ class AccessControl extends \yii\filters\AccessControl
      *
      * @inheritdoc
      */
-    protected function isActive($action): bool
-    {
+    protected function isActive($action): bool {
         if ($this->isErrorPage($action) || $this->isLoginPage($action) || $this->isAllowedAction($action)) {
             return false;
         }
@@ -58,8 +51,7 @@ class AccessControl extends \yii\filters\AccessControl
      *
      * @return bool
      */
-    private function isErrorPage(Action $action): bool
-    {
+    private function isErrorPage(Action $action): bool {
         if ($action->getUniqueId() === Yii::$app->getErrorHandler()->errorAction) {
             return true;
         }
@@ -74,8 +66,7 @@ class AccessControl extends \yii\filters\AccessControl
      *
      * @return bool
      */
-    private function isLoginPage(Action $action): bool
-    {
+    private function isLoginPage(Action $action): bool {
         $loginUrl = trim(Url::to(Yii::$app->user->loginUrl), '/');
 
         if (Yii::$app->user->isGuest && $action->getUniqueId() === $loginUrl) {
@@ -92,12 +83,11 @@ class AccessControl extends \yii\filters\AccessControl
      *
      * @return bool
      */
-    private function isAllowedAction(Action $action): bool
-    {
+    private function isAllowedAction(Action $action): bool {
         if ($this->owner instanceof Module) {
             $ownerId = $this->owner->getUniqueId();
             $id = $action->getUniqueId();
-            if (! empty($ownerId) && strpos($id, $ownerId . '/') === 0) {
+            if (!empty($ownerId) && strpos($id, $ownerId . '/') === 0) {
                 $id = substr($id, strlen($ownerId) + 1);
             }
         } else {
@@ -119,4 +109,5 @@ class AccessControl extends \yii\filters\AccessControl
 
         return false;
     }
+
 }
