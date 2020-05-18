@@ -45,7 +45,7 @@ use app\components\TActiveForm;
 
 $form = TActiveForm::begin([
 					<?php if ($count > 8){ echo '//'; }?> 'layout' => 'horizontal',
-						'id'	=> '<?=$generator->getControllerID ()?>-form',
+						'id'	=> '<?=$generator->geSControllerID ()?>-form',
 						]);
 						
 						
@@ -135,7 +135,7 @@ endforeach
 	   <div class="form-group">
 		<div
 			class="col-md-6 col-md-offset-3 bottom-admin-button btn-space-bottom text-right">
-        <?="<?= "?>Html::submitButton($model->isNewRecord ? <?=$generator->generateString ( 'Save' )?> : <?=$generator->generateString ( 'Update' )?>, ['id'=> '<?=$generator->getControllerID ()?>-form-submit','class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?="<?= "?>Html::submitButton($model->isNewRecord ? <?=$generator->generateString ( 'Save' )?> : <?=$generator->generateString ( 'Update' )?>, ['id'=> '<?=$generator->geSControllerID ()?>-form-submit','class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 	</div>
 

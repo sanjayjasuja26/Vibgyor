@@ -1,8 +1,5 @@
 <?php
-/**
-*@copyright   : ToXSL Technologies Pvt. Ltd < https://toxsl.com >
-*@author      : Shiv Charan Panjeta  < shiv@toxsl.com >
-*/
+
 use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
 
@@ -24,18 +21,18 @@ $this->params['breadcrumbs'][] = <?= $generator->generateString('Add') ?>;
 ?>
 
 <div class="wrapper">
-	<div class="panel">
+    <div class="panel">
 
-		<div
-			class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-create">
-	<?= "<?= " ?> \app\components\PageHeader::widget(); ?>
-</div>
+        <div
+            class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-create">
+            <?= "<?= " ?> \app\components\PageHeader::widget(); ?>
+        </div>
 
-	</div>
+    </div>
 
-	<div class="content-section clearfix panel">
+    <div class="content-section clearfix panel">
 
-		<?= "<?= " ?>$this->render ( '_form', [ 'model' => $model ] )?></div>
+        <?= "<?= " ?>$this->render ( '_form', [ 'model' => $model ] )?></div>
 </div>
 
 

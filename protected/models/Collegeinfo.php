@@ -24,7 +24,7 @@ use Yii;
 use app\models\User;
 use yii\helpers\ArrayHelper;
 
-class Collegeinfo extends \app\components\TActiveRecord {
+class Collegeinfo extends \app\components\SActiveRecord {
 
     const SCENARIO_ADD = 'add';
     const SCENARIO_UPDATE = 'update';

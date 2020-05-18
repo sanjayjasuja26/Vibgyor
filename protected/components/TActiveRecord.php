@@ -18,7 +18,7 @@ use yii\web\UploadedFile;
 /**
  * This is the generic model class
  */
-class TActiveRecord extends TBaseActiveRecord {
+class SActiveRecord extends TBaseActiveRecord {
 
     protected $_controllerId = null;
 
@@ -153,7 +153,7 @@ class TActiveRecord extends TBaseActiveRecord {
         return true;
     }
 
-    public function getControllerID() {
+    public function geSControllerID() {
         if (empty($this->_controllerId)) {
             $admin = '';
             if (!(\Yii::$app instanceof yii\console\Application) && Yii::$app->user->isAdminMode) {
@@ -172,7 +172,7 @@ class TActiveRecord extends TBaseActiveRecord {
 
     public function getUrl($action = 'view', $id = null) {
         $params = [
-            $this->getControllerID() . '/' . $action
+            $this->geSControllerID() . '/' . $action
         ];
         if ($id != null) {
             if (is_array($id))
@@ -183,7 +183,7 @@ class TActiveRecord extends TBaseActiveRecord {
             $params['id'] = $this->id;
         }
         $params['title'] = (string) $this;
-        return Yii::$app->getUrlManager()->createAbsoluteUrl($params, true);
+        return Yii::$app->geSUrlManager()->createAbsoluteUrl($params, true);
     }
 
     public function linkify($title = null, $controller = null, $action = 'view') {

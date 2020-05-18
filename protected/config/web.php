@@ -15,7 +15,7 @@ $config = [
     'bootstrap' => [
         'log',
         'session',
-        'app\components\TBootstrap',
+        'app\components\SBootstrap',
         'languagepicker'
     ],
     'timeZone' => date_default_timezone_get(),
@@ -24,11 +24,19 @@ $config = [
         '@npm' => '@vendor/npm-asset'
     ],
     'components' => [
+        'assetManager' => [
+            'bundles' => [
+                'yii\bootstrap\BootstrapAsset' => [
+                    'sourcePath' => 'your-path',
+                    'css' => ['css/bootstrap.css', 'path/to/custom.css']
+                ],
+            ],
+        ],
         'session' => [
-            'class' => 'app\components\TSession'
+            'class' => 'app\components\SSession'
         ],
         'request' => [
-            'class' => 'app\components\TRequest'
+            'class' => 'app\components\SRequest'
         ],
         'settings' => [
             'class' => 'app\components\Settings'
@@ -40,7 +48,7 @@ $config = [
             'class' => 'app\components\WebUser'
         ],
         'mailer' => [
-            'class' => 'app\components\TMailer',
+            'class' => 'app\components\SMailer',
             'useFileTransport' => YII_ENV == 'dev' ? true : false
         ],
         'log' => [
@@ -64,7 +72,7 @@ $config = [
             'dateFormat' => 'php:Y-m-d'
         ],
         'urlManager' => [
-            'class' => 'app\components\TUrlManager',
+            'class' => 'app\components\SUrlManager',
             'rules' => [
                 'file/file/files/<file>' => '/file/file/files',
                 '<controller:[A-Za-z-]+>/<action:[A-Za-z-]+>/<id:\d+>/<title>' => '<controller>/<action>',

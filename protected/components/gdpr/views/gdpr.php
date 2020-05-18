@@ -1,5 +1,5 @@
 <?php
-use app\components\TActiveForm;
+use app\components\SActiveForm;
 use yii\helpers\Html;
 ?>
 <div class="bg-bottom">
@@ -7,7 +7,7 @@ use yii\helpers\Html;
 		<p class="line_h">
 		<?= $description?></p>
 	    <?php
-    $form = TActiveForm::begin([
+    $form = SActiveForm::begin([
         'id' => 'cookies-actions-form'
     ]);
     echo Html::submitButton('Accept', array(
@@ -16,7 +16,7 @@ use yii\helpers\Html;
         'class' => 'btn btn-success',
         'id' => 'information-form-submit'
     ));
-    TActiveForm::end();
+    SActiveForm::end();
     ?>
    </div>
 </div>

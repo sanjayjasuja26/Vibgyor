@@ -1,5 +1,5 @@
 <?php
-use app\components\TGridView;
+use app\components\SGridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -19,7 +19,7 @@ use yii\widgets\Pjax;
 <?php Pjax::begin(['id'=>'payment-transaction-pjax-grid']); ?>
     <?php
 				
-				echo TGridView::widget ( [ 
+				echo SGridView::widget ( [ 
 						'id' => 'payment-transaction-grid-view',
 						'dataProvider' => $dataProvider,
 						'filterModel' => $searchModel,
@@ -56,7 +56,7 @@ use yii\widgets\Pjax;
 								],
 								'created_on:datetime',
 								[ 
-										'class' => 'app\components\TActionColumn',
+										'class' => 'app\components\SActionColumn',
 										'header' => '<a>Actions</a>',
 								        'template' => '{view}{delete}'
 								] 

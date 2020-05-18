@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use app\components\TActiveForm;
+use app\components\SActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Collegeevent */
@@ -13,7 +13,7 @@ use app\components\TActiveForm;
 <div class="panel-body">
 
     <?php 
-$form = TActiveForm::begin([
+$form = SActiveForm::begin([
 					 'layout' => 'horizontal',
 						'id'	=> 'collegeevent-form',
 						]);
@@ -30,7 +30,7 @@ echo $form->errorSummary($model);
 	 		
 
 
-		 <?php /*echo  $form->field($model, 'description')->widget ( app\components\TRichTextEditor::className (), [ 'options' => [ 'rows' => 6 ],'preset' => 'basic' ] ); //$form->field($model, 'description')->textarea(['rows' => 6]); */ ?>
+		 <?php /*echo  $form->field($model, 'description')->widget ( app\components\SRichTextEditor::className (), [ 'options' => [ 'rows' => 6 ],'preset' => 'basic' ] ); //$form->field($model, 'description')->textarea(['rows' => 6]); */ ?>
 	 		
 
 
@@ -75,6 +75,6 @@ echo $form->errorSummary($model);
     </div>
 	</div>
 
-    <?php TActiveForm::end(); ?>
+    <?php SActiveForm::end(); ?>
 
 </div>

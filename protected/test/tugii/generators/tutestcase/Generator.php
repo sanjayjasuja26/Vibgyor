@@ -1,8 +1,5 @@
 <?php
-/**
- *@copyright   : ToXSL Technologies Pvt. Ltd < https://toxsl.com >
- *@author      : Shiv Charan Panjeta  < shiv@toxsl.com >
- */
+
 namespace app\modules\tugii\generators\tutestcase;
 
 use Yii;
@@ -19,44 +16,35 @@ use yii\helpers\FileHelper;
  *
  * @since 2.0
  */
-class Generator extends \yii\gii\Generator
-{
+class Generator extends \yii\gii\Generator {
 
     public $modelClass;
-
     public $controllerClass;
-
     public $actions;
-
     public $_models;
-
     public $_controllers;
-
     public $_modulecontrollers;
-
     public $module;
-
     public $controllerPath = 'tests\acceptance';
 
-    public function beforeValidate()
-    {
+    public function beforeValidate() {
         $modelClassPath = StringHelper::dirname($this->modelClass);
-        
+
         $modelClass = StringHelper::basename($this->modelClass);
-        
+
         if (empty($this->controllerClass)) {
             $nsControllerClass = '';
             $this->controllerClass = str_replace('Controller', 'AcceptanceCest', $modelClass);
         }
-        
+
         if (strstr($modelClassPath, 'modules')) {
             $this->module = StringHelper::basename(StringHelper::dirname($modelClassPath));
-            
+
             $this->controllerPath = str_replace('moduleName', $this->module, '@app/modules/moduleName/tests/acceptance');
-            
+
             $this->controllerPath = Yii::getAlias($this->controllerPath);
-            
-            if (! file_exists($this->controllerPath))
+
+            if (!file_exists($this->controllerPath))
                 mkdir($this->controllerPath);
         }
         return parent::beforeValidate();
@@ -65,31 +53,27 @@ class Generator extends \yii\gii\Generator
     /**
      * @inheritdoc
      */
-    public function getName()
-    {
+    public function getName() {
         return 'TuGii TEST Generator';
     }
 
     /**
      * @inheritdoc
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return 'This generator generates Test Case.';
     }
 
     /**
      * @inheritdoc
      */
-    public function requiredTemplates()
-    {
+    public function requiredTemplates() {
         return [
             'test.php'
         ];
     }
 
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'modelClass' => 'Controller Class',
             'controllerClass' => 'Test Controller Class',
@@ -97,8 +81,7 @@ class Generator extends \yii\gii\Generator
         ];
     }
 
-    public function rules()
-    {
+    public function rules() {
         return [
             [
                 [
@@ -124,17 +107,16 @@ class Generator extends \yii\gii\Generator
                 'pattern' => '/^[\w\\\\]*$/',
                 'message' => 'Only word characters and backslashes are allowed.'
             ],
-
-		/* 		[
-						[
-								'modelClass'
-						],
-						'validateClass',
-						'params' => [
-								'extends' => BaseActiveRecord::className ()
-						]
-				], */
-				[
+            /* 		[
+              [
+              'modelClass'
+              ],
+              'validateClass',
+              'params' => [
+              'extends' => BaseActiveRecord::className ()
+              ]
+              ], */
+            [
                 [
                     'controllerClass'
                 ],
@@ -150,12 +132,10 @@ class Generator extends \yii\gii\Generator
                 'pattern' => '/(^|\\\\)[A-Z][^\\\\]+Cest$/',
                 'message' => 'Cest class name must start with an uppercase letter.'
             ]
-        
         ];
     }
 
-    public function hints()
-    {
+    public function hints() {
         return array_merge(parent::hints(), [
             'modelClass' => 'This is the Test Model Class.
 				 You should provide a fully qualified class name, e.g., <code>app\controllers\PostController</code>.',
@@ -168,39 +148,35 @@ class Generator extends \yii\gii\Generator
     /**
      * @inheritdoc
      */
-    public function generate()
-    {
+    public function generate() {
         $files = [];
-        
+
         $controllerFile = $this->controllerPath . '/' . $this->controllerClass . '.php';
-        
+
         $files = [
             new CodeFile($controllerFile, $this->render('test.php'))
         ];
-        
+
         return $files;
     }
 
-   
     /**
      * Generates action parameters
      *
      * @return string
      */
-    public function generateActionParams()
-    {
+    public function generateActionParams() {
         return 'AcceptanceTester $I';
     }
 
-    public function getModelRealClass()
-    {
+    public function getModelRealClass() {
         $class = str_replace([
             'controllers',
             'Controller'
-        ], [
+                ], [
             'models',
             ''
-        ], $this->modelClass);
+                ], $this->modelClass);
         return $class;
     }
 
@@ -208,9 +184,8 @@ class Generator extends \yii\gii\Generator
      *
      * @return array model column names
      */
-    public function getColumnNames()
-    {
-        
+    public function getColumnNames() {
+
         /* @var $class ActiveRecord */
         $class = $this->modelRealClass;
         if (is_subclass_of($class, 'yii\db\ActiveRecord')) {
@@ -218,7 +193,7 @@ class Generator extends \yii\gii\Generator
         } else {
             /* @var $model \yii\base\Model */
             $model = new $class();
-            
+
             return $model->attributes();
         }
     }
@@ -228,8 +203,7 @@ class Generator extends \yii\gii\Generator
      *
      * @return boolean|\yii\db\TableSchema
      */
-    public function getTableSchema()
-    {
+    public function getTableSchema() {
         /* @var $class ActiveRecord */
         $class = $this->modelRealClass;
         if (is_subclass_of($class, 'yii\db\ActiveRecord')) {
@@ -239,8 +213,7 @@ class Generator extends \yii\gii\Generator
         }
     }
 
-    public function getFieldtestdata($column)
-    {
+    public function getFieldtestdata($column) {
         if (strtoupper($column->dbType) == 'TINYINT(1)' || strtoupper($column->dbType) == 'BIT' || strtoupper($column->dbType) == 'BOOL' || strtoupper($column->dbType) == 'BOOLEAN') {
             return "\Helper::faker()->boolean";
         } else if (strtoupper($column->dbType) == 'DATE' || strtoupper($column->dbType) == 'DATETIME') {
@@ -265,9 +238,8 @@ class Generator extends \yii\gii\Generator
         }
     }
 
-    public function findRelation($modelClass, $column)
-    {
-        if (! $column->isForeignKey)
+    public function findRelation($modelClass, $column) {
+        if (!$column->isForeignKey)
             return null;
         $relations = ActiveRecord::model($modelClass)->relations();
         // Find the relation for this attribute.
@@ -286,26 +258,24 @@ class Generator extends \yii\gii\Generator
         return null;
     }
 
-    public function getCurrentid($modelClass)
-    {
+    public function getCurrentid($modelClass) {
         $model = new $modelClass();
         $model = $modelClass::findOne([
-            $model->attributes('id')
+                    $model->attributes('id')
         ]);
         if ($model) {
-            
+
             return $model;
         } else {
             return 0;
         }
     }
 
-    public function getActions($modelClass)
-    {
+    public function getActions($modelClass) {
         $actions = [];
-        
+
         $methods = (new \ReflectionClass($modelClass))->getMethods(\ReflectionMethod::IS_PUBLIC);
-        
+
         foreach ($methods as $method) {
             if (StringHelper::startsWith($method->name, 'action') && $method->name != 'actions') {
                 $functionName = substr($method->name, strlen('action'));
@@ -316,16 +286,15 @@ class Generator extends \yii\gii\Generator
          * echo "<pre>";
          * VarDumper::dump($actions);
          */
-        
+
         return $actions;
     }
 
-    public function generateActiveField($column)
-    {
+    public function generateActiveField($column) {
         $modelClass = StringHelper::basename($this->modelClass);
         $modelClass = str_replace('Controller', '', $modelClass);
         $field = $modelClass . '[' . $column->name . ']';
-        
+
         if ($column->phpType === 'boolean') {
             return "\$I->checkOption ('$field',false)";
         } elseif ($column->type === 'text' || preg_match('/^description$/i', $column->name)) {
@@ -341,21 +310,20 @@ class Generator extends \yii\gii\Generator
         } elseif (preg_match('/^file|_file$/i', $column->name)) {
             return "\$I->attachFile('$field','')";
         } else {
-            
+
             return "\$I->fillField ('$field',\$this->data['$column->name'])";
         }
     }
 
-    protected function getModels()
-    {
+    protected function getModels() {
         if ($this->_models == null) {
             $files = scandir(Yii::getAlias('@app/controllers'));
             foreach ($files as $file) {
                 if ($file[0] !== '.') {
                     $fileClassName = 'app\\controllers\\' . substr($file, 0, strpos($file, '.'));
-                    
-                    if (class_exists($fileClassName)  /* && is_subclass_of ( $fileClassName, 'app\\componenets\\TActiveRecord', true ) */ ) {
-                        
+
+                    if (class_exists($fileClassName) /* && is_subclass_of ( $fileClassName, 'app\\componenets\\SActiveRecord', true ) */) {
+
                         $this->_models[] = $fileClassName;
                     }
                 }
@@ -364,16 +332,15 @@ class Generator extends \yii\gii\Generator
         return $this->_models;
     }
 
-    protected function getControllers()
-    {
+    protected function getControllers() {
         if ($this->_controllers == null) {
             $files = scandir(Yii::getAlias('@app/controllers'));
             foreach ($files as $file) {
                 if ($file[0] !== '.') {
                     $fileClassName = 'app\\controllers\\' . substr($file, 0, strpos($file, '.'));
-                    
-                    if (class_exists($fileClassName)  /* && is_subclass_of ( $fileClassName, 'app\\componenets\\TActiveRecord', true ) */ ) {
-                        
+
+                    if (class_exists($fileClassName) /* && is_subclass_of ( $fileClassName, 'app\\componenets\\SActiveRecord', true ) */) {
+
                         $this->_controllers[] = $fileClassName;
                     }
                 }
@@ -382,42 +349,41 @@ class Generator extends \yii\gii\Generator
         return $this->_controllers;
     }
 
-    protected function getModulesControllers()
-    {
+    protected function getModulesControllers() {
         if ($this->_modulecontrollers == null) {
             $files = FileHelper::findFiles(Yii::getAlias('@app/modules'), [
-                'recursive' => true,
-                'only' => [
-                    '*Controller.php'
-                ]
+                        'recursive' => true,
+                        'only' => [
+                            '*Controller.php'
+                        ]
             ]);
-            
+
             foreach ($files as $file) {
                 if (strstr($file, 'tugii'))
                     continue;
                 $file = substr($file, strlen(Yii::getAlias('@app/modules/')));
                 $fileClassName = substr($file, 0, strpos($file, '.'));
                 $fileClassName = 'app\\modules\\' . str_replace('/', '\\', $fileClassName);
-                
-                if (class_exists($fileClassName)  /* && is_subclass_of ( $fileClassName, 'app\\componenets\\TActiveRecord', true ) */ ) {
-                    
+
+                if (class_exists($fileClassName) /* && is_subclass_of ( $fileClassName, 'app\\componenets\\SActiveRecord', true ) */) {
+
                     $this->_modulecontrollers[] = $fileClassName;
                 }
             }
         }
         $all = array_merge($this->getControllers(), $this->_modulecontrollers);
-        
+
         return $all;
     }
 
     /**
      * @inheritdoc
      */
-    public function autoCompleteData()
-    {
+    public function autoCompleteData() {
         return [
             'modelClass' => $this->getModulesControllers()
-            // 'controllerClass' => $this->getControllers()
+                // 'controllerClass' => $this->getControllers()
         ];
     }
+
 }

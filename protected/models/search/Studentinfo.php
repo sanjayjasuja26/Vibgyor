@@ -1,8 +1,5 @@
 <?php
-/**
- *@copyright : ToXSL Technologies Pvt. Ltd. < www.toxsl.com >
- *@author	 : Shiv Charan Panjeta < shiv@toxsl.com >
- */
+
 namespace app\models\search;
 
 use Yii;
@@ -13,13 +10,12 @@ use app\models\Studentinfo as StudentinfoModel;
 /**
  * Studentinfo represents the model behind the search form about `app\models\Studentinfo`.
  */
-class Studentinfo extends StudentinfoModel
-{
+class Studentinfo extends StudentinfoModel {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'user_id', 'course_id', 'caste', 'current_studies', 'state_id', 'type_id', 'created_by_id'], 'integer'],
             [['f_name', 'm_name', 'created_on', 'updated_on'], 'safe'],
@@ -29,14 +25,15 @@ class Studentinfo extends StudentinfoModel
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
-    public function beforeValidate(){
-            return true;
+
+    public function beforeValidate() {
+        return true;
     }
+
     /**
      * Creates data provider instance with search query applied
      *
@@ -44,17 +41,16 @@ class Studentinfo extends StudentinfoModel
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = StudentinfoModel::find();
 
-		        $dataProvider = new ActiveDataProvider([
+        $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
-						'defaultOrder' => [
-								'id' => SORT_DESC
-						]
-				]
+                'defaultOrder' => [
+                    'id' => SORT_DESC
+                ]
+            ]
         ]);
 
         if (!($this->load($params) && $this->validate())) {
@@ -75,8 +71,9 @@ class Studentinfo extends StudentinfoModel
         ]);
 
         $query->andFilterWhere(['like', 'f_name', $this->f_name])
-            ->andFilterWhere(['like', 'm_name', $this->m_name]);
+                ->andFilterWhere(['like', 'm_name', $this->m_name]);
 
         return $dataProvider;
     }
+
 }

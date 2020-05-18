@@ -1,9 +1,5 @@
 <?php
 
-/**
- *@copyright : ToXSL Technologies Pvt. Ltd. < www.toxsl.com >
- *@author	 : Shiv Charan Panjeta < shiv@toxsl.com >
- */
 namespace app\modules\payment\controllers;
 
 use app\components\TController;
@@ -19,11 +15,9 @@ use yii\web\NotFoundHttpException;
 /**
  * PaymentTransactionController implements the CRUD actions for PaymentTransaction model.
  */
-class TransactionController extends TController
-{
+class TransactionController extends TController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -62,14 +56,13 @@ class TransactionController extends TController
      *
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new TransactionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $this->updateMenuItems();
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider
         ]);
     }
 
@@ -79,12 +72,11 @@ class TransactionController extends TController
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         $model = $this->findModel($id);
         $this->updateMenuItems($model);
         return $this->render('view', [
-            'model' => $model
+                    'model' => $model
         ]);
     }
 
@@ -95,12 +87,11 @@ class TransactionController extends TController
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $model = $this->findModel($id);
         $model->delete();
         return $this->redirect([
-            'index'
+                    'index'
         ]);
     }
 
@@ -112,44 +103,42 @@ class TransactionController extends TController
      * @return PaymentTransaction the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id, $accessCheck = true)
-    {
+    protected function findModel($id, $accessCheck = true) {
         if (($model = Transaction::findOne($id)) !== null) {
-            
-            if ($accessCheck && ! ($model->isAllowed()))
+
+            if ($accessCheck && !($model->isAllowed()))
                 throw new HttpException(403, Yii::t('app', 'You are not allowed to access this page.'));
-            
+
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
 
-    protected function updateMenuItems($model = null)
-    {
+    protected function updateMenuItems($model = null) {
         switch (\Yii::$app->controller->action->id) {
-            case 'view':
-                {
+            case 'view': {
                     $this->menu['manage'] = array(
                         'label' => '<span class="glyphicon glyphicon-list"></span>',
                         'title' => Yii::t('app', 'Manage'),
                         'url' => [
                             'index'
                         ]
-                        // 'visible' => User::isAdmin ()
+                            // 'visible' => User::isAdmin ()
                     );
                     if ($model != null) {
                         $this->menu['delete'] = array(
                             'label' => '<span class="glyphicon glyphicon-trash"></span>',
-								'title' => Yii::t ( 'app', 'Delete' ),
-								'url' => [ 
-										'delete',
-										'id' => $model->id 
-								], 
-							 'visible' => User::isAdmin ()
-						);
-					}
-				}
-		}
-	}
+                            'title' => Yii::t('app', 'Delete'),
+                            'url' => [
+                                'delete',
+                                'id' => $model->id
+                            ],
+                            'visible' => User::isAdmin()
+                        );
+                    }
+                }
+        }
+    }
+
 }

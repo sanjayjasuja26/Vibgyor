@@ -4,12 +4,12 @@ namespace app\modules\sitemap;
 /**
  * sitemap module definition class
  */
-use app\components\TModule;
+use app\components\SModule;
 use yii\base\InvalidConfigException;
 use yii\caching\Cache;
 use yii\helpers\Url;
 
-class Module extends TModule
+class Module extends SModule
 {
 
     public $controllerNamespace = 'app\modules\sitemap\controllers';

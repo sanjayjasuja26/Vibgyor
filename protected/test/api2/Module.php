@@ -1,15 +1,11 @@
 <?php
-/**
- *@copyright : ToXSL Technologies Pvt. Ltd. < www.toxsl.com >
- *@author	 : Shiv Charan Panjeta < shiv@toxsl.com >
- */
+
 namespace app\modules\api2;
 
 /**
  * Api module definition class
  */
-class Module extends \yii\base\Module
-{
+class Module extends \yii\base\Module {
 
     /**
      * @inheritdoc
@@ -19,8 +15,8 @@ class Module extends \yii\base\Module
     /**
      * @inheritdoc
      */
-    public function init()
-    {
+    public function init() {
         parent::init();
     }
+
 }

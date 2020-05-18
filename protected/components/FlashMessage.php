@@ -5,7 +5,7 @@ namespace app\components;
 use app\components\toster\Toastr;
 use Yii;
 
-class FlashMessage extends TBaseWidget {
+class FlashMessage extends SBaseWidget {
 
     // Error supported type ==> error, update, success, warning, info;
     // supported type ==> default, dialog, toster;

@@ -7,7 +7,7 @@ use Yii;
 use yii\helpers\Inflector;
 use app\modules\favorite\widgets\Favorite;
 
-class PageHeader extends TBaseWidget {
+class PageHeader extends SBaseWidget {
 
     public $title;
     public $subtitle;
@@ -50,7 +50,7 @@ class PageHeader extends TBaseWidget {
                 <?php if ($this->showActions): ?>
                 <div class="state-information">
 
-                    <?php if (!User::isGuest()) echo \app\components\TToolButtons::widget(); ?>
+                    <?php if (!User::isGuest()) echo \app\components\SToolButtons::widget(); ?>
 
                 </div>
                 <?php endif; ?>

@@ -1,6 +1,6 @@
 <?php
 use app\components\MassAction;
-use app\components\TGridView;
+use app\components\SGridView;
 use app\models\User;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
@@ -30,7 +30,7 @@ Pjax::begin([
 ?>
     <?php
 
-    echo TGridView::widget([
+    echo SGridView::widget([
         'id' => 'feed-grid',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -64,7 +64,7 @@ Pjax::begin([
             ],
 
             [
-                'class' => 'app\components\TActionColumn',
+                'class' => 'app\components\SActionColumn',
                 'template' => '{view}{delete}',
                 'header' => "<a>" . Yii::t("app", 'Actions') . "</a>"
             ]

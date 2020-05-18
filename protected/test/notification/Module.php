@@ -2,13 +2,13 @@
 namespace app\modules\notification;
 
 use app\components\TController;
-use app\components\TModule;
+use app\components\SModule;
 use Yii;
 
 /**
  * notification module definition class
  */
-class Module extends TModule
+class Module extends SModule
 {
 
     /**

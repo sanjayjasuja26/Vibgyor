@@ -1,14 +1,14 @@
 <?php
 namespace app\modules\notification;
 
-use app\components\TController;
-use app\components\TModule;
+use app\components\SController;
+use app\components\SModule;
 use Yii;
 
 /**
  * notification module definition class
  */
-class Module extends TModule
+class Module extends SModule
 {
 
     /**
@@ -32,11 +32,11 @@ class Module extends TModule
             if (\Yii::$app->user->isAdminMode) {
                 return self::adminSubNav();
             }
-        return TController::addMenu(Yii::t('app', 'Notifications'), '//notification', 'list-alt', (Module::isManager()));
+        return SController::addMenu(Yii::t('app', 'Notifications'), '//notification', 'list-alt', (Module::isManager()));
     }
 
     public static function adminSubNav()
     {
-        return TController::addMenu(Yii::t('app', 'Notifications'), '//notification/admin', 'list-alt', (Module::isManager()));
+        return SController::addMenu(Yii::t('app', 'Notifications'), '//notification/admin', 'list-alt', (Module::isManager()));
     } */
 }

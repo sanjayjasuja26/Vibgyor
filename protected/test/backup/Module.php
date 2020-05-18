@@ -1,10 +1,10 @@
 <?php
 namespace app\modules\backup;
 
-use app\components\TModule;
+use app\components\SModule;
 use app\components\TController;
 
-class Module extends TModule
+class Module extends SModule
 {
 
     public $controllerNamespace = 'app\modules\backup\controllers';

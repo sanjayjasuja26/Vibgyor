@@ -18,7 +18,7 @@ use app\modules\installer\models\Mail;
 /**
  * Default controller for the `install` module
  */
-class DefaultController extends Controller {
+class DefaulSController extends Controller {
 
     public $setup;
     public $setupDone = false;
@@ -207,7 +207,7 @@ class DefaultController extends Controller {
         } else {
             $textFile = "<?php
                         return [
-                            'class' => 'yii\swiftmailer\Mailer',
+                            'class' => 'yii\swifSMailer\Mailer',
                             'transport' => [
                                 'class' => 'Swift_SmtpTransport',
                                 'host' => '{host}',

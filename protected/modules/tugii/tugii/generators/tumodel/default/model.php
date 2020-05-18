@@ -402,7 +402,7 @@ endforeach
 	public function getUrl($action = 'view', $id = null)
     {
         $params = [
-            '/<?= $generator->moduleName?>/' . $this->getControllerID() . '/' . $action
+            '/<?= $generator->moduleName?>/' . $this->geSControllerID() . '/' . $action
         ];
         if ($id != null)
             $params['id'] = $id;
@@ -413,7 +413,7 @@ endforeach
             $params['title'] = $this->title;
         else
             $params['title'] = (string) $this;
-        return Yii::$app->getUrlManager()->createAbsoluteUrl($params, true);
+        return Yii::$app->geSUrlManager()->createAbsoluteUrl($params, true);
     }
 	<?php endif;?>
 

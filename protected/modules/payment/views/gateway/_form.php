@@ -1,5 +1,5 @@
 <?php
-use app\components\TActiveForm;
+use app\components\SActiveForm;
 use app\modules\payment\models\Gateway;
 use app\modules\payment\models\GatewaySetting;
 use yii\helpers\Html;
@@ -14,7 +14,7 @@ use yii\helpers\Html;
 <div class="panel-body">
 
     <?php
-				$form = TActiveForm::begin ( [ 
+				$form = SActiveForm::begin ( [ 
 				    'layout' => 'horizontal',
 						'id' => 'payment-gateway-form' 
 				] );
@@ -58,6 +58,6 @@ use yii\helpers\Html;
     </div>
 	</div>
 
-    <?php TActiveForm::end(); ?>
+    <?php SActiveForm::end(); ?>
 
 </div>

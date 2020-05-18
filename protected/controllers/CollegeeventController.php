@@ -9,18 +9,18 @@ namespace app\controllers;
 use Yii;
 use app\models\Collegeevent;
 use app\models\search\Collegeevent as CollegeeventSearch;
-use app\components\TController;
+use app\components\SController;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
 use yii\filters\AccessRule;
 use app\models\User;
 use yii\web\HttpException;
-use app\components\TActiveForm;
+use app\components\SActiveForm;
 
 /**
- * CollegeeventController implements the CRUD actions for Collegeevent model.
+ * CollegeevenSController implements the CRUD actions for Collegeevent model.
  */
-class CollegeeventController extends TController {
+class CollegeevenSController extends SController {
 
     public function behaviors() {
         return [
@@ -114,7 +114,7 @@ class CollegeeventController extends TController {
         $post = \yii::$app->request->post();
         if (\yii::$app->request->isAjax && $model->load($post)) {
             \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return TActiveForm::validate($model);
+            return SActiveForm::validate($model);
         }
         if ($model->load($post) && $model->save()) {
             return $this->redirect($model->getUrl());
@@ -137,7 +137,7 @@ class CollegeeventController extends TController {
         $post = \yii::$app->request->post();
         if (\yii::$app->request->isAjax && $model->load($post)) {
             \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return TActiveForm::validate($model);
+            return SActiveForm::validate($model);
         }
         if ($model->load($post) && $model->save()) {
             return $this->redirect($model->getUrl());

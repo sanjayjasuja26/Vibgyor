@@ -6,8 +6,8 @@
 
 namespace app\controllers;
 
-use app\components\TActiveForm;
-use app\components\TController;
+use app\components\SActiveForm;
+use app\components\SController;
 use app\models\LoginForm;
 use app\models\User;
 use app\models\search\User as UserSearch;
@@ -21,7 +21,7 @@ use app\components\filters\AccessControl;
 /**
  * UserController implements the CRUD actions for User model.
  */
-class UserController extends TController {
+class UserController extends SController {
 
     public function behaviors() {
         return [
@@ -166,7 +166,7 @@ class UserController extends TController {
         $model->scenario = User::SCENARIO_ADD_ADMIN;
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return TActiveForm::validate($model);
+            return SActiveForm::validate($model);
         }
         if ($model->load(Yii::$app->request->post())) {
             $model->role_id = User::ROLE_ADMIN;
@@ -207,7 +207,7 @@ class UserController extends TController {
         $model->scenario = User::SCENARIO_SIGNUP;
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return TActiveForm::validate($model);
+            return SActiveForm::validate($model);
         }
         if ($model->load($post)) {
             $model->saveUploadedFile($model, 'profile_file');
@@ -314,7 +314,7 @@ class UserController extends TController {
 
         if (Yii::$app->request->isAjax && $model->load($post)) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return TActiveForm::validate($model);
+            return SActiveForm::validate($model);
         }
 
         if ($model->load($post)) {
@@ -400,7 +400,7 @@ class UserController extends TController {
 
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return TActiveForm::validate($model);
+            return SActiveForm::validate($model);
         }
         if ($model->load(Yii::$app->request->post())) {
             $model->state_id = User::STATE_ACTIVE;
@@ -490,7 +490,7 @@ class UserController extends TController {
         ]);
         if (Yii::$app->request->isAjax && $newModel->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return TActiveForm::validate($newModel);
+            return SActiveForm::validate($newModel);
         }
         if ($newModel->load(Yii::$app->request->post()) && $newModel->validate()) {
             $model->setPassword($newModel->newPassword);

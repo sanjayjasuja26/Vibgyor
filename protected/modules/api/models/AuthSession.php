@@ -19,7 +19,7 @@ use Yii;
 use yii\components;
 use yii\web\HttpException;
 
-class AuthSession extends \app\components\TActiveRecord {
+class AuthSession extends \app\components\SActiveRecord {
 
     const TYPE_ANDROID = 1;
     const TYPE_IPHONE = 2;

@@ -2,7 +2,7 @@
 
 namespace app\components\notice;
 
-use app\components\TBaseWidget;
+use app\components\SBaseWidget;
 use app\models\Notice;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -10,7 +10,7 @@ use yii\data\ActiveDataProvider;
 /**
  * This is just an example.
  */
-class Notices extends TBaseWidget {
+class Notices extends SBaseWidget {
 
     public $model;
     public $disabled = false;

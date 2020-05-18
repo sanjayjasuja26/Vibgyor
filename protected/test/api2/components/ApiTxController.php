@@ -1,9 +1,5 @@
 <?php
 
-/**
- *@copyright : ToXSL Technologies Pvt. Ltd. < www.toxsl.com >
- *@author	 : Shiv Charan Panjeta < shiv@toxsl.com >
- */
 namespace app\modules\api2\components;
 
 use Yii;
@@ -89,15 +85,13 @@ use yii\web\Response;
  * 511 => 'Network Authentication Required'
  * ];
  */
-abstract class ApiTxController extends ActiveController
-{
+
+abstract class ApiTxController extends ActiveController {
 
     const API_OK = 200;
-
     const API_NOK = 400;
 
-    public function behaviors()
-    {
+    public function behaviors() {
         $behaviors = parent::behaviors();
         // $behaviors['contentNegotiator'] = [
         // 'class' => ContentNegotiator::className(),
@@ -110,7 +104,6 @@ abstract class ApiTxController extends ActiveController
         // 'class' => VerbFilter::className(),
         // 'actions' => $this->verbs()
         // ];
-        
         // $behaviors['rateLimiter'] = [
         // 'class' => \yii\filters\RateLimiter::className(),
         // ];
@@ -125,13 +118,13 @@ abstract class ApiTxController extends ActiveController
                 QueryParamAuth::className() // param : access-token
             ]
         ];
-        
+
         return $behaviors;
     }
 
     /* Declare actions supported by APIs (Added in api/modules/v1/components/controller.php too) */
-    public function actions()
-    {
+
+    public function actions() {
         $actions = parent::actions();
         unset($actions['create']);
         unset($actions['update']);
@@ -142,8 +135,8 @@ abstract class ApiTxController extends ActiveController
     }
 
     /* Declare methods supported by APIs */
-    protected function verbs()
-    {
+
+    protected function verbs() {
         return [
             'create' => [
                 'POST'
@@ -167,31 +160,27 @@ abstract class ApiTxController extends ActiveController
 
     // For Pagination
     public $modelClass = '';
-
     protected $response = [];
 
-    public function beforeAction($action)
-    {
+    public function beforeAction($action) {
         return parent::beforeAction($action);
     }
 
-    public function afterAction($action, $result)
-    {
+    public function afterAction($action, $result) {
         $this->response['url'] = \yii::$app->request->pathInfo;
-        
+
         if (isset($this->response['status'])) {
             \Yii::$app->response->setStatusCode($this->response['status'], '');
         } else {
             $this->response['status'] = self::API_NOK;
             \Yii::$app->response->setStatusCode(self::API_OK, "OK");
         }
-        
+
         \Yii::$app->response->data = $this->response;
         return parent::afterAction($action, $result);
     }
 
-    public function txDelete($id)
-    {
+    public function txDelete($id) {
         $model = $this->findModel($id);
         $data['status'] = self::API_NOK;
         if ($model->delete()) {
@@ -201,8 +190,7 @@ abstract class ApiTxController extends ActiveController
         $this->response = $data;
     }
 
-    public function txSave($fileAttributes = [])
-    {
+    public function txSave($fileAttributes = []) {
         $model = new $this->modelClass();
         if ($model->load(Yii::$app->request->post())) {
             foreach ($fileAttributes as $file) {
@@ -222,16 +210,14 @@ abstract class ApiTxController extends ActiveController
         $this->response = $data;
     }
 
-    public function txGet($id)
-    {
+    public function txGet($id) {
         $model = $this->findModel($id);
         $data['detail'] = $model->asJson();
         $data['status'] = self::API_OK;
         $this->response = $data;
     }
 
-    public function txIndex()
-    {
+    public function txIndex() {
         $model = new $this->modelClass();
         $dataProvider = $model->search(\Yii::$app->request->queryParams);
         $data = (new TPagination())->serialize($dataProvider);
@@ -239,16 +225,16 @@ abstract class ApiTxController extends ActiveController
         $this->response = $data;
     }
 
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         $modelClass = Inflector::id2camel(\Yii::$app->controller->id);
         $modelClass = 'app\models\\' . $modelClass;
         if (($model = $modelClass::findOne($id)) !== null) {
-            if (! ($model->isAllowed()))
+            if (!($model->isAllowed()))
                 throw new HttpException(403, Yii::t('app', 'You are not allowed to access this page.'));
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
 }

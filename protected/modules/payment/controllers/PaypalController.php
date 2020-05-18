@@ -2,7 +2,7 @@
 namespace app\modules\payment\controllers;
 
 use Omnipay\Omnipay;
-use app\components\TController;
+use app\components\SController;
 use app\modules\payment\models\Gateway;
 use app\modules\payment\models\GatewaySetting;
 use app\modules\payment\models\Payment;
@@ -17,7 +17,7 @@ use yii\web\NotFoundHttpException;
 /**
  * Default controller for the `payment` module
  */
-class PaypalController extends TController
+class PaypalController extends SController
 {
 
     public $enableCsrfValidation = false;

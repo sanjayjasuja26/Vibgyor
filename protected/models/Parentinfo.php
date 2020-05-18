@@ -29,7 +29,7 @@ use app\models\Course;
 use app\models\User;
 use yii\helpers\ArrayHelper;
 
-class Parentinfo extends \app\components\TActiveRecord {
+class Parentinfo extends \app\components\SActiveRecord {
 
     const SCENARIO_ADD = 'add';
     const SCENARIO_UPDATE = 'update';
@@ -174,7 +174,7 @@ class Parentinfo extends \app\components\TActiveRecord {
             [['created_by_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
             [['child_name'], 'trim'],
-            [['child_name'], 'app\components\TNameValidator'],
+            [['child_name'], 'app\components\SNameValidator'],
             [['state_id'], 'in', 'range' => array_keys(self::getStateOptions())],
             [['type_id'], 'in', 'range' => array_keys(self::getTypeOptions())]
         ];

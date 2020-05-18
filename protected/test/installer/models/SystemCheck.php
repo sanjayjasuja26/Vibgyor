@@ -1,15 +1,11 @@
 <?php
-/**
- *@copyright   : ToXSL Technologies Pvt. Ltd < https://toxsl.com >
- *@author      : Shiv Charan Panjeta  < shiv@toxsl.com >
- */
+
 namespace app\modules\installer\models;
 
 use app\modules\installer\helpers\InstallerHelper;
 use YiiRequirementChecker;
 
-class SystemCheck
-{
+class SystemCheck {
 
     /**
      * Get Results of the Application SystemCheck.
@@ -21,8 +17,7 @@ class SystemCheck
      *
      * @return Array
      */
-    public static function getResults($module, $render = true)
-    {
+    public static function getResults($module, $render = true) {
         require_once VENDOR_PATH . 'yiisoft/yii2/requirements/YiiRequirementChecker.php';
         $requirementsChecker = new YiiRequirementChecker();
         $requirements = [];
@@ -46,12 +41,13 @@ class SystemCheck
                 'memo' => "Package extension $pkg required"
             );
         }
-        
+
         $checks = $requirementsChecker->checkYii()
-            ->check($requirements)
-            ->getResult();
+                ->check($requirements)
+                ->getResult();
         if ($render)
             $requirementsChecker->render();
         return $checks;
     }
+
 }

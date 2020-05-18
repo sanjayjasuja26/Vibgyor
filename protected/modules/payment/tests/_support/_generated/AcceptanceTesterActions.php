@@ -1492,14 +1492,14 @@ trait AcceptanceTesterActions
      * If your page triggers an ajax request, you can perform it manually.
      * This action sends a GET ajax request with specified params.
      *
-     * See ->sendAjaxPostRequest for examples.
+     * See ->sendAjaxPosSRequest for examples.
      *
      * @param $uri
      * @param $params
-     * @see \Codeception\Lib\InnerBrowser::sendAjaxGetRequest()
+     * @see \Codeception\Lib\InnerBrowser::sendAjaxGeSRequest()
      */
-    public function sendAjaxGetRequest($uri, $params = null) {
-        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendAjaxGetRequest', func_get_args()));
+    public function sendAjaxGeSRequest($uri, $params = null) {
+        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendAjaxGeSRequest', func_get_args()));
     }
 
  
@@ -1517,17 +1517,17 @@ trait AcceptanceTesterActions
      *
      * ``` php
      * <?php
-     * $I->sendAjaxPostRequest('/updateSettings', array('notifications' => true)); // POST
-     * $I->sendAjaxGetRequest('/updateSettings', array('notifications' => true)); // GET
+     * $I->sendAjaxPosSRequest('/updateSettings', array('notifications' => true)); // POST
+     * $I->sendAjaxGeSRequest('/updateSettings', array('notifications' => true)); // GET
      *
      * ```
      *
      * @param $uri
      * @param $params
-     * @see \Codeception\Lib\InnerBrowser::sendAjaxPostRequest()
+     * @see \Codeception\Lib\InnerBrowser::sendAjaxPosSRequest()
      */
-    public function sendAjaxPostRequest($uri, $params = null) {
-        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendAjaxPostRequest', func_get_args()));
+    public function sendAjaxPosSRequest($uri, $params = null) {
+        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendAjaxPosSRequest', func_get_args()));
     }
 
  

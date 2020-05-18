@@ -1,6 +1,6 @@
 <?php
 
-use app\components\TGridView;
+use app\components\SGridView;
 use app\models\User;
 use yii\widgets\Pjax;
 /**
@@ -13,7 +13,7 @@ use yii\widgets\Pjax;
 <?php Pjax::begin(['id'=>'notification-pjax-ajax-grid','enablePushState'=>false,'enableReplaceState'=>false]); ?>
     <?php
     
-    echo TGridView::widget([
+    echo SGridView::widget([
         'id' => 'notification-grid-view',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -68,7 +68,7 @@ use yii\widgets\Pjax;
             ],
             
             [
-                'class' => 'app\components\TActionColumn',
+                'class' => 'app\components\SActionColumn',
                 'header' => '<a>Actions</a>'
             ]
         ]

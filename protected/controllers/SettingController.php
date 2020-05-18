@@ -2,8 +2,8 @@
 
 namespace app\controllers;
 
-use app\components\TActiveForm;
-use app\components\TController;
+use app\components\SActiveForm;
+use app\components\SController;
 use app\models\Setting;
 use app\models\User;
 use Yii;
@@ -16,7 +16,7 @@ use yii\web\NotFoundHttpException;
 /**
  * SettingController implements the CRUD actions for Setting model.
  */
-class SettingController extends TController {
+class SettingController extends SController {
 
     public function behaviors() {
         return [
@@ -97,7 +97,7 @@ class SettingController extends TController {
         $post = \yii::$app->request->post();
         if (\yii::$app->request->isAjax && $model->load($post)) {
             \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return TActiveForm::validate($model);
+            return SActiveForm::validate($model);
         }
         if ($model->load($post)) {
             if ($model->save()) {
@@ -120,7 +120,7 @@ class SettingController extends TController {
         $post = \yii::$app->request->post();
         if (\yii::$app->request->isAjax && $model->load($post)) {
             \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return TActiveForm::validate($model);
+            return SActiveForm::validate($model);
         }
         if ($model->load($post)) {
             $config = [];

@@ -16,7 +16,7 @@ namespace app\models;
 
 use Yii;
 
-class Halogins extends \app\components\TActiveRecord
+class Halogins extends \app\components\SActiveRecord
 {
 
     public function __toString()

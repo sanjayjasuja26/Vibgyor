@@ -28,7 +28,7 @@ use app\models\User;
 
 use yii\helpers\ArrayHelper;
 
-class Courseofferdbycollege extends \app\components\TActiveRecord
+class Courseofferdbycollege extends \app\components\SActiveRecord
 {
 	public  function __toString()
 	{

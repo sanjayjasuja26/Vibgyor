@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = (string) $model;
 			<div class="email-queue">
     <?php
     
-    echo \app\components\TDetailView::widget([
+    echo \app\components\SDetailView::widget([
         'id' => 'email-queue-detail-view',
         'model' => $model,
         'options' => [

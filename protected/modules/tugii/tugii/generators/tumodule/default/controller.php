@@ -14,14 +14,14 @@ echo "<?php\n";
  *@copyright : ToXSL Technologies Pvt. Ltd. < www.toxsl.com >
  *@author	 : Shiv Charan Panjeta < shiv@toxsl.com >
  */
-namespace <?= $generator->getControllerNamespace() ?>;
+namespace <?= $generator->geSControllerNamespace() ?>;
 
-use app\components\TController;
+use app\components\SController;
 
 /**
  * Default controller for the `<?= $generator->moduleID ?>` module
  */
-class DefaultController extends TController
+class DefaulSController extends SController
 {
     /**
      * Renders the index view for the module

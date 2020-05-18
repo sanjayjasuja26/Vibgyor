@@ -2,8 +2,8 @@
 
 namespace app\controllers;
 
-use app\components\TActiveForm;
-use app\components\TController;
+use app\components\SActiveForm;
+use app\components\SController;
 use app\models\Notice;
 use app\models\User;
 use app\models\search\Notice as NoticeSearch;
@@ -16,7 +16,7 @@ use yii\web\NotFoundHttpException;
 /**
  * NoticeController implements the CRUD actions for Notice model.
  */
-class NoticeController extends TController {
+class NoticeController extends SController {
 
     public function behaviors() {
         return [
@@ -131,7 +131,7 @@ class NoticeController extends TController {
         $post = \yii::$app->request->post();
         if (\yii::$app->request->isAjax && $model->load($post)) {
             \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return TActiveForm::validate($model);
+            return SActiveForm::validate($model);
         }
         if ($model->load($post) && $model->save()) {
             return $this->redirect($model->getUrl());
@@ -155,7 +155,7 @@ class NoticeController extends TController {
         $post = \yii::$app->request->post();
         if (\yii::$app->request->isAjax && $model->load($post)) {
             \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return TActiveForm::validate($model);
+            return SActiveForm::validate($model);
         }
         if ($model->load($post) && $model->save()) {
             return $this->redirect($model->getUrl());

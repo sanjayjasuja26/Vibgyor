@@ -1,5 +1,5 @@
 <?php
-use app\components\TGridView;
+use app\components\SGridView;
 use yii\widgets\Pjax;
 /**
  *
@@ -19,7 +19,7 @@ Pjax::begin([
 ?>
     <?php
 
-    echo TGridView::widget([
+    echo SGridView::widget([
         'id' => 'notice-ajax-grid-view',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -57,7 +57,7 @@ Pjax::begin([
 				],*/
 
             [
-                'class' => 'app\components\TActionColumn',
+                'class' => 'app\components\SActionColumn',
                 'header' => "<a>".Yii::t("app",'Actions')."</a>"
             ]
         ]

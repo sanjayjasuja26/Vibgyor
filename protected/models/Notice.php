@@ -20,7 +20,7 @@ namespace app\models;
 
 use Yii;
 
-class Notice extends \app\components\TActiveRecord {
+class Notice extends \app\components\SActiveRecord {
 	public function __toString() {
 		return ( string ) $this->title;
 	}

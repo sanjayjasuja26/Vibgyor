@@ -1,5 +1,5 @@
 <?php
-use app\components\TActiveForm;
+use app\components\SActiveForm;
 use yii\helpers\Html;
 ?>
 
@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 <div class="col-md-12">
 	
-    <?php $form = TActiveForm::begin(['id' => 'user-actions-form',]); ?>
+    <?php $form = SActiveForm::begin(['id' => 'user-actions-form',]); ?>
     <div class="row">
 
 			<div class="col-md-2" style="margin-top: 10px;">
@@ -40,7 +40,7 @@ use yii\helpers\Html;
 ?>
 
 	</div>
-<?php TActiveForm::end(); ?>
+<?php SActiveForm::end(); ?>
 
 <?php if(\Yii::$app->session->hasFlash('user-action')): ?>
 <div class="col-md-6">

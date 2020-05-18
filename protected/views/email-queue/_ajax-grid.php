@@ -1,5 +1,5 @@
 <?php
-use app\components\TGridView;
+use app\components\SGridView;
 use yii\widgets\Pjax;
 /**
  *
@@ -12,7 +12,7 @@ use yii\widgets\Pjax;
 <?php Pjax::begin(["enablePushState"=>false,"enableReplaceState"=>false,'id' => 'email-queue-pjax-grid']); ?>
     <?php
     
-    echo TGridView::widget([
+    echo SGridView::widget([
         'id' => 'email-queue-ajax-grid-view',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -38,7 +38,7 @@ use yii\widgets\Pjax;
             /* 'model_type',*/
 
             [
-                'class' => 'app\components\TActionColumn',
+                'class' => 'app\components\SActionColumn',
                 'header' => "<a>".Yii::t("app",'Actions')."</a>"
             ]
         ]

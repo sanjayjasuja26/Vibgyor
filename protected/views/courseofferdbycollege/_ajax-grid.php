@@ -1,6 +1,6 @@
 <?php
 
-use app\components\TGridView;
+use app\components\SGridView;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /**
@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
 
 ?>
 <?php Pjax::begin(['id'=>'courseofferdbycollege-pjax-ajax-grid','enablePushState'=>false,'enableReplaceState'=>false]); ?>
-    <?php echo TGridView::widget([
+    <?php echo SGridView::widget([
     	'id' => 'courseofferdbycollege-ajax-grid-view',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -43,7 +43,7 @@ use yii\widgets\Pjax;
 				'value' => function ($data) { return $data->getRelatedDataLink('created_by_id');  },
 				],
 
-            ['class' => 'app\components\TActionColumn','header'=>'<a>Actions</a>'],
+            ['class' => 'app\components\SActionColumn','header'=>'<a>Actions</a>'],
         ],
     ]); ?>
 <?php Pjax::end(); ?>

@@ -1,6 +1,6 @@
 <?php
 
-use app\components\TGridView;
+use app\components\SGridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -17,7 +17,7 @@ use yii\widgets\Pjax;
 ?>
 <?php if (User::isAdmin()) echo Html::a('','#',['class'=>'multiple-delete glyphicon glyphicon-trash','id'=>"bulk_delete_course-grid"])?>
 <?php Pjax::begin(['id'=>'course-pjax-grid']); ?>
-    <?php echo TGridView::widget([
+    <?php echo SGridView::widget([
     	'id' => 'course-grid-view',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -46,7 +46,7 @@ use yii\widgets\Pjax;
 				'value' => function ($data) { return $data->getRelatedDataLink('created_by_id');  },
 				],
 
-            ['class' => 'app\components\TActionColumn','header'=>'<a>Actions</a>'],
+            ['class' => 'app\components\SActionColumn','header'=>'<a>Actions</a>'],
         ],
     ]); ?>
 <?php Pjax::end(); ?>

@@ -4,7 +4,7 @@ namespace app\modules\payment\controllers;
 use function Composer\Autoload\includeFile;
 includeFile(__DIR__ . "/../vendors/instamojo-php/src/Instamojo.php");
 
-use app\components\TController;
+use app\components\SController;
 use app\modules\payment\models\Gateway;
 use app\modules\payment\models\GatewaySetting;
 use app\modules\payment\models\Payment;
@@ -19,7 +19,7 @@ use yii\web\NotFoundHttpException;
 /**
  * Default controller for the `payment` module
  */
-class InstamojoController extends TController
+class InstamojoController extends SController
 {
 
     public $enableCsrfValidation = false;
@@ -118,7 +118,7 @@ class InstamojoController extends TController
             ]);
             $response = null;
             try {
-                $response = $this->gateway->paymentRequestCreate(array(
+                $response = $this->gateway->paymenSRequestCreate(array(
                     "purpose" => $transaction->description,
                     "amount" => $transaction->amount,
                     // "send_email" => true,
@@ -157,7 +157,7 @@ class InstamojoController extends TController
             $payment_id = \yii::$app->request->getQueryParam('payment_id');
             $response = null;
             try {
-                $response = $api->paymentRequestPaymentStatus($payment_request_id, [
+                $response = $api->paymenSRequestPaymentStatus($payment_request_id, [
                     $payment_id
                 ]);
                 print_r($response['purpose']); // print purpose of payment request

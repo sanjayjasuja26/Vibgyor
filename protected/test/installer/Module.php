@@ -1,24 +1,17 @@
 <?php
-/**
- *@copyright   : ToXSL Technologies Pvt. Ltd < https://toxsl.com >
- *@author      : Shiv Charan Panjeta  < shiv@toxsl.com >
- */
+
 namespace app\modules\installer;
 
-use app\components\TModule;
+use app\components\SModule;
 
 /**
  * install module definition class
  */
-class Module extends TModule
-{
-    
+class Module extends SModule {
+
     public $exts = [];
-    
     public $pkgs = [];
-    
     public $sqlfile = null;
-    
     public $layout = 'installer';
 
     /**
@@ -29,14 +22,13 @@ class Module extends TModule
     /**
      * @inheritdoc
      */
-    public function init()
-    {
+    public function init() {
         parent::init();
-        
+
         if (\Yii::$app instanceof \yii\web\Application) {
-            $this->layoutPath = __DIR__. '/views/layouts/';
+            $this->layoutPath = __DIR__ . '/views/layouts/';
         }
-        
+
         if ($this->sqlfile == null) {
             $this->sqlfile = [
                 dirname(__FILE__) . '/db/install.sql'
@@ -45,9 +37,10 @@ class Module extends TModule
         if (\Yii::$app instanceof \yii\console\Application) {
             $this->controllerNamespace = 'app\modules\installer\command';
         }
-        
+
         $this->sqlfile = is_array($this->sqlfile) ? $this->sqlfile : [
             $this->sqlfile
         ];
     }
+
 }

@@ -1,8 +1,5 @@
 <?php
-/**
- *@copyright : ToXSL Technologies Pvt. Ltd. < www.toxsl.com >
- *@author	 : Shiv Charan Panjeta < shiv@toxsl.com >
- */
+
 namespace app\models\search;
 
 use Yii;
@@ -13,13 +10,12 @@ use app\models\Collegeevent as CollegeeventModel;
 /**
  * Collegeevent represents the model behind the search form about `app\models\Collegeevent`.
  */
-class Collegeevent extends CollegeeventModel
-{
+class Collegeevent extends CollegeeventModel {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'college_id', 'state_id', 'type_id', 'created_by_id'], 'integer'],
             [['title', 'description', 'start_on', 'end_on', 'created_on', 'updated_on'], 'safe'],
@@ -29,14 +25,15 @@ class Collegeevent extends CollegeeventModel
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
-    public function beforeValidate(){
-            return true;
+
+    public function beforeValidate() {
+        return true;
     }
+
     /**
      * Creates data provider instance with search query applied
      *
@@ -44,17 +41,16 @@ class Collegeevent extends CollegeeventModel
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = CollegeeventModel::find();
 
-		        $dataProvider = new ActiveDataProvider([
+        $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
-						'defaultOrder' => [
-								'id' => SORT_DESC
-						]
-				]
+                'defaultOrder' => [
+                    'id' => SORT_DESC
+                ]
+            ]
         ]);
 
         if (!($this->load($params) && $this->validate())) {
@@ -74,8 +70,9 @@ class Collegeevent extends CollegeeventModel
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'description', $this->description]);
+                ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }
+
 }

@@ -26,7 +26,7 @@ $config = [
             'class' => 'app\components\Settings'
         ],
         'urlManager' => [
-            'class' => 'app\components\TUrlManager',
+            'class' => 'app\components\SUrlManager',
             'baseUrl' => (YII_ENV == 'dev') ? 'http://localhost/yii2-base-admin-panel-api' : ''
         ],
         'cache' => [
@@ -44,7 +44,7 @@ $config = [
             ]
         ],
         'mailer' => [
-            'class' => 'app\components\TMailer',
+            'class' => 'app\components\SMailer',
             'useFileTransport' => YII_ENV == 'dev' ? true : false
         ]
     ],

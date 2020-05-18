@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = (string)$model;
 
 	<div class=" panel ">
 		<div class=" panel-body ">
-    <?="<?php echo "?>\app\components\TDetailView::widget([
+    <?="<?php echo "?>\app\components\SDetailView::widget([
     	'id'	=> '<?=Inflector::camel2id ( StringHelper::basename ( $generator->modelClass ) )?>-detail-view',
         'model' => $model,
         'options'=>['class'=>'table table-bordered'],

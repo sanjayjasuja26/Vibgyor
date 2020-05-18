@@ -1,11 +1,11 @@
 <?php
 namespace app\components\useraction;
 
-use app\components\TBaseWidget;
+use app\components\SBaseWidget;
 use app\models\User;
 use Yii;
 
-class UserAction extends TBaseWidget
+class UserAction extends SBaseWidget
 {
 
     public $model;

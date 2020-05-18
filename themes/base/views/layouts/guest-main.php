@@ -15,7 +15,7 @@ AppAsset::register($this);
 <html lang="<?= Yii::$app->language ?>">
 
     <head>
-        <?php //$this->head() ?>
+        <?php $this->head() ?>
         <meta charset="<?= Yii::$app->charset ?>" />
         <?= Html::csrfMetaTags() ?>
         <!-- Tell the browser to be responsive to screen width -->
@@ -105,14 +105,14 @@ AppAsset::register($this);
                                 <span class="icon-bar"></span>
                             </button>
                             <div class="logo-normal">
-                                <a class="navbar-brand" href="index.html"><h3>Vibgyor</h3>
+                                <a class="navbar-brand" href="<?php echo Url::toRoute(['/']) ?>"><h3>Vibgyor</h3>
                                 </a>
                             </div>
                         </div>
 
                         <div id="navbar" class="navbar-collapse collapse">
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a href="index.html">Home</a></li>
+                                <li><a href="<?php echo Url::toRoute(['/']) ?>">Home</a></li>
                                 <!--                                                                <li class="dropdown yamm-fw yamm-half"><a href="#" data-toggle="dropdown" class="dropdown-toggle active">Mega Menu <b class="fa fa-angle-down"></b></a>
                                                                                                     <ul class="dropdown-menu">
                                                                                                         <li>
@@ -150,12 +150,11 @@ AppAsset::register($this);
                                                                                                         </li>
                                                                                                     </ul>
                                                                                                 </li>-->
-                                <li><a href="events.html">Events</a></li>
-                                <li><a href="page-contact.html">Contact</a></li>
+                                <li><a href="#">Events</a></li>
+                                <li><a href="#">Contact</a></li>
                                 <li><a href="<?= Url::toRoute(['/user/signup']) ?>">Signup</a></li>
                                 <li><a href="<?= Url::toRoute(['/user/login']) ?>">Login</a></li>
                                 <li class="iconitem"><a href="#" data-toggle="modal" data-target="#login-modal"><i class="fa fa-search"></i></a></li>
-                                <li class="iconitem"><a class="shopicon" href="shop-cart.html"><i class="fa fa-shopping-basket"></i> &nbsp;(0)</a></li>
                             </ul>
                         </div>
                     </nav><!-- end navbar -->
@@ -168,7 +167,7 @@ AppAsset::register($this);
                     <div class="overlay"></div>
                     <div class="home-text-wrapper relative container">
                         <div class="home-message">
-                            <p>Learning Management System</p>
+                            <p>Vibgyor System</p>
                             <small>Edulogy is the ideal choice for your organization, your business and your online education system. Create your online course now with unlimited page templates, color options, and menu features.</small>
                             <div class="btn-wrapper">
                                 <div class="text-center">

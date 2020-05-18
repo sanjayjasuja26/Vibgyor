@@ -11,6 +11,6 @@ class TActiveForm extends ActiveForm {
     public $options = [
         'enctype' => 'multipart/form-data'
     ];
-    public $fieldClass = 'app\components\TActiveField';
+    public $fieldClass = 'app\components\SActiveField';
 
 }

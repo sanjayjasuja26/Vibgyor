@@ -1,8 +1,5 @@
 <?php
-/**
- *@copyright : ToXSL Technologies Pvt. Ltd. < www.toxsl.com >
- *@author	 : Shiv Charan Panjeta < shiv@toxsl.com >
- */
+
 namespace app\models\search;
 
 use Yii;
@@ -13,13 +10,12 @@ use app\models\Collegecounseller as CollegecounsellerModel;
 /**
  * Collegecounseller represents the model behind the search form about `app\models\Collegecounseller`.
  */
-class Collegecounseller extends CollegecounsellerModel
-{
+class Collegecounseller extends CollegecounsellerModel {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'college_id', 'state_id', 'type_id', 'created_by_id'], 'integer'],
             [['full_name', 'email', 'contact_no', 'created_on', 'updated_on'], 'safe'],
@@ -29,14 +25,15 @@ class Collegecounseller extends CollegecounsellerModel
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
-    public function beforeValidate(){
-            return true;
+
+    public function beforeValidate() {
+        return true;
     }
+
     /**
      * Creates data provider instance with search query applied
      *
@@ -44,17 +41,16 @@ class Collegecounseller extends CollegecounsellerModel
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = CollegecounsellerModel::find();
 
-		        $dataProvider = new ActiveDataProvider([
+        $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
-						'defaultOrder' => [
-								'id' => SORT_DESC
-						]
-				]
+                'defaultOrder' => [
+                    'id' => SORT_DESC
+                ]
+            ]
         ]);
 
         if (!($this->load($params) && $this->validate())) {
@@ -72,9 +68,10 @@ class Collegecounseller extends CollegecounsellerModel
         ]);
 
         $query->andFilterWhere(['like', 'full_name', $this->full_name])
-            ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'contact_no', $this->contact_no]);
+                ->andFilterWhere(['like', 'email', $this->email])
+                ->andFilterWhere(['like', 'contact_no', $this->contact_no]);
 
         return $dataProvider;
     }
+
 }

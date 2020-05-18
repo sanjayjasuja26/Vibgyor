@@ -10,7 +10,7 @@ use yii\gii\CodeFile;
 use yii\helpers\Inflector;
 use yii\base\NotSupportedException;
 use yii\db\ActiveQuery;
-use app\components\TActiveRecord;
+use app\components\SActiveRecord;
 use app\modules\api\controllers\ApiTxController;
 use yii\db\BaseActiveRecord;
 use yii\helpers\StringHelper;
@@ -148,7 +148,7 @@ class Generator extends \yii\gii\Generator {
             'modelClass' => 'This is the Api Model Class.
 				 You should provide a fully qualified class name, e.g., <code>app\models\PosT</code>.',
             'controllerClass' => 'This is the Api Controller Class.
-				 You should provide a fully qualified class name, e.g., <code>app\modules\api\controllers\PostController</code>.',
+				 You should provide a fully qualified class name, e.g., <code>app\modules\api\controllers\PosSController</code>.',
             'baseControllerClass' => 'This is the class that the new API controller class will extend from.
                 You should provide a fully qualified class name, e.g., <code>app\modules\api\controllers\ApiTxController</code>.'
                 ]
@@ -167,7 +167,7 @@ class Generator extends \yii\gii\Generator {
         }
     }
 
-    public function getControllerID() {
+    public function geSControllerID() {
         $pos = strrpos($this->controllerClass, '\\');
         $class = substr(substr($this->controllerClass, $pos), 1, -10);
 
@@ -186,7 +186,7 @@ class Generator extends \yii\gii\Generator {
         $controllerclass = substr(substr($this->controllerClass, $pos + 1), 0, - 10);
 
         $controllerFile = $controllerPath . '\\' . $controllerclass . 'Controller.php';
-        $testFile = Yii::getAlias($testPath . '\\' . $this->getControllerID() . '.php');
+        $testFile = Yii::getAlias($testPath . '\\' . $this->geSControllerID() . '.php');
         $files = [
             new CodeFile($controllerFile, $this->render('api.php'))
         ];

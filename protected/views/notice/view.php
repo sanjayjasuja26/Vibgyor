@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = (string) $model;
 		<div class="card-body ">
     <?php
 
-    echo \app\components\TDetailView::widget([
+    echo \app\components\SDetailView::widget([
         'id' => 'notice-detail-view',
         'model' => $model,
         'options' => [

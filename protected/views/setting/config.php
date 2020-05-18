@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Html;
-use app\components\TActiveForm;
+use app\components\SActiveForm;
 use app\models\Setting;
 
 /* @var $this yii\web\View */
@@ -18,7 +18,7 @@ use app\models\Setting;
 			<div class="panel-body">
 
     			<?php
-							$form = TActiveForm::begin ( [ 
+							$form = SActiveForm::begin ( [ 
 									'layout' => 'horizontal',
 									'enableClientValidation' => true,
 									'enableAjaxValidation' => true,
@@ -60,7 +60,7 @@ use app\models\Setting;
     				</div>
 				</div>
 
-				<?php TActiveForm::end(); ?>
+				<?php SActiveForm::end(); ?>
 			</div>
 		</div>
 	</div>

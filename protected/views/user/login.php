@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @copyright : ToXSL Technologies Pvt. Ltd. < www.toxsl.com >
- * @author	 : Shiv Charan Panjeta < shiv@toxsl.com >
- */
-use app\components\TActiveForm;
+use app\components\SActiveForm;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use app\models\LoginForm;
@@ -39,7 +35,7 @@ $fieldOptions2 = [
 
                         <div class="card-block">
                             <?php
-                            $form = TActiveForm::begin([
+                            $form = SActiveForm::begin([
                                         'id' => 'login-form',
                                         'enableClientValidation' => false,
                                         'enableAjaxValidation' => false,
@@ -107,7 +103,7 @@ $fieldOptions2 = [
                                     </p>
                                 </div>
                             </div>
-                            <?php TActiveForm::end() ?>
+                            <?php SActiveForm::end() ?>
                         </div>
                     </div>
                 </div>

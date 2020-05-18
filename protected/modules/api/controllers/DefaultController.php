@@ -2,14 +2,14 @@
 
 namespace app\modules\api\controllers;
 
-use app\components\TController;
+use app\components\SController;
 use yii\filters\AccessControl;
 use Yii\web\Response;
 
 /**
  * Default controller for the `Api` module
  */
-class DefaultController extends TController {
+class DefaulSController extends SController {
 
     /**
      * Renders the index view for the module

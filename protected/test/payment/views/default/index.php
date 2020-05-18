@@ -1,5 +1,5 @@
 <?php
-use app\components\TActiveForm;
+use app\components\SActiveForm;
 use app\modules\payment\assets\PaymentAsset;
 use app\modules\payment\components\Currency;
 use app\modules\payment\models\Payment;
@@ -25,7 +25,7 @@ if (! empty($currency)) {
 					<?= \Yii::$app->params['company'] ?>
 				</h3>
 				<?php
-    $form = TActiveForm::begin([
+    $form = SActiveForm::begin([
         /*
          * 'action' => [
          * '/payment/paypal/paynow'
@@ -53,7 +53,7 @@ if (! empty($currency)) {
 <?php }?>
 				</div>
 				</div>	
-				<?php TActiveForm::end(); ?>
+				<?php SActiveForm::end(); ?>
 			</div>
 		</div>
 	</div>

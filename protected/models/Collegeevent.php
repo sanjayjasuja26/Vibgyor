@@ -29,7 +29,7 @@ use app\models\User;
 
 use yii\helpers\ArrayHelper;
 
-class Collegeevent extends \app\components\TActiveRecord
+class Collegeevent extends \app\components\SActiveRecord
 {
 	public  function __toString()
 	{

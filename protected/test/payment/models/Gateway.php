@@ -19,7 +19,7 @@ use Yii;
 use yii\helpers\Json;
 use yii\helpers\Url;
 
-class Gateway extends \app\components\TActiveRecord
+class Gateway extends \app\components\SActiveRecord
 {
 
     public function __toString()
@@ -244,7 +244,7 @@ class Gateway extends \app\components\TActiveRecord
         else
             $params['title'] = (string) $this;
         
-        return Yii::$app->getUrlManager()->createAbsoluteUrl($params, true);
+        return Yii::$app->geSUrlManager()->createAbsoluteUrl($params, true);
     }
 
     public function afterSave($insert, $changedAttributes)

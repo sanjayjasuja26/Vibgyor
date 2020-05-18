@@ -27,7 +27,7 @@ namespace app\models;
 use Yii;
 use yii\helpers\VarDumper;
 
-class Feed extends \app\components\TActiveRecord
+class Feed extends \app\components\SActiveRecord
 {
 
     public function __toString()

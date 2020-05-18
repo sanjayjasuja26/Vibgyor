@@ -1,12 +1,12 @@
 <?php
 namespace app\modules\payment;
 
-use app\components\TModule;
+use app\components\SModule;
 
 /**
  * payment module definition class
  */
-class Module extends TModule
+class Module extends SModule
 {
 
     /**

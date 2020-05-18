@@ -1,7 +1,7 @@
 <?php
 namespace app\modules\payment\controllers;
 
-use app\components\TController;
+use app\components\SController;
 use app\models\User;
 use app\modules\payment\models\Gateway;
 use app\modules\payment\models\Transaction;
@@ -11,7 +11,7 @@ use yii\filters\VerbFilter;
 /**
  * Default controller for the `payment` module
  */
-class DefaultController extends TController
+class DefaulSController extends SController
 {
 
     /**

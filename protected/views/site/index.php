@@ -4,8 +4,7 @@ use yii\helpers\Url;
 
 /**
  *
- * @copyright : Amusoftech Pvt. Ltd. < http://amusoftech.com/ >
- * @author	 :Ram Mohamad Singh <  er.amudeep@gmail.com >
+ * @author :Sanjay Jasuja <  sanjayjasuja26@gmail.com >
  */
 /* @var $this yii\web\View */
 $this->title = Yii::$app->name;
@@ -16,7 +15,7 @@ $this->title = Yii::$app->name;
         <div class="row">
             <div class="col-md-4 hidden-sm hidden-xs">
                 <div class="custom-module">
-                    <img src="upload/device_01.png" alt="" class="img-responsive wow slideInLeft">
+                    <img src="<?= $this->theme->getUrl('frontend/upload/device_01.png'); ?>" alt="" class="img-responsive wow slideInLeft">
                 </div><!-- end module -->
             </div><!-- end col -->
             <div class="col-md-8">
@@ -82,7 +81,7 @@ $this->title = Yii::$app->name;
             <div class="caro-item">
                 <div class="course-box">
                     <div class="image-wrap entry">
-                        <img src="upload/course_01.jpg" alt="" class="img-responsive">
+                        <img src="<?= $this->theme->getUrl('frontend/upload/course_01.jpg'); ?>" alt="" class="img-responsive">
                         <div class="magnifier">
                             <a href="#" title=""><i class="flaticon-add"></i></a>
                         </div>
@@ -102,11 +101,11 @@ $this->title = Yii::$app->name;
                             </ul>
                         </div><!-- end left -->
 
-                        <div class="pull-right">
-                            <ul class="list-inline">
-                                <li><a href="#">$22.00</a></li>
-                            </ul>
-                        </div><!-- end left -->
+                        <!--                        <div class="pull-right">
+                                                    <ul class="list-inline">
+                                                        <li><a href="#">$22.00</a></li>
+                                                    </ul>
+                                                </div> end left -->
                     </div><!-- end footer -->
                 </div><!-- end box -->
             </div><!-- end col -->
@@ -114,7 +113,7 @@ $this->title = Yii::$app->name;
             <div class="caro-item">
                 <div class="course-box">
                     <div class="image-wrap entry">
-                        <img src="upload/course_02.jpg" alt="" class="img-responsive">
+                        <img src="<?= $this->theme->getUrl('frontend/upload/course_02.jpg'); ?>" alt="" class="img-responsive">
                         <div class="magnifier">
                             <a href="#" title=""><i class="flaticon-add"></i></a>
                         </div>
@@ -134,11 +133,11 @@ $this->title = Yii::$app->name;
                             </ul>
                         </div><!-- end left -->
 
-                        <div class="pull-right">
-                            <ul class="list-inline">
-                                <li><a href="#">$55.00</a></li>
-                            </ul>
-                        </div><!-- end left -->
+                        <!--                        <div class="pull-right">
+                                                    <ul class="list-inline">
+                                                        <li><a href="#">$55.00</a></li>
+                                                    </ul>
+                                                </div> end left -->
                     </div><!-- end footer -->
                 </div><!-- end box -->
             </div><!-- end col -->
@@ -146,7 +145,7 @@ $this->title = Yii::$app->name;
             <div class="caro-item">
                 <div class="course-box">
                     <div class="image-wrap entry">
-                        <img src="upload/course_03.jpg" alt="" class="img-responsive">
+                        <img src="<?= $this->theme->getUrl('frontend/upload/course_03.jpg'); ?>" alt="" class="img-responsive">
                         <div class="magnifier">
                             <a href="#" title=""><i class="flaticon-add"></i></a>
                         </div>
@@ -166,11 +165,11 @@ $this->title = Yii::$app->name;
                             </ul>
                         </div><!-- end left -->
 
-                        <div class="pull-right">
-                            <ul class="list-inline">
-                                <li><a href="#">$51.00</a></li>
-                            </ul>
-                        </div><!-- end left -->
+                        <!--                        <div class="pull-right">
+                                                    <ul class="list-inline">
+                                                        <li><a href="#">$51.00</a></li>
+                                                    </ul>
+                                                </div> end left -->
                     </div><!-- end footer -->
                 </div><!-- end box -->
             </div><!-- end col -->
@@ -178,7 +177,7 @@ $this->title = Yii::$app->name;
             <div class="caro-item">
                 <div class="course-box">
                     <div class="image-wrap entry">
-                        <img src="upload/course_04.jpg" alt="" class="img-responsive">
+                        <img src="<?= $this->theme->getUrl('frontend/upload/course_04.jpg'); ?>" alt="" class="img-responsive">
                         <div class="magnifier">
                             <a href="#" title=""><i class="flaticon-add"></i></a>
                         </div>
@@ -198,11 +197,11 @@ $this->title = Yii::$app->name;
                             </ul>
                         </div><!-- end left -->
 
-                        <div class="pull-right">
-                            <ul class="list-inline">
-                                <li><a href="#">$51.00</a></li>
-                            </ul>
-                        </div><!-- end left -->
+                        <!--                        <div class="pull-right">
+                                                    <ul class="list-inline">
+                                                        <li><a href="#">$51.00</a></li>
+                                                    </ul>
+                                                </div> end left -->
                     </div><!-- end footer -->
                 </div><!-- end box -->
             </div><!-- end col -->
@@ -210,7 +209,7 @@ $this->title = Yii::$app->name;
             <div class="caro-item">
                 <div class="course-box">
                     <div class="image-wrap entry">
-                        <img src="upload/course_01.jpg" alt="" class="img-responsive">
+                        <img src="<?= $this->theme->getUrl('frontend/upload/course_01.jpg'); ?>" alt="" class="img-responsive">
                         <div class="magnifier">
                             <a href="#" title=""><i class="flaticon-add"></i></a>
                         </div>
@@ -230,11 +229,11 @@ $this->title = Yii::$app->name;
                             </ul>
                         </div><!-- end left -->
 
-                        <div class="pull-right">
-                            <ul class="list-inline">
-                                <li><a href="#">$22.00</a></li>
-                            </ul>
-                        </div><!-- end left -->
+                        <!--                        <div class="pull-right">
+                                                    <ul class="list-inline">
+                                                        <li><a href="#">$22.00</a></li>
+                                                    </ul>
+                                                </div> end left -->
                     </div><!-- end footer -->
                 </div><!-- end box -->
             </div><!-- end col -->
@@ -355,7 +354,7 @@ $this->title = Yii::$app->name;
         <div class="row">
             <div class="col-md-4">
                 <div class="box testimonial">
-                    <p class="testiname"><strong><img src="upload/testimonial_01.png" alt="" class="img-circle"> Jenny LUXURY</strong></p>
+                    <p class="testiname"><strong><img src="<?= $this->theme->getUrl('frontend/upload/testimonial_01.png'); ?>" alt="" class="img-circle"> Jenny LUXURY</strong></p>
                     <p>Quisque porttitor eros quis leo pulvinar, at hendrerit sapien iaculis. Donec consectetur accumsan arcu, sit amet fringilla ex ultricies.</p>
                     <div class="rating">
                         <i class="fa fa-star"></i>
@@ -369,7 +368,7 @@ $this->title = Yii::$app->name;
 
             <div class="col-md-4">
                 <div class="box testimonial">
-                    <p class="testiname"><strong><img src="upload/testimonial_02.png" alt="" class="img-circle"> Martin LEO</strong></p>
+                    <p class="testiname"><strong><img src="<?= $this->theme->getUrl('frontend/upload/testimonial_02.png'); ?>" alt="" class="img-circle"> Martin LEO</strong></p>
                     <p>Quisque porttitor eros quis leo pulvinar, at hendrerit sapien iaculis. Donec consectetur accumsan arcu, sit amet fringilla ex ultricies.</p>
                     <div class="rating">
                         <i class="fa fa-star"></i>
@@ -383,7 +382,7 @@ $this->title = Yii::$app->name;
 
             <div class="col-md-4">
                 <div class="box testimonial">
-                    <p class="testiname"><strong><img src="upload/testimonial_03.png" alt="" class="img-circle"> John DOE</strong></p>
+                    <p class="testiname"><strong><img src="<?= $this->theme->getUrl('frontend/upload/testimonial_03.png'); ?>" alt="" class="img-circle"> John DOE</strong></p>
                     <p>Quisque porttitor eros quis leo pulvinar, at hendrerit sapien iaculis. Donec consectetur accumsan arcu, sit amet fringilla ex ultricies.</p>
                     <div class="rating">
                         <i class="fa fa-star"></i>
@@ -401,7 +400,7 @@ $this->title = Yii::$app->name;
 <section class="section gb">
     <div class="container">
         <div class="section-title text-center">
-            <h3>Recent News</h3>
+            <h3>Recent Events</h3>
             <p>Maecenas sit amet tristique turpis. Quisque porttitor eros quis leo pulvinar, at hendrerit sapien iaculis. Donec consectetur accumsan arcu, sit amet fringilla ex ultricies.</p>
         </div><!-- end title -->
 
@@ -409,7 +408,7 @@ $this->title = Yii::$app->name;
             <div class="col-lg-4 col-md-12">
                 <div class="blog-box">
                     <div class="image-wrap entry">
-                        <img src="upload/blog_01.jpeg" alt="" class="img-responsive">
+                        <img src="<?= $this->theme->getUrl('frontend/upload/blog_01.jpeg'); ?>" alt="" class="img-responsive">
                         <div class="magnifier">
                             <a href="blog-single.html" title=""><i class="flaticon-add"></i></a>
                         </div>
@@ -433,14 +432,14 @@ $this->title = Yii::$app->name;
             <div class="col-lg-4 col-md-12">
                 <div class="blog-box">
                     <div class="image-wrap entry">
-                        <img src="upload/blog_02.jpeg" alt="" class="img-responsive">
+                        <img src="<?= $this->theme->getUrl('frontend/upload/blog_02.jpeg'); ?>" alt="" class="img-responsive">
                         <div class="magnifier">
                             <a href="blog-single.html" title=""><i class="flaticon-add"></i></a>
                         </div>
                     </div><!-- end image-wrap -->
 
                     <div class="blog-desc">
-                        <h4><a href="blog-single.html">The most suitable web design & development tutorials</a></h4>
+                        <h4><a href="#">The most suitable web design & development tutorials</a></h4>
                         <p>Sed suscipit neque in erat posuere tristique aliquam porta vestibulum. Cras placerat tincidunt. </p>
                     </div><!-- end blog-desc -->
 
@@ -457,14 +456,14 @@ $this->title = Yii::$app->name;
             <div class="col-lg-4 col-md-12">
                 <div class="blog-box">
                     <div class="image-wrap entry">
-                        <img src="upload/blog_03.jpeg" alt="" class="img-responsive">
+                        <img src="<?= $this->theme->getUrl('frontend/upload/blog_03.jpeg'); ?>" alt="" class="img-responsive">
                         <div class="magnifier">
-                            <a href="blog-single.html" title=""><i class="flaticon-add"></i></a>
+                            <a href="#" title=""><i class="flaticon-add"></i></a>
                         </div>
                     </div><!-- end image-wrap -->
 
                     <div class="blog-desc">
-                        <h4><a href="blog-single.html">Design for all mobile devices! This is name "responsive"</a></h4>
+                        <h4><a href="#">Design for all mobile devices! This is name "responsive"</a></h4>
                         <p>Suspendisse scelerisque ex ac mattis molestie vel enim ut massa placerat faucibus sed ut dui vivamus. </p>
                     </div><!-- end blog-desc -->
 

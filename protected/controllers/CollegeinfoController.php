@@ -9,18 +9,18 @@ namespace app\controllers;
 use Yii;
 use app\models\Collegeinfo;
 use app\models\search\Collegeinfo as CollegeinfoSearch;
-use app\components\TController;
+use app\components\SController;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
 use yii\filters\AccessRule;
 use app\models\User;
 use yii\web\HttpException;
-use app\components\TActiveForm;
+use app\components\SActiveForm;
 
 /**
  * CollegeinfoController implements the CRUD actions for Collegeinfo model.
  */
-class CollegeinfoController extends TController {
+class CollegeinfoController extends SController {
 
     public function behaviors() {
         return [
@@ -114,7 +114,7 @@ class CollegeinfoController extends TController {
         $post = \yii::$app->request->post();
         if (\yii::$app->request->isAjax && $model->load($post)) {
             \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return TActiveForm::validate($model);
+            return SActiveForm::validate($model);
         }
         if ($model->load($post) && $model->save()) {
             return $this->redirect($model->getUrl());
@@ -137,7 +137,7 @@ class CollegeinfoController extends TController {
         $post = \yii::$app->request->post();
         if (\yii::$app->request->isAjax && $model->load($post)) {
             \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return TActiveForm::validate($model);
+            return SActiveForm::validate($model);
         }
         if ($model->load($post) && $model->save()) {
             return $this->redirect($model->getUrl());

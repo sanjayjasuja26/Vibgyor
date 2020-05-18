@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Html;
-use app\components\TActiveForm;
+use app\components\SActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\media\models\File */

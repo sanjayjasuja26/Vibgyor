@@ -5,8 +5,8 @@
 */
 namespace app\controllers;
 
-use app\components\TActiveForm;
-use app\components\TController;
+use app\components\SActiveForm;
+use app\components\SController;
 use app\models\ContactForm;
 use app\models\EmailQueue;
 use app\models\User;
@@ -18,7 +18,7 @@ use bizley\contenttools\actions\UploadAction;
 use bizley\contenttools\actions\InsertAction;
 use bizley\contenttools\actions\RotateAction;
 
-class SiteController extends TController
+class SiteController extends SController
 {
 
     public function behaviors()
@@ -98,7 +98,7 @@ class SiteController extends TController
         $model = new ContactForm();
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return TActiveForm::validate($model);
+            return SActiveForm::validate($model);
         }
         if ($model->load(Yii::$app->request->post())) {
             $sub = 'New Contact: ' . $model->subject;

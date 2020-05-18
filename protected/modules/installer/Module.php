@@ -6,12 +6,12 @@
 
 namespace app\modules\installer;
 
-use app\components\TModule;
+use app\components\SModule;
 
 /**
  * install module definition class
  */
-class Module extends TModule {
+class Module extends SModule {
 
     public $exts = [];
     public $pkgs = [];

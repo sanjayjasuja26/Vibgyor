@@ -25,7 +25,7 @@
 		"php" : ">=7.0.0",
 		"yiisoft/yii2" : "*",
 		"yiisoft/yii2-bootstrap4" : "^1.0@dev",
-		"yiisoft/yii2-swiftmailer" : "*",
+		"yiisoft/yii2-swifSMailer" : "*",
 		"yiisoft/yii2-jui" : "*",
 		"yiisoft/yii2-imagine" : "*",
 		"yiisoft/yii2-authclient" : "*",

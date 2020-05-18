@@ -45,7 +45,7 @@ use yii\web\NotFoundHttpException;
 use \thyseus\files\behaviors\HasFilesBehavior;
 use app\modules\page\models\Page;
 
-class User extends \app\components\TActiveRecord implements \yii\web\IdentityInterface
+class User extends \app\components\SActiveRecord implements \yii\web\IdentityInterface
 {
 
     public $search;
@@ -565,7 +565,7 @@ class User extends \app\components\TActiveRecord implements \yii\web\IdentityInt
                     'password',
                     'newPassword'
                 ],
-                'app\components\TPasswordValidator'
+                'app\components\SPasswordValidator'
             ],
             [
                 [

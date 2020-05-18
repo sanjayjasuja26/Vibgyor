@@ -21,7 +21,7 @@ use app\models\User;
 use Yii;
 use yii\web\HttpException;
 
-class DeviceDetail extends \app\components\TActiveRecord
+class DeviceDetail extends \app\components\SActiveRecord
 {
 
     public function __toString()

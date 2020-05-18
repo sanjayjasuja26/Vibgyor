@@ -152,7 +152,7 @@ foreach ( $generator->getTableSchema ()->columns as $column ) {
 	}
 	public function DeleteWorks(AcceptanceTester $I) 
 	{
-		$I->sendAjaxPostRequest ( '/<?=$generator->module .$url?>/delete/' . $this->id );
+		$I->sendAjaxPosSRequest ( '/<?=$generator->module .$url?>/delete/' . $this->id );
 			$I->expectTo ( 'delete <?=$url?> works' );
 			$I->amOnPage ( '/<?=$generator->module .$url?>/' . $this->id );
 			$I->canSeeResponseCodeIs(404);

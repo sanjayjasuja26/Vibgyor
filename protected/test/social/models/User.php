@@ -16,7 +16,7 @@ namespace app\modules\social\models;
 
 use Yii;
 
-class User extends \app\components\TActiveRecord {
+class User extends \app\components\SActiveRecord {
 	public function __toString() {
 		return ( string ) $this->social_user_id;
 	}
@@ -156,7 +156,7 @@ class User extends \app\components\TActiveRecord {
 			$params ['title'] = $this->title;
 		else
 			$params ['title'] = ( string ) $this;
-		return Yii::$app->getUrlManager ()->createAbsoluteUrl ( $params, true );
+		return Yii::$app->geSUrlManager ()->createAbsoluteUrl ( $params, true );
 	}
 	public function asJson($with_relations = false) {
 		$json = [ ];

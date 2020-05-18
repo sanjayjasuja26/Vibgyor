@@ -1,12 +1,12 @@
 <?php
 namespace app\modules\media;
 
-use app\components\TModule;
+use app\components\SModule;
 
 /**
  * media module definition class
  */
-class Module extends TModule
+class Module extends SModule
 {
 
     /**

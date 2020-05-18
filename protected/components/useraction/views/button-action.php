@@ -1,11 +1,11 @@
 <?php
-use app\components\TActiveForm;
+use app\components\SActiveForm;
 use yii\helpers\Html;
 ?>
 <div class="clearfix"></div>
 <div class="form">
 
-    <?php $form = TActiveForm::begin(['id' => 'user-actions-form',]); ?>
+    <?php $form = SActiveForm::begin(['id' => 'user-actions-form',]); ?>
 		<?= $title?>
 		<div class="btn-group pull-right">
 
@@ -29,5 +29,5 @@ foreach ($allowed as $id => $act) {
 ?>
 	
 	</div>
-<?php TActiveForm::end(); ?>
+<?php SActiveForm::end(); ?>
 </div>

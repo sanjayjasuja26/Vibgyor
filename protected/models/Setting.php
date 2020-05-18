@@ -11,6 +11,7 @@
  * @property integer $state_id
  * @property integer $created_by_id
  */
+
 namespace app\models;
 
 use Yii;
@@ -18,60 +19,48 @@ use yii\helpers\Inflector;
 use yii\helpers\Json;
 use yii\base\InvalidConfigException;
 
-class Setting extends \app\components\TActiveRecord
-{
+class Setting extends \app\components\SActiveRecord {
 
-    public function __toString()
-    {
+    public function __toString() {
         return (string) $this->title;
     }
 
     public $keyName;
-
     public $keyType;
-
     public $keyValue;
-
     public $keyRequired;
 
     const KEY_TYPE_STRING = 0;
-
     const KEY_TYPE_BOOL = 1;
-
     const KEY_TYPE_INT = 2;
-
     const KEY_TYPE_EMAIL = 3;
-
     const KEY_TYPE_TIME = 4;
-
     const KEY_TYPE_DATE = 5;
-
     const KEY_TYPE_TEXT = 6;
 
-    public static function getDefaultConfig()
-    {
+    public static function getDefaultConfig() {
         return [
             'appConfig' => [
                 'title' => Yii::t('app', 'App Configration'),
                 'value' => [
                     'companyUrl' => [
                         'type' => self::KEY_TYPE_STRING,
-                        'value' => 'https://www.toxsl.com',
+                        'value' => 'https://www.vibgyor.com',
                         'required' => true
                     ],
                     'company' => [
                         'type' => self::KEY_TYPE_STRING,
-                        'value' => 'ToXSL Technologies',
+                        'value' => 'Vibgyor Technologies',
                         'required' => true
                     ],
                     'companyEmail' => [
                         'type' => self::KEY_TYPE_STRING,
-                        'value' => 'admin@toxsl.in',
+                        'value' => 'admin@vibgyor.in',
                         'required' => true
                     ],
                     'companyContactEmail' => [
                         'type' => self::KEY_TYPE_STRING,
-                        'value' => 'admin@toxsl.in',
+                        'value' => 'admin@vibgyor.in',
                         'required' => false
                     ],
                     'companyContactNo' => [
@@ -81,7 +70,7 @@ class Setting extends \app\components\TActiveRecord
                     ],
                     'companyAddress' => [
                         'type' => self::KEY_TYPE_STRING,
-                        'value' => 'C-127, 2nd floor, Phase 8, Industrial Area, Sector 72, Mohali, Punjab',
+                        'value' => 'Mohali, Punjab',
                         'required' => false
                     ],
                     'loginCount' => [
@@ -129,14 +118,12 @@ class Setting extends \app\components\TActiveRecord
                         'value' => '',
                         'required' => true
                     ],
-                
                 ]
             ]
         ];
     }
 
-    public static function getDefault($key)
-    {
+    public static function getDefault($key) {
         $setting = self::getDefaultConfig();
         if (isset($setting[$key])) {
             return $setting[$key];
@@ -145,8 +132,7 @@ class Setting extends \app\components\TActiveRecord
         }
     }
 
-    public static function getTypeOptions()
-    {
+    public static function getTypeOptions() {
         return [
             self::KEY_TYPE_STRING => 'String',
             self::KEY_TYPE_BOOL => 'Boolean',
@@ -158,20 +144,16 @@ class Setting extends \app\components\TActiveRecord
         ];
     }
 
-    public function getType()
-    {
+    public function getType() {
         $list = self::getTypeOptions();
         return isset($list[$this->type_id]) ? $list[$this->type_id] : 'Not Defined';
     }
 
     const STATE_INACTIVE = 0;
-
     const STATE_ACTIVE = 1;
-
     const STATE_DELETED = 2;
 
-    public static function getStateOptions()
-    {
+    public static function getStateOptions() {
         return [
             self::STATE_INACTIVE => "New",
             self::STATE_ACTIVE => "Active",
@@ -179,26 +161,23 @@ class Setting extends \app\components\TActiveRecord
         ];
     }
 
-    public function getState()
-    {
+    public function getState() {
         $list = self::getStateOptions();
         return isset($list[$this->state_id]) ? $list[$this->state_id] : 'Not Defined';
     }
 
-    public function getStateBadge()
-    {
+    public function getStateBadge() {
         $list = [
             self::STATE_INACTIVE => "primary",
             self::STATE_ACTIVE => "success",
             self::STATE_DELETED => "danger"
         ];
         return isset($list[$this->state_id]) ? \yii\helpers\Html::tag('span', $this->getState(), [
-            'class' => 'label label-' . $list[$this->state_id]
-        ]) : 'Not Defined';
+                    'class' => 'label label-' . $list[$this->state_id]
+                ]) : 'Not Defined';
     }
 
-    public static function getCreatedByOptions()
-    {
+    public static function getCreatedByOptions() {
         return [
             "TYPE1",
             "TYPE2",
@@ -207,18 +186,18 @@ class Setting extends \app\components\TActiveRecord
         // return ArrayHelper::Map ( CreatedBy::findActive ()->all (), 'id', 'title' );
     }
 
-    public function getCreatedBy()
-    {
+    public function getCreatedBy() {
         $list = self::getCreatedByOptions();
         return isset($list[$this->created_by_id]) ? $list[$this->created_by_id] : 'Not Defined';
     }
 
-    public function beforeValidate()
-    {
+    public function beforeValidate() {
         if ($this->isNewRecord) {
-            if (! isset($this->created_by_id))
+            if (!isset($this->created_by_id))
                 $this->created_by_id = Yii::$app->user->id;
-        } else {}
+        } else {
+            
+        }
         return parent::beforeValidate();
     }
 
@@ -226,8 +205,7 @@ class Setting extends \app\components\TActiveRecord
      *
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return '{{%setting}}';
     }
 
@@ -235,8 +213,7 @@ class Setting extends \app\components\TActiveRecord
      *
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [
                 [
@@ -305,8 +282,7 @@ class Setting extends \app\components\TActiveRecord
      *
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => Yii::t('app', 'ID'),
             'key' => Yii::t('app', 'Key'),
@@ -318,25 +294,21 @@ class Setting extends \app\components\TActiveRecord
         ];
     }
 
-    public static function getHasManyRelations()
-    {
+    public static function getHasManyRelations() {
         $relations = [];
         return $relations;
     }
 
-    public static function getHasOneRelations()
-    {
+    public static function getHasOneRelations() {
         $relations = [];
         return $relations;
     }
 
-    public function beforeDelete()
-    {
+    public function beforeDelete() {
         return parent::beforeDelete();
     }
 
-    public function asJson($with_relations = false)
-    {
+    public function asJson($with_relations = false) {
         $json = [];
         $json['id'] = $this->id;
         $json['key'] = $this->key;
@@ -345,17 +317,18 @@ class Setting extends \app\components\TActiveRecord
         $json['type_id'] = $this->type_id;
         $json['state_id'] = $this->state_id;
         $json['created_by_id'] = $this->created_by_id;
-        if ($with_relations) {}
+        if ($with_relations) {
+            
+        }
         return $json;
     }
 
-    public static function generateField($key, $field)
-    {
+    public static function generateField($key, $field) {
         $html = "";
         if (is_array($field)) {
             $required = (isset($field['required']) && ($field['required'] != false)) ? "required" : '';
             $value = isset($field['value']) ? $field['value'] : '';
-            $typeRequired = (! empty($required)) ? true : false;
+            $typeRequired = (!empty($required)) ? true : false;
             if (isset($field['type'])) {
                 switch ($field['type']) {
                     case self::KEY_TYPE_BOOL:
@@ -438,12 +411,11 @@ class Setting extends \app\components\TActiveRecord
         return $html;
     }
 
-    public static function setDefaultConfig()
-    {
+    public static function setDefaultConfig() {
         $data = self::getDefaultConfig();
         foreach ($data as $key => $value) {
             $model = self::findOne([
-                'key' => $key
+                        'key' => $key
             ]);
             if (empty($model)) {
                 $model = new self();
@@ -455,35 +427,34 @@ class Setting extends \app\components\TActiveRecord
                 $save = json_decode($model->value, true);
                 $static = $value['value'];
                 foreach ($save as $key => $value) {
-                    if (! array_key_exists($key, $static)) {
+                    if (!array_key_exists($key, $static)) {
                         unset($save[$key]);
                     }
                 }
                 foreach ($static as $key => $value) {
-                    if (! array_key_exists($key, $save)) {
+                    if (!array_key_exists($key, $save)) {
                         $save[$key] = $value;
                     }
                 }
                 $model->value = Json::encode($save);
             }
 
-            if (! $model->save()) {
+            if (!$model->save()) {
                 \Yii::$app->session->setFlash('error', "Error! " . $model->errors);
             }
         }
     }
 
-    public static function checkKeyType($type, $value)
-    {
+    public static function checkKeyType($type, $value) {
         switch ($type) {
             case self::KEY_TYPE_BOOL:
-                if (! empty($value)) {
+                if (!empty($value)) {
                     $val = \yii\helpers\Html::tag('span', 'ON', [
-                        'class' => 'label label-success'
+                                'class' => 'label label-success'
                     ]);
                 } else {
                     $val = \yii\helpers\Html::tag('span', 'OFF', [
-                        'class' => 'label label-danger'
+                                'class' => 'label label-danger'
                     ]);
                 }
                 break;
@@ -493,26 +464,24 @@ class Setting extends \app\components\TActiveRecord
         }
         return $val;
     }
-    public function isAllowed()
-    {
-        
+
+    public function isAllowed() {
+
         if (User::isAdmin())
             return true;
-            
-            if ($this instanceof User)
-            {
-                return ($this->id == Yii::$app->user->id);
-            }
-            if ($this->hasAttribute('created_by_id'))
-            {
-                return ($this->created_by_id == Yii::$app->user->id);
-            }
-            
-            if ($this->hasAttribute('user_id'))
-            {
-                return ($this->user_id == Yii::$app->user->id);
-            }
-            
-            return false;
+
+        if ($this instanceof User) {
+            return ($this->id == Yii::$app->user->id);
+        }
+        if ($this->hasAttribute('created_by_id')) {
+            return ($this->created_by_id == Yii::$app->user->id);
+        }
+
+        if ($this->hasAttribute('user_id')) {
+            return ($this->user_id == Yii::$app->user->id);
+        }
+
+        return false;
     }
+
 }

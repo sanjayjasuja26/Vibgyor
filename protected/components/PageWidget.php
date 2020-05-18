@@ -8,7 +8,7 @@ use yii\helpers\StringHelper;
 use yii\helpers\Url;
 use app\modules\page\models\Page;
 
-class PageWidget extends TBaseWidget {
+class PageWidget extends SBaseWidget {
 
     public $id;
     public $limit = 0;

@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use app\components\TActiveForm;
+use app\components\SActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Courseofferdbycollege */
@@ -13,7 +13,7 @@ use app\components\TActiveForm;
 <div class="panel-body">
 
     <?php 
-$form = TActiveForm::begin([
+$form = SActiveForm::begin([
 					 'layout' => 'horizontal',
 						'id'	=> 'courseofferdbycollege-form',
 						]);
@@ -49,6 +49,6 @@ echo $form->errorSummary($model);
     </div>
 	</div>
 
-    <?php TActiveForm::end(); ?>
+    <?php SActiveForm::end(); ?>
 
 </div>

@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Html;
-use app\components\TActiveForm;
+use app\components\SActiveForm;
 use app\modules\social\models\Provider;
 
 /* @var $this yii\web\View */
@@ -251,7 +251,7 @@ use app\modules\social\models\Provider;
 			</div>
 			<div class="col-sm-6">
   	<?php
-			$form = TActiveForm::begin ( [ 
+			$form = SActiveForm::begin ( [ 
 					'id' => 'social-provider-form' 
 			] );
 			?>
@@ -287,7 +287,7 @@ use app\modules\social\models\Provider;
 
     <?php
 				
-				TActiveForm::end ();
+				SActiveForm::end ();
 				?>
   </div>
 

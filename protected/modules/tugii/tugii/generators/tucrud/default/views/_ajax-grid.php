@@ -18,7 +18,7 @@ $nameAttribute = $generator->getNameAttribute ();
 echo "<?php\n";
 ?>
 
-use app\components\TGridView;
+use app\components\SGridView;
 use <?=$generator->indexWidgetType === 'grid' ? "yii\\grid\\GridView" : "yii\\widgets\\ListView"?>;
 <?=$generator->enablePjax ? 'use yii\widgets\Pjax;' : ''?>
 
@@ -38,7 +38,7 @@ $pjax=$class."-pjax-ajax-grid";
 
 if ($generator->indexWidgetType === 'grid') :
 	?>
-    <?="<?php echo "?>TGridView::widget([
+    <?="<?php echo "?>SGridView::widget([
     	'id' => '<?=$class?>-ajax-grid-view',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -89,7 +89,7 @@ if ($generator->indexWidgetType === 'grid') :
 	}
 	?>
 
-            ['class' => 'app\components\TActionColumn','header'=>'<a>Actions</a>'],
+            ['class' => 'app\components\SActionColumn','header'=>'<a>Actions</a>'],
         ],
     ]); ?>
 <?php

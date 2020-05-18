@@ -28,7 +28,7 @@ use yii\web\UploadedFile;
 use yii\imagine\Image;
 use yii\helpers\Html;
 
-class File extends \app\components\TActiveRecord
+class File extends \app\components\SActiveRecord
 {
 
     const TYPE_IMAGE = 0;
@@ -469,7 +469,7 @@ class File extends \app\components\TActiveRecord
             $params['title'] = $this->title;
         else
             $params['title'] = (string) $this;
-        return Yii::$app->getUrlManager()->createAbsoluteUrl($params, true);
+        return Yii::$app->geSUrlManager()->createAbsoluteUrl($params, true);
     }
 
     public static function findImage($model, $all = false)

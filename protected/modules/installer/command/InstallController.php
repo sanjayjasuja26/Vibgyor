@@ -1,8 +1,5 @@
 <?php
-/**
- *@copyright   : ToXSL Technologies Pvt. Ltd < https://toxsl.com >
- *@author      : Shiv Charan Panjeta  < shiv@toxsl.com >
- */
+
 namespace app\modules\installer\command;
 
 use app\modules\installer\helpers\InstallerHelper;
@@ -16,31 +13,20 @@ use yii\helpers\VarDumper;
 /**
  * Install controller for the `install` module
  */
-class InstallController extends Controller
-{
+class InstallController extends Controller {
 
     public $dryrun = false;
-
     public $db_name;
-
     public $username;
-
     public $db_password;
-
     public $full_name;
-
     public $email;
-
     public $password;
-
     public $tablePrefix = 'tbl_';
-
     public $host;
-
     public $moduleClass;
 
-    public function options($actionID)
-    {
+    public function options($actionID) {
         return [
             'dryrun',
             'db_name',
@@ -54,8 +40,7 @@ class InstallController extends Controller
         ];
     }
 
-    public function optionAliases()
-    {
+    public function optionAliases() {
         return [
             'd' => 'dryrun',
             'db' => 'db_name',
@@ -74,21 +59,19 @@ class InstallController extends Controller
      *
      * @return string
      */
-    public function log($string)
-    {
+    public function log($string) {
         echo $string . PHP_EOL;
     }
 
-    public function beforeAction($action)
-    {
+    public function beforeAction($action) {
         $this->host = "127.0.0.1";
-        if (! isset($this->db_name))
+        if (!isset($this->db_name))
             $this->db_name = Yii::$app->id;
-        if (! isset($this->username))
+        if (!isset($this->username))
             $this->username = "root";
-        if (! isset($this->db_password))
+        if (!isset($this->db_password))
             $this->db_password = "";
-        
+
         if (file_exists(DB_CONFIG_FILE_PATH)) {
             $dbconfig = include (DB_CONFIG_FILE_PATH);
             $this->username = $dbconfig['username'];
@@ -98,32 +81,31 @@ class InstallController extends Controller
                 $this->db_name = $matches[1];
             }
         }
-        if (! parent::beforeAction($action)) {
+        if (!parent::beforeAction($action)) {
             return false;
         }
-        
+
         // other custom code here
-        
+
         return true; // or false to not run the action
     }
 
-    protected function removeDB()
-    {
+    protected function removeDB() {
         $dbValid = true;
         // Connect to MySQL
         $link = mysqli_connect($this->host, $this->username, $this->db_password);
-        if (! $link) {
+        if (!$link) {
             die('Could not connect: ' . mysql_error());
         }
-        
+
         // Make my_db the current database
         $db_selected = mysqli_select_db($link, $this->db_name);
-        
+
         if ($db_selected) {
             $dbValid = false;
             // If we couldn't, then it either doesn't exist, or we can't see it.
             $sql = 'DROP DATABASE ' . $this->db_name;
-            
+
             if (mysqli_query($link, $sql)) {
                 echo "Database removed successfully\n";
                 $dbValid = true;
@@ -131,7 +113,7 @@ class InstallController extends Controller
                 echo 'Error creating database: ' . mysqli_error($link) . "\n";
             }
         }
-        
+
         mysqli_close($link);
         return $dbValid;
     }
@@ -139,32 +121,30 @@ class InstallController extends Controller
     /**
      * Remove database
      */
-    public function actionRemove()
-    {
+    public function actionRemove() {
         if ($this->removeDB()) {
-            
+
             if (file_exists(DB_CONFIG_FILE_PATH))
                 @unlink(DB_CONFIG_FILE_PATH);
         }
     }
 
-    protected function checkDB()
-    {
+    protected function checkDB() {
         $dbValid = true;
         // Connect to MySQL
         $link = mysqli_connect($this->host, $this->username, $this->db_password);
-        if (! $link) {
+        if (!$link) {
             die('Could not connect: ' . mysql_error());
         }
-        
+
         // Make my_db the current database
         $db_selected = mysqli_select_db($link, $this->db_name);
-        
-        if (! $db_selected) {
+
+        if (!$db_selected) {
             $dbValid = false;
             // If we couldn't, then it either doesn't exist, or we can't see it.
             $sql = 'CREATE DATABASE ' . $this->db_name;
-            
+
             if (mysqli_query($link, $sql)) {
                 echo "Database created successfully\n";
                 $dbValid = true;
@@ -172,7 +152,7 @@ class InstallController extends Controller
                 echo 'Error creating database: ' . mysqli_error($link) . "\n";
             }
         }
-        
+
         mysqli_close($link);
         return $dbValid;
     }
@@ -180,16 +160,14 @@ class InstallController extends Controller
     /**
      * Check system requirements
      */
-    public function actionSystem()
-    {
+    public function actionSystem() {
         $checks = SystemCheck::getResults($this->module);
     }
 
     /**
      * Check code quality
      */
-    public function actionCode()
-    {
+    public function actionCode() {
         $checks = CodeCheck::getResults();
         $hasError = false;
         foreach ($checks as $check) {
@@ -204,12 +182,11 @@ class InstallController extends Controller
     /**
      * Check database module
      */
-    public function actionModule()
-    {
+    public function actionModule() {
         if ($this->checkDB()) {
             $success = true;
             try {
-                
+
                 \Yii::$app->set('db', [
                     'class' => 'yii\db\Connection',
                     'dsn' => "mysql:host=$this->host;dbname=$this->db_name",
@@ -224,12 +201,12 @@ class InstallController extends Controller
                 $success = false;
             }
         }
-        
+
         if ($success) {
             $moduleName = $this->moduleClass;
             try {
                 $message = 'NOK';
-                
+
                 if (class_exists("$moduleName")) {
                     $class = $moduleName;
                 } else {
@@ -245,7 +222,7 @@ class InstallController extends Controller
                         if (is_file($sqlFile)) {
                             $sqlArray = file_get_contents($sqlFile);
                             $message = InstallerHelper::execSql($sqlArray);
-                            
+
                             $this->log(__FUNCTION__ . " :DB:" . $sqlFile . ' ==> ' . $message);
                         } else {
                             $this->log(__FUNCTION__ . " :DB:" . $sqlFile . " not exists.");
@@ -254,7 +231,9 @@ class InstallController extends Controller
                 } else {
                     $this->log(__FUNCTION__ . " `dbFile` Method not exits");
                 }
-                if ($message == 'ok') {} else {
+                if ($message == 'ok') {
+                    
+                } else {
                     $this->log(__FUNCTION__ . " : " . $message);
                 }
             } catch (Exception $e) {
@@ -268,12 +247,11 @@ class InstallController extends Controller
     /**
      * Remove modules database check
      */
-    public function actionRemoveModule()
-    {
+    public function actionRemoveModule() {
         if ($this->checkDB()) {
             $success = true;
             try {
-                
+
                 \Yii::$app->set('db', [
                     'class' => 'yii\db\Connection',
                     'dsn' => "mysql:host=$this->host;dbname=$this->db_name",
@@ -288,12 +266,12 @@ class InstallController extends Controller
                 $success = false;
             }
         }
-        
+
         if ($success) {
             $moduleName = $this->moduleClass;
             try {
                 $message = 'NOK';
-                
+
                 if (class_exists("$moduleName")) {
                     $class = $moduleName;
                 } else {
@@ -302,11 +280,11 @@ class InstallController extends Controller
                 $this->log(__FUNCTION__ . ":" . $class);
                 if (method_exists($class, 'dbFile')) {
                     $sqlFile = $class::dbFile();
-                    
+
                     if (file_exists($sqlFile)) {
                         $this->log(__FUNCTION__ . " :DB:" . $sqlFile . ' ==> OK');
                         $sqlArray = file_get_contents($sqlFile);
-                        
+
                         // TODO find tables name and create drop instuctions
                         if (preg_match_all("/DROP TABLE(.*);/i", $sqlArray, $matches)) {
                             $final = 'SET AUTOCOMMIT=0;
@@ -327,7 +305,9 @@ COMMIT;';
                 } else {
                     $this->log(__FUNCTION__ . " `dbFile` Method not exits");
                 }
-                if ($message == 'ok') {} else {
+                if ($message == 'ok') {
+                    
+                } else {
                     $this->log(__FUNCTION__ . " : " . $message);
                 }
             } catch (Exception $e) {
@@ -343,18 +323,17 @@ COMMIT;';
      *
      * @return number
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $success = true;
-        
+
         $checks = SystemCheck::getResults($this->module, true);
-        
+
         $message = "file not found";
-        
+
         if ($this->checkDB()) {
             $success = true;
             try {
-                
+
                 \Yii::$app->set('db', [
                     'class' => 'yii\db\Connection',
                     'dsn' => "mysql:host=$this->host;dbname=$this->db_name",
@@ -369,12 +348,12 @@ COMMIT;';
                 $success = false;
             }
         }
-        
-        if (! $success) {
+
+        if (!$success) {
             $this->log(__FUNCTION__ . "database not ready");
             return 0;
         }
-        
+
         $text_file = "<?php
 			return [
 			'class' => 'yii\db\Connection',
@@ -388,12 +367,12 @@ COMMIT;';
             'schemaCacheDuration' => 3600,
             'schemaCache' => 'cache',
 			];";
-        
+
         try {
             $message = 'NOK';
             file_put_contents(DB_CONFIG_FILE_PATH, $text_file);
             $message = InstallerHelper::execSqlFiles($this->module->sqlfile);
-            
+
             if ($message != 'NOK') {
                 $this->log(" Installation Done.");
                 InstallerHelper::setCookie();
@@ -411,12 +390,11 @@ COMMIT;';
     /**
      * Remove database
      */
-    public function actionDatabase()
-    {
+    public function actionDatabase() {
         $this->removeDB();
-        
+
         $success = true;
-        
+
         if ($this->checkDB()) {
             $success = true;
             try {
@@ -434,13 +412,13 @@ COMMIT;';
                 $success = false;
             }
         }
-        
+
         if ($success) {
             try {
-                
+
                 $message = 'NOK';
                 $message = InstallerHelper::execSqlFiles($this->module->sqlfile);
-                
+
                 if ($message != 'NOK') {
                     $this->log(" Installation Done.");
                     InstallerHelper::setCookie();
@@ -455,7 +433,5 @@ COMMIT;';
             $this->log(__FUNCTION__ . "database not ready");
         }
     }
+
 }
-
-
-

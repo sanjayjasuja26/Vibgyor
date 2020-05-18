@@ -18,7 +18,7 @@ $nameAttribute = $generator->getNameAttribute ();
 echo "<?php\n";
 ?>
 
-use app\components\TGridView;
+use app\components\SGridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -46,7 +46,7 @@ $pjax=$class."-pjax-grid";
 
 if ($generator->indexWidgetType === 'grid') :
 	?>
-    <?="<?php echo "?>TGridView::widget([
+    <?="<?php echo "?>SGridView::widget([
     	'id' => '<?=Inflector::camel2id ( StringHelper::basename ( $generator->modelClass ) )?>-grid-view',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -102,7 +102,7 @@ if ($generator->indexWidgetType === 'grid') :
 	}
 	?>
 
-            ['class' => 'app\components\TActionColumn','header'=>'<a>Actions</a>'],
+            ['class' => 'app\components\SActionColumn','header'=>'<a>Actions</a>'],
         ],
     ]); ?>
 <?php

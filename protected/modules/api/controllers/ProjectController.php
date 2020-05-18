@@ -8,9 +8,9 @@ use app\models\search\Project;
 use app\models\Project as ProjectModel;
 
 /**
- * ProjectController implements the API actions for Project model.
+ * ProjecSController implements the API actions for Project model.
  */
-class ProjectController extends ApiTxController
+class ProjecSController extends ApiTxController
 {
 
     public function behaviors()

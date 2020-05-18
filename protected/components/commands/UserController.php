@@ -6,7 +6,7 @@ use app\models\User;
 use yii\console\Controller;
 use yii\console\ExitCode;
 use yii\helpers\ArrayHelper;
-use app\components\TPasswordValidator;
+use app\components\SPasswordValidator;
 
 class UserController extends Controller {
 
@@ -69,7 +69,7 @@ class UserController extends Controller {
             return ExitCode::NOUSER;
         }
 
-        $validator = new TPasswordValidator();
+        $validator = new SPasswordValidator();
 
         $model->password = $this->password;
 

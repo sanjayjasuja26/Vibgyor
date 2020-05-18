@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\components\TController;
+use app\components\SController;
 use app\models\LoginHistory;
 use app\models\User;
 use app\models\search\LoginHistory as LoginHistorySearch;
@@ -15,7 +15,7 @@ use yii\web\NotFoundHttpException;
 /**
  * LoginHistoryController implements the CRUD actions for LoginHistory model.
  */
-class LoginHistoryController extends TController {
+class LoginHistoryController extends SController {
 
     public function behaviors() {
         return [

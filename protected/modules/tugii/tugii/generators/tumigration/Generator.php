@@ -15,7 +15,7 @@ use yii\gii\CodeFile;
 use yii\helpers\Inflector;
 use yii\base\NotSupportedException;
 use yii\db\ActiveQuery;
-use app\components\TActiveRecord;
+use app\components\SActiveRecord;
 
 /**
  * This generator will generate one or multiple ActiveRecord classes for the specified database table.

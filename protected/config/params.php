@@ -8,6 +8,6 @@ return [
     'company' => 'Vibgyor Technologies',
     'companyUrl' => 'https://www.vibgyor.com',
     'user.passwordResetTokenExpire' => 60 * 1024,
-    //'bsVersion' => '4.3.1',
+    'bsVersion' => '3.3.7',
     'useCrudModals' => true
 ];

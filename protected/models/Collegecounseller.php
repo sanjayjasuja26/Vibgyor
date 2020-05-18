@@ -28,7 +28,7 @@ use app\models\User;
 
 use yii\helpers\ArrayHelper;
 
-class Collegecounseller extends \app\components\TActiveRecord
+class Collegecounseller extends \app\components\SActiveRecord
 {
 	public  function __toString()
 	{
@@ -118,7 +118,7 @@ public static function getCollegeOptions()
             [['college_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['college_id' => 'id']],
             [['created_by_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by_id' => 'id']],
             [['full_name', 'email', 'contact_no'], 'trim'],
-            [['full_name'], 'app\components\TNameValidator' ],
+            [['full_name'], 'app\components\SNameValidator' ],
             [['email'], 'email' ],
             [['state_id'], 'in', 'range' => array_keys(self::getStateOptions())],
             [['type_id'], 'in', 'range' => array_keys (self::getTypeOptions())]

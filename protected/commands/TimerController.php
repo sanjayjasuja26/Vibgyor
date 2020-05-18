@@ -5,10 +5,10 @@
 */
 namespace app\commands;
 
-use app\components\TConsoleController;
+use app\components\SConsoleController;
 use app\models\EmailQueue;
 
-class TimerController extends TConsoleController
+class TimerController extends SConsoleController
 {
 
     const MAX_ATTEMPTS = 5;

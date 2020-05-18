@@ -1,8 +1,5 @@
 <?php
-/**
- *@copyright   : ToXSL Technologies Pvt. Ltd < https://toxsl.com >
- *@author      : Shiv Charan Panjeta  < shiv@toxsl.com >
- */
+
 namespace app\modules\installer\models;
 
 use Yii;
@@ -13,8 +10,7 @@ use Yii;
  * @since 1.0
  * @author Abhimanyu Saharan
  */
-class CodeCheck
-{
+class CodeCheck {
 
     /**
      * Get Results of the Application SystemCheck.
@@ -26,8 +22,7 @@ class CodeCheck
      *
      * @return Array
      */
-    public static function getRequiredDir()
-    {
+    public static function getRequiredDir() {
         return [
             'protected',
             'themes',
@@ -45,8 +40,7 @@ class CodeCheck
         ];
     }
 
-    public static function getResults()
-    {
+    public static function getResults() {
         $projectroot = Yii::$app->basePath . '/../';
         $checks = [];
         foreach (self::getRequiredDir() as $path) {
@@ -65,4 +59,5 @@ class CodeCheck
         }
         return $checks;
     }
+
 }

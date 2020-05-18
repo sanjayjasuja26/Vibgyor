@@ -2,8 +2,8 @@
 
 namespace app\controllers;
 
-use app\components\TActiveForm;
-use app\components\TController;
+use app\components\SActiveForm;
+use app\components\SController;
 use app\models\EmailQueue;
 use app\models\User;
 use app\models\search\EmailQueue as EmailQueueSearch;
@@ -16,7 +16,7 @@ use yii\web\NotFoundHttpException;
 /**
  * EmailQueueController implements the CRUD actions for EmailQueue model.
  */
-class EmailQueueController extends TController {
+class EmailQueueController extends SController {
 
     public function behaviors() {
         return [
@@ -146,7 +146,7 @@ class EmailQueueController extends TController {
      * $post = \yii::$app->request->post();
      * if (\yii::$app->request->isAjax && $model->load($post)) {
      * \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-     * return TActiveForm::validate($model);
+     * return SActiveForm::validate($model);
      * }
      * if ($model->load($post) && $model->save()) {
      * return $this->redirect([
@@ -174,7 +174,7 @@ class EmailQueueController extends TController {
         $post = \yii::$app->request->post();
         if (\yii::$app->request->isAjax && $model->load($post)) {
             \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return TActiveForm::validate($model);
+            return SActiveForm::validate($model);
         }
         if ($model->load($post) && $model->save()) {
             return $this->redirect([

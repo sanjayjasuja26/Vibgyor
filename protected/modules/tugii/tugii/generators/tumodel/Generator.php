@@ -21,7 +21,7 @@ class Generator extends \yii\gii\generators\model\Generator
 
     public $modelClass;
 
-    public $baseClass = 'app\components\TActiveRecord';
+    public $baseClass = 'app\components\SActiveRecord';
 
     public $generateLabelsFromComments = false;
 
@@ -440,10 +440,10 @@ class Generator extends \yii\gii\generators\model\Generator
                 $rules[] = "[['" . $column->name . "'], 'email' ]";
             }
             if (preg_match('/(name)$/i', $column->name)) {
-                $rules[] = "[['" . $column->name . "'], 'app\components\TNameValidator' ]";
+                $rules[] = "[['" . $column->name . "'], 'app\components\SNameValidator' ]";
             }
             if (preg_match('/(password)$/i', $column->name)) {
-                $rules[] = "[['" . $column->name . "'],'app\components\TPasswordValidator','length' => 8  ]";
+                $rules[] = "[['" . $column->name . "'],'app\components\SPasswordValidator','length' => 8  ]";
             }
             if (preg_match('/^(status_id|state_id)/i', $column->name)) {
                 $rules[] = "[['" . $column->name . "'], 'in', 'range' => array_keys(self::getStateOptions())]";

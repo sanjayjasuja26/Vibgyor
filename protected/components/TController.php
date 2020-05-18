@@ -17,7 +17,7 @@ use yii\jui\Tabs;
 use yii\web\HttpException;
 use yii\web\View;
 
-class TController extends TBaseController {
+class SController extends TBaseController {
 
     public function actions() {
         return [
@@ -63,7 +63,7 @@ class TController extends TBaseController {
     }
 
     public function processSEO($model = null) {
-        if ($model != null && $model instanceof TActiveRecord && !$model->isNewRecord) {
+        if ($model != null && $model instanceof SActiveRecord && !$model->isNewRecord) {
 
             $this->_pageCaption = Html::encode(strip_tags($model));
             if ($model->hasAttribute('content'))
@@ -168,7 +168,7 @@ class TController extends TBaseController {
     }
 
     protected function checkIPAccess() {
-        $ip = Yii::$app->getRequest()->getUserIP();
+        $ip = Yii::$app->geSRequest()->getUserIP();
         foreach ($this->allowedIPs as $filter) {
             if ($filter === '*' || $filter === $ip || (($pos = strpos($filter, '*')) !== false && !strncmp($ip, $filter, $pos))) {
                 return true;

@@ -40,7 +40,7 @@ class Generator extends \yii\gii\generators\crud\Generator
 
     public $controllerClass;
 
-    public $baseControllerClass = 'app\components\TController';
+    public $baseControllerClass = 'app\components\SController';
 
     public $indexWidgetType = 'grid';
 
@@ -184,7 +184,7 @@ class Generator extends \yii\gii\generators\crud\Generator
      *
      * @return string the controller ID (without the module ID prefix)
      */
-    public function getControllerID()
+    public function geSControllerID()
     {
         $pos = strrpos($this->controllerClass, '\\');
         $class = substr(substr($this->controllerClass, $pos + 1), 0, - 10);
@@ -200,7 +200,7 @@ class Generator extends \yii\gii\generators\crud\Generator
     {
         $module = empty($this->moduleID) ? Yii::$app : Yii::$app->getModule($this->moduleID);
         
-        return $module->getViewPath() . '/' . $this->getControllerID();
+        return $module->getViewPath() . '/' . $this->geSControllerID();
     }
 
     public function getNameAttribute()
@@ -238,7 +238,7 @@ class Generator extends \yii\gii\generators\crud\Generator
         if ($column->phpType === 'boolean' || $column->dbType == 'tinyint(1)') {
             return "\$form->field(\$model, '$attribute')->checkbox()" . "//\$form->field(\$model, '$attribute')->widget(kartik\widgets\SwitchInput::className(),[])";
         } elseif ($column->type === 'text' || preg_match('/^description$/i', $column->name)) {
-            return " \$form->field(\$model, '$attribute')->widget ( app\components\TRichTextEditor::className (), [ 'options' => [ 'rows' => 6 ],'preset' => 'basic' ] );" . " //\$form->field(\$model, '$attribute')->textarea(['rows' => 6]);";
+            return " \$form->field(\$model, '$attribute')->widget ( app\components\SRichTextEditor::className (), [ 'options' => [ 'rows' => 6 ],'preset' => 'basic' ] );" . " //\$form->field(\$model, '$attribute')->textarea(['rows' => 6]);";
         } elseif ($column->type === 'date' || $column->type === 'datetime') {
             return "\$form->field(\$model, '$attribute')->widget(yii\jui\DatePicker::className(),
 			[
@@ -658,7 +658,7 @@ class Generator extends \yii\gii\generators\crud\Generator
             foreach ($files as $file) {
                 if ($file[0] !== '.') {
                     $fileClassName = substr($file, 0, strpos($file, '.'));
-                    // if (class_exists($fileClassName) && is_subclass_of($fileClassName, 'TActiveRecord')) {
+                    // if (class_exists($fileClassName) && is_subclass_of($fileClassName, 'SActiveRecord')) {
                     
                     $this->_models[] = 'app\\models\\' . $fileClassName;
                     // }
@@ -685,7 +685,7 @@ class Generator extends \yii\gii\generators\crud\Generator
                 $fileClassName = substr($file, 0, strpos($file, '.'));
                 $fileClassName = 'app\\modules\\' . str_replace('/', '\\', $fileClassName);
                 
-                if (class_exists($fileClassName)  /* && is_subclass_of ( $fileClassName, 'app\\componenets\\TActiveRecord', true ) */ ) {
+                if (class_exists($fileClassName)  /* && is_subclass_of ( $fileClassName, 'app\\componenets\\SActiveRecord', true ) */ ) {
                     
                     $this->_modulemodels[] = $fileClassName;
                 }

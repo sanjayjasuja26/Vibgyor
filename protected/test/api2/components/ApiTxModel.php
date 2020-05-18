@@ -7,7 +7,7 @@
 namespace app\modules\api2\components;
 
 use yii\web\Link;
-use app\components\TActiveRecord;
+use app\components\SActiveRecord;
 
 /**
  * Serializer converts resource objects and collections into array representation.
@@ -21,7 +21,7 @@ use app\components\TActiveRecord;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class ApiTxModel extends TActiveRecord
+class ApiTxModel extends SActiveRecord
 {
 
     /**

@@ -17,7 +17,7 @@ namespace app\modules\payment\models;
 
 use yii\helpers\Inflector;
 
-class GatewaySetting extends \app\components\TActiveRecord
+class GatewaySetting extends \app\components\SActiveRecord
 {
 
     // Input types

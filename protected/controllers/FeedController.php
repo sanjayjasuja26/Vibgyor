@@ -2,8 +2,8 @@
 
 namespace app\controllers;
 
-use app\components\TActiveForm;
-use app\components\TController;
+use app\components\SActiveForm;
+use app\components\SController;
 use app\models\Feed;
 use app\models\User;
 use app\models\search\Feed as FeedSearch;
@@ -16,7 +16,7 @@ use yii\web\NotFoundHttpException;
 /**
  * FeedController implements the CRUD actions for Feed model.
  */
-class FeedController extends TController {
+class FeedController extends SController {
 
     public function behaviors() {
         return [
@@ -109,7 +109,7 @@ class FeedController extends TController {
         $post = \yii::$app->request->post();
         if (\yii::$app->request->isAjax && $model->load($post)) {
             \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return TActiveForm::validate($model);
+            return SActiveForm::validate($model);
         }
         if ($model->load($post) && $model->save()) {
             return $this->redirect([
@@ -135,7 +135,7 @@ class FeedController extends TController {
         $post = \yii::$app->request->post();
         if (\yii::$app->request->isAjax && $model->load($post)) {
             \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return TActiveForm::validate($model);
+            return SActiveForm::validate($model);
         }
         if ($model->load($post) && $model->save()) {
             return $this->redirect([

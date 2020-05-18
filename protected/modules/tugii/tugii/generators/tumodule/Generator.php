@@ -46,7 +46,7 @@ class Generator extends \yii\gii\generators\module\Generator
         $files = [];
         $modulePath = $this->getModulePath();
         $files[] = new CodeFile($modulePath . '/' . StringHelper::basename($this->moduleClass) . '.php', $this->render("module.php"));
-        $files[] = new CodeFile($modulePath . '/controllers/DefaultController.php', $this->render("controller.php"));
+        $files[] = new CodeFile($modulePath . '/controllers/DefaulSController.php', $this->render("controller.php"));
         $files[] = new CodeFile($modulePath . '/views/default/index.php', $this->render("view.php"));
         
         $files[] = new CodeFile($modulePath . '/codeception.yml', $this->render("codeception.yml"));

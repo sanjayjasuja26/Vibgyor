@@ -1,5 +1,5 @@
 <?php
-use app\components\TGridView;
+use app\components\SGridView;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 use app\models\User;
@@ -29,7 +29,7 @@ echo MassAction::widget([
 Pjax::begin([
     'id' => 'login-history-pjax-grid'
 ]);
-echo TGridView::widget([
+echo SGridView::widget([
     'id' => 'login-history-grid',
     'dataProvider' => $dataProvider,
     'filterModel' => $searchModel,
@@ -74,7 +74,7 @@ echo TGridView::widget([
             'created_on:datetime',
 
         [
-            'class' => 'app\components\TActionColumn',
+            'class' => 'app\components\SActionColumn',
             'template' => '{view} {delete}',
             'header' => "<a>" . Yii::t("app", 'Actions') . "</a>",
             'showModal' => true

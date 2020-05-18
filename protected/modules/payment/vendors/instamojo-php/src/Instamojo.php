@@ -282,31 +282,31 @@ class Instamojo {
     /////   Request a Payment  /////
 
     /**
-    * @param array single PaymentRequest object.
-    * @return array single PaymentRequest object.
+    * @param array single PaymenSRequest object.
+    * @return array single PaymenSRequest object.
     */
-    public function paymentRequestCreate(array $payment_request) 
+    public function paymenSRequestCreate(array $payment_request) 
     {
         $response = $this->api_call('POST', 'payment-requests', $payment_request); 
         return $response['payment_request'];
     }
 
     /**
-    * @param string id as provided by paymentRequestCreate, paymentRequestsList, webhook or redirect.
-    * @return array single PaymentRequest object.
+    * @param string id as provided by paymenSRequestCreate, paymenSRequestsList, webhook or redirect.
+    * @return array single PaymenSRequest object.
     */
-    public function paymentRequestStatus($id) 
+    public function paymenSRequestStatus($id) 
     {
         $response = $this->api_call('GET', 'payment-requests/' . $id, array()); 
         return $response['payment_request'];
     }
 
     /**
-    * @param string id as provided by paymentRequestCreate, paymentRequestsList, webhook or redirect.
+    * @param string id as provided by paymenSRequestCreate, paymenSRequestsList, webhook or redirect.
     * @param string payment_id as received with the redirection URL or webhook.
-    * @return array single PaymentRequest object.
+    * @return array single PaymenSRequest object.
     */
-    public function paymentRequestPaymentStatus($id, $payment_id) 
+    public function paymenSRequestPaymentStatus($id, $payment_id) 
     {
         $response = $this->api_call('GET', 'payment-requests/' . $id . '/' . $payment_id, array()); 
         return $response['payment_request'];
@@ -316,11 +316,11 @@ class Instamojo {
     /**
     * @param array datetime_limits containing datetime data with keys 'max_created_at', 'min_created_at',
     * 'min_modified_at' and 'max_modified_at' in ISO 8601 format(optional).
-    * @return array containing list of PaymentRequest objects.
+    * @return array containing list of PaymenSRequest objects.
     * For more information on the allowed date formats check the
     * docs: https://www.instamojo.com/developers/request-a-payment-api/#toc-filtering-payment-requests
     */
-    public function paymentRequestsList($datetime_limits=null) 
+    public function paymenSRequestsList($datetime_limits=null) 
     {
         $endpoint = 'payment-requests';
 

@@ -1,8 +1,5 @@
 <?php
-/**
- *@copyright : ToXSL Technologies Pvt. Ltd. < www.toxsl.com >
- *@author	 : Shiv Charan Panjeta < shiv@toxsl.com >
- */
+
 namespace app\modules\media\models\search;
 
 use Yii;
@@ -13,15 +10,13 @@ use app\modules\media\models\File as FileModel;
 /**
  * File represents the model behind the search form about `app\modules\media\models\File`.
  */
-class File extends FileModel
-{
+class File extends FileModel {
 
     /**
      *
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [
                 [
@@ -53,14 +48,12 @@ class File extends FileModel
      *
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
-    public function beforeValidate()
-    {
+    public function beforeValidate() {
         return true;
     }
 
@@ -71,10 +64,9 @@ class File extends FileModel
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = FileModel::find();
-        
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
@@ -83,11 +75,11 @@ class File extends FileModel
                 ]
             ]
         ]);
-        
-        if (! ($this->load($params) && $this->validate())) {
+
+        if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
-        
+
         $query->andFilterWhere([
             'id' => $this->id,
             'model_id' => $this->model_id,
@@ -97,38 +89,39 @@ class File extends FileModel
             'updated_on' => $this->updated_on,
             'created_by_id' => $this->created_by_id
         ]);
-        
+
         $query->andFilterWhere([
-            'like',
-            'title',
-            $this->title
-        ])
-            ->andFilterWhere([
-            'like',
-            'file',
-            $this->file
-        ])
-            ->andFilterWhere([
-            'like',
-            'size',
-            $this->size
-        ])
-            ->andFilterWhere([
-            'like',
-            'extension',
-            $this->extension
-        ])
-            ->andFilterWhere([
-            'like',
-            'model_type',
-            $this->model_type
-        ])
-            ->andFilterWhere([
-            'like',
-            'createBy',
-            $this->createBy
+                    'like',
+                    'title',
+                    $this->title
+                ])
+                ->andFilterWhere([
+                    'like',
+                    'file',
+                    $this->file
+                ])
+                ->andFilterWhere([
+                    'like',
+                    'size',
+                    $this->size
+                ])
+                ->andFilterWhere([
+                    'like',
+                    'extension',
+                    $this->extension
+                ])
+                ->andFilterWhere([
+                    'like',
+                    'model_type',
+                    $this->model_type
+                ])
+                ->andFilterWhere([
+                    'like',
+                    'createBy',
+                    $this->createBy
         ]);
-        
+
         return $dataProvider;
     }
+
 }

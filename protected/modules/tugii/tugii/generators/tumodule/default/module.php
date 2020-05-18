@@ -20,17 +20,17 @@ echo "<?php\n";
  *@author	 : Shiv Charan Panjeta < shiv@toxsl.com >
  */
 namespace <?= $ns ?>;
-use app\components\TController;
-use app\components\TModule;
+use app\components\SController;
+use app\components\SModule;
 use app\models\User;
 /**
  * <?= $generator->moduleID ?> module definition class
  */
-class <?= $className ?> extends TModule
+class <?= $className ?> extends SModule
 {
     const NAME = '<?= $generator->moduleID ?>';
 
-    public $controllerNamespace = '<?= $generator->getControllerNamespace() ?>';
+    public $controllerNamespace = '<?= $generator->geSControllerNamespace() ?>';
 	
 	//public $defaultRoute = '<?= $generator->moduleID ?>';
 	
@@ -38,8 +38,8 @@ class <?= $className ?> extends TModule
 
     public static function subNav()
     {
-        return TController::addMenu(\Yii::t('app', '<?= Inflector::camel2words(Inflector::pluralize($generator->moduleID)) ?>'), '#', 'key ', Module::isAdmin(), [
-           // TController::addMenu(\Yii::t('app', 'Home'), '//<?= $generator->moduleID ?>', 'lock', Module::isAdmin()),
+        return SController::addMenu(\Yii::t('app', '<?= Inflector::camel2words(Inflector::pluralize($generator->moduleID)) ?>'), '#', 'key ', Module::isAdmin(), [
+           // SController::addMenu(\Yii::t('app', 'Home'), '//<?= $generator->moduleID ?>', 'lock', Module::isAdmin()),
         ]);
     }
     /*

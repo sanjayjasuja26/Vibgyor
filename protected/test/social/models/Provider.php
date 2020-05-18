@@ -19,7 +19,7 @@ namespace app\modules\social\models;
 use Yii;
 use yii\components;
 
-class Provider extends \app\components\TActiveRecord {
+class Provider extends \app\components\SActiveRecord {
 	const PROVIDER_GOOGLE = 1;
 	const PROVIDER_FACEBOOK = 2;
 	const PROVIDER_GITHUB = 3;
@@ -236,7 +236,7 @@ class Provider extends \app\components\TActiveRecord {
 			$params ['title'] = $this->title;
 		else
 			$params ['title'] = ( string ) $this;
-		return Yii::$app->getUrlManager ()->createAbsoluteUrl ( $params, true );
+		return Yii::$app->geSUrlManager ()->createAbsoluteUrl ( $params, true );
 	}
 	public function asJson($with_relations = false) {
 		$json = [ ];
@@ -278,7 +278,7 @@ class Provider extends \app\components\TActiveRecord {
 	public function getDomainUrl($type) {
 		$list = self::getClientClasses ();
 		$client = strtolower ( $list [$type] );
-		return Yii::$app->getUrlManager ()->createAbsoluteUrl ( [ 
+		return Yii::$app->geSUrlManager ()->createAbsoluteUrl ( [ 
 				"social/user/auth?authclient={$client}" 
 		] );
 	}

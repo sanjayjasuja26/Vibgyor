@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Html;
-use app\components\TActiveForm;
+use app\components\SActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Setting */
@@ -10,7 +10,7 @@ use app\components\TActiveForm;
 <div class="card-body">
 
     <?php
-    $form = TActiveForm::begin([
+    $form = SActiveForm::begin([
         'layout' => 'horizontal',
         'id' => 'setting-form'
     ]);
@@ -32,7 +32,7 @@ use app\components\TActiveForm;
     </div>
 	</div>
 
-    <?php TActiveForm::end(); ?>
+    <?php SActiveForm::end(); ?>
 
 </div>
 <script>

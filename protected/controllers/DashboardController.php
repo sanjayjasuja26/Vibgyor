@@ -2,12 +2,12 @@
 
 namespace app\controllers;
 
-use app\components\TController;
+use app\components\SController;
 use app\models\User;
 use app\components\filters\AccessControl;
 use app\models\Setting;
 
-class DashboardController extends TController {
+class DashboardController extends SController {
 
     public function behaviors() {
         return [

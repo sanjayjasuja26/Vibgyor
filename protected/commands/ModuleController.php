@@ -7,11 +7,11 @@
  */
 namespace app\commands;
 
-use app\components\TConsoleController;
+use app\components\SConsoleController;
 use Yii;
 use yii\console\ExitCode;
 
-class ModuleController extends TConsoleController
+class ModuleController extends SConsoleController
 {
 
     public $dryrun = false;

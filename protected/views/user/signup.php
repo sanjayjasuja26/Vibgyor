@@ -1,6 +1,6 @@
 <?php
 
-use app\components\TActiveForm;
+use app\components\SActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 ?>
@@ -12,7 +12,7 @@ use yii\helpers\Url;
                     <div class="col-md-6 col-md-offset-3 p-3">
                         <div class="card-block">
                             <?php
-                            $form = TActiveForm::begin([
+                            $form = SActiveForm::begin([
                                         'id' => 'form-signup',
                                         'options' => [
                                             'class' => 'login-form form-horizontal form-material white-popup-block'
@@ -41,7 +41,7 @@ use yii\helpers\Url;
                                 </div>
                             </div>
                             <?php
-                            TActiveForm::end();
+                            SActiveForm::end();
                             ?>
 
                         </div>

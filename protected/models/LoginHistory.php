@@ -24,7 +24,7 @@ namespace app\models;
 use Yii;
 use yii\helpers\VarDumper;
 
-class LoginHistory extends \app\components\TActiveRecord
+class LoginHistory extends \app\components\SActiveRecord
 {
 
     public static function add($success = true, $user = null, $failer_reason = null)

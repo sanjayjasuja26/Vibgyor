@@ -1,11 +1,8 @@
 <?php
-/**
- *@copyright : ToXSL Technologies Pvt. Ltd. < www.toxsl.com >
- *@author	 : Shiv Charan Panjeta < shiv@toxsl.com >
- */
+
 namespace app\modules\media\controllers;
 
-use app\components\TActiveForm;
+use app\components\SActiveForm;
 use app\components\TController;
 use app\models\User;
 use app\modules\media\models\File;
@@ -20,11 +17,9 @@ use yii\web\UploadedFile;
 /**
  * FileController implements the CRUD actions for File model.
  */
-class FileController extends TController
-{
+class FileController extends TController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -103,37 +98,37 @@ class FileController extends TController
      * return parent::beforeAction($action);
      * }
      */
-    public function actionUpload($modelId, $modelType, $createUserId = null, $typeId = File::TYPE_IMAGE)
-    {
+
+    public function actionUpload($modelId, $modelType, $createUserId = null, $typeId = File::TYPE_IMAGE) {
         \Yii::$app->response->format = 'json';
-        
+
         $images = UploadedFile::getInstancesByName('qqfile');
         $response = [
             'success' => false
         ];
-        if (! empty($images)) {
+        if (!empty($images)) {
             foreach ($images as $image) {
                 $model = new File();
                 $model->model_type = $modelType;
                 $model->model_id = $modelId;
-                
+
                 if (empty($createUserId)) {
                     $model->created_by_id = (isset(\Yii::$app->user) ? \Yii::$app->user->id : null);
                     $model->createBy = (isset(\Yii::$app->user) ? \Yii::$app->user->identity->full_name : 'Guest');
                 } else {
                     $model->created_by_id = $createUserId;
                     $user = User::findOne($createUserId);
-                    if (! empty($user)) {
+                    if (!empty($user)) {
                         $model->createBy = $user->full_name;
                     } else {
                         $model->createBy = 'Guest';
                     }
                 }
                 $model->type_id = $typeId;
-                
+
                 $model->uploadImageByFile($image);
-                
-                if (! $model->save()) {
+
+                if (!$model->save()) {
                     // print_r($model->errors);
                     $response['error'] = $model->getErrorsString();
                 } else {
@@ -150,14 +145,13 @@ class FileController extends TController
      *
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new FileSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $this->updateMenuItems();
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider
         ]);
     }
 
@@ -167,8 +161,7 @@ class FileController extends TController
      *
      * @return mixed
      */
-    public function actionAdd()
-    {
+    public function actionAdd() {
         $model = new File([
             'scenario' => 'insert'
         ]);
@@ -177,22 +170,22 @@ class FileController extends TController
         $post = \yii::$app->request->post();
         if (\yii::$app->request->isAjax && $model->load($post)) {
             \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return TActiveForm::validate($model);
+            return SActiveForm::validate($model);
         }
         if ($model->load($post)) {
-            
+
             // print_r($_FILES);exit;
-            
+
             if ($model->save()) {
                 return $this->redirect([
-                    'view',
-                    'id' => $model->id
+                            'view',
+                            'id' => $model->id
                 ]);
             }
         }
         $this->updateMenuItems();
         return $this->render('add', [
-            'model' => $model
+                    'model' => $model
         ]);
     }
 
@@ -203,48 +196,44 @@ class FileController extends TController
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $model = $this->findModel($id);
-        
-        if ( !empty($model->thumb_file) && is_file(UPLOAD_THUMB_PATH . $model->thumb_file) ) {
+
+        if (!empty($model->thumb_file) && is_file(UPLOAD_THUMB_PATH . $model->thumb_file)) {
             unlink(UPLOAD_THUMB_PATH . $model->thumb_file);
         }
-        if ( !empty($model->file) && is_file(UPLOAD_PATH . $model->file) ) {
+        if (!empty($model->file) && is_file(UPLOAD_PATH . $model->file)) {
             unlink(UPLOAD_PATH . $model->file);
         }
-        
+
         $model->delete();
-        
+
         return $this->redirect(\Yii::$app->request->referrer);
     }
 
-    public function actionImage($id, $thumb = true)
-    {
+    public function actionImage($id, $thumb = true) {
         $model = $this->findModel($id);
-        
+
         if ($thumb) {
             $file = UPLOAD_THUMB_PATH . $model->thumb_file;
         } else {
             $file = UPLOAD_PATH . $model->file;
         }
-        if (! is_file($file)) {
+        if (!is_file($file)) {
             return false;
         }
         return \Yii::$app->response->sendFile($file);
     }
 
-    public function actionSend($file)
-    {
+    public function actionSend($file) {
         $file = UPLOAD_PATH . $file;
-        if (! is_file($file)) {
+        if (!is_file($file)) {
             return false;
         }
         \Yii::$app->response->sendFile($file);
     }
 
-    public function actionDeleteFile($model, $id, $attribute = 'file')
-    {
+    public function actionDeleteFile($model, $id, $attribute = 'file') {
         \Yii::$app->response->format = 'json';
         $response = [
             'success' => false
@@ -269,18 +258,19 @@ class FileController extends TController
      * @return File the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id, $accessCheck = false)
-    {
+    protected function findModel($id, $accessCheck = false) {
         if (($model = File::findOne($id)) !== null) {
             if ($accessCheck)
                 throw new HttpException(403, Yii::t('app', 'You are not allowed to access this page.'));
-            
+
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
 
-    protected function updateMenuItems($model = null)
-    {}
+    protected function updateMenuItems($model = null) {
+        
+    }
+
 }

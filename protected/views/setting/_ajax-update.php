@@ -1,5 +1,5 @@
 <?php
-use app\components\TActiveForm;
+use app\components\SActiveForm;
 use yii\helpers\Html;
 use app\models\Setting;
 
@@ -10,7 +10,7 @@ $defaultConfig = (Setting::getDefaultConfig());
 ?>
 <div class="panel-body">
     <?php
-    $form = TActiveForm::begin([
+    $form = SActiveForm::begin([
         'layout' => 'horizontal',
         'id' => 'setting-update-form',
         'action' => [
@@ -97,6 +97,6 @@ $i ++;
 	</div>
     <?php
 
-TActiveForm::end();
+SActiveForm::end();
     ?>
 </div>

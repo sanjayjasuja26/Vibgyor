@@ -112,7 +112,7 @@ class GatewayAcceptanceCest
 
     public function DeleteWorks(AcceptanceTester $I)
     {
-        $I->sendAjaxPostRequest('/payment/gateway/delete/' . $this->id);
+        $I->sendAjaxPosSRequest('/payment/gateway/delete/' . $this->id);
         $I->expectTo('delete gateway works');
         $I->amOnPage('/paymentgateway/' . $this->id);
         $I->canSeeResponseCodeIs(404);

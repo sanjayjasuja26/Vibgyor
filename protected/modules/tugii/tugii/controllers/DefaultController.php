@@ -16,7 +16,7 @@ use app\modules\tugii\models\CrudForm;
 use app\modules\tugii\components\AppData;
 use app\modules\tugii\components\AppFile;
 use app\modules\tugii\models\ModelForm;
-class DefaultController extends \yii\gii\controllers\DefaultController {
+class DefaulSController extends \yii\gii\controllers\DefaulSController {
 	public function actionIndex() {
 		return $this->render ( 'index' );
 	}

@@ -1,8 +1,5 @@
 <?php
-/**
- *@copyright : ToXSL Technologies Pvt. Ltd. < www.toxsl.com >
- *@author	 : Shiv Charan Panjeta < shiv@toxsl.com >
- */
+
 namespace app\models\search;
 
 use Yii;
@@ -13,13 +10,12 @@ use app\models\Parentinfo as ParentinfoModel;
 /**
  * Parentinfo represents the model behind the search form about `app\models\Parentinfo`.
  */
-class Parentinfo extends ParentinfoModel
-{
+class Parentinfo extends ParentinfoModel {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'user_id', 'profession', 'course_id', 'caste', 'current_studies', 'state_id', 'type_id', 'created_by_id'], 'integer'],
             [['child_name', 'created_on', 'updated_on'], 'safe'],
@@ -29,14 +25,15 @@ class Parentinfo extends ParentinfoModel
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
-    public function beforeValidate(){
-            return true;
+
+    public function beforeValidate() {
+        return true;
     }
+
     /**
      * Creates data provider instance with search query applied
      *
@@ -44,17 +41,16 @@ class Parentinfo extends ParentinfoModel
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = ParentinfoModel::find();
 
-		        $dataProvider = new ActiveDataProvider([
+        $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
-						'defaultOrder' => [
-								'id' => SORT_DESC
-						]
-				]
+                'defaultOrder' => [
+                    'id' => SORT_DESC
+                ]
+            ]
         ]);
 
         if (!($this->load($params) && $this->validate())) {
@@ -79,4 +75,5 @@ class Parentinfo extends ParentinfoModel
 
         return $dataProvider;
     }
+
 }

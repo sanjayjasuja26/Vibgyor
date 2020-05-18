@@ -158,7 +158,7 @@ class Generator extends \yii\gii\Generator
     {
         return array_merge(parent::hints(), [
             'modelClass' => 'This is the Test Model Class.
-				 You should provide a fully qualified class name, e.g., <code>app\controllers\PostController</code>.',
+				 You should provide a fully qualified class name, e.g., <code>app\controllers\PosSController</code>.',
             'controllerClass' => 'Test Cest Class
 				 You should provide a fully qualified class name, e.g., <code>PosTAcceptanceCest</code>.',
             'actions' => 'Test Cest Actions.'
@@ -354,7 +354,7 @@ class Generator extends \yii\gii\Generator
                 if ($file[0] !== '.') {
                     $fileClassName = 'app\\controllers\\' . substr($file, 0, strpos($file, '.'));
                     
-                    if (class_exists($fileClassName)  /* && is_subclass_of ( $fileClassName, 'app\\componenets\\TActiveRecord', true ) */ ) {
+                    if (class_exists($fileClassName)  /* && is_subclass_of ( $fileClassName, 'app\\componenets\\SActiveRecord', true ) */ ) {
                         
                         $this->_models[] = $fileClassName;
                     }
@@ -364,7 +364,7 @@ class Generator extends \yii\gii\Generator
         return $this->_models;
     }
 
-    protected function getControllers()
+    protected function geSControllers()
     {
         if ($this->_controllers == null) {
             $files = scandir(Yii::getAlias('@app/controllers'));
@@ -372,7 +372,7 @@ class Generator extends \yii\gii\Generator
                 if ($file[0] !== '.') {
                     $fileClassName = 'app\\controllers\\' . substr($file, 0, strpos($file, '.'));
                     
-                    if (class_exists($fileClassName)  /* && is_subclass_of ( $fileClassName, 'app\\componenets\\TActiveRecord', true ) */ ) {
+                    if (class_exists($fileClassName)  /* && is_subclass_of ( $fileClassName, 'app\\componenets\\SActiveRecord', true ) */ ) {
                         
                         $this->_controllers[] = $fileClassName;
                     }
@@ -399,13 +399,13 @@ class Generator extends \yii\gii\Generator
                 $fileClassName = substr($file, 0, strpos($file, '.'));
                 $fileClassName = 'app\\modules\\' . str_replace('/', '\\', $fileClassName);
                 
-                if (class_exists($fileClassName)  /* && is_subclass_of ( $fileClassName, 'app\\componenets\\TActiveRecord', true ) */ ) {
+                if (class_exists($fileClassName)  /* && is_subclass_of ( $fileClassName, 'app\\componenets\\SActiveRecord', true ) */ ) {
                     
                     $this->_modulecontrollers[] = $fileClassName;
                 }
             }
         }
-        $all = array_merge($this->getControllers(), $this->_modulecontrollers);
+        $all = array_merge($this->geSControllers(), $this->_modulecontrollers);
         
         return $all;
     }
@@ -417,7 +417,7 @@ class Generator extends \yii\gii\Generator
     {
         return [
             'modelClass' => $this->getModulesControllers()
-            // 'controllerClass' => $this->getControllers()
+            // 'controllerClass' => $this->geSControllers()
         ];
     }
 }

@@ -31,7 +31,7 @@ use app\models\Studentinfo;
 
 use yii\helpers\ArrayHelper;
 
-class Course extends \app\components\TActiveRecord
+class Course extends \app\components\SActiveRecord
 {
 	public  function __toString()
 	{

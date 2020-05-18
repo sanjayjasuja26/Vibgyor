@@ -1,6 +1,6 @@
 <?php
 
-use app\components\TGridView;
+use app\components\SGridView;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /**
@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
 
 ?>
 <?php Pjax::begin(['id'=>'file-pjax-ajax-grid','enablePushState'=>false,'enableReplaceState'=>false]); ?>
-    <?php echo TGridView::widget([
+    <?php echo SGridView::widget([
     	'id' => 'file-ajax-grid-view',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -41,7 +41,7 @@ use yii\widgets\Pjax;
 				],*/
             /* 'createBy',*/
 
-            ['class' => 'app\components\TActionColumn','header'=>'<a>Actions</a>'],
+            ['class' => 'app\components\SActionColumn','header'=>'<a>Actions</a>'],
         ],
     ]); ?>
 <?php Pjax::end(); ?>

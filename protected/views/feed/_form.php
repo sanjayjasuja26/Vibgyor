@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Html;
-use app\components\TActiveForm;
+use app\components\SActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Feed */
@@ -13,7 +13,7 @@ use app\components\TActiveForm;
 
 
 <?php
-$form = TActiveForm::begin([
+$form = SActiveForm::begin([
     /* 'layout' => 'horizontal', */
     'id' => 'feed-form',
     'options' => [
@@ -24,7 +24,7 @@ $form = TActiveForm::begin([
 
 <div class="row">
 	<div class="col-md-3">	 <?php
-/* echo $form->field($model, 'content')->widget ( app\components\TRichTextEditor::className (), [ 'options' => [ 'rows' => 6 ],'preset' => 'basic' ] ); //$form->field($model, 'content')->textarea(['rows' => 6]); */
+/* echo $form->field($model, 'content')->widget ( app\components\SRichTextEditor::className (), [ 'options' => [ 'rows' => 6 ],'preset' => 'basic' ] ); //$form->field($model, 'content')->textarea(['rows' => 6]); */
 ?>
 	 		
 
@@ -78,6 +78,6 @@ echo $form->field($model, 'type_id')->dropDownList($model->getTypeOptions(), [
 
 <?php
 
-TActiveForm::end();
+SActiveForm::end();
 ?>
 

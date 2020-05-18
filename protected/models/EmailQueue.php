@@ -24,7 +24,7 @@
  */
 namespace app\models;
 
-class EmailQueue extends \app\components\TEmailQueue
+class EmailQueue extends \app\components\SEmailQueue
 {
 
     public function isAllowed()

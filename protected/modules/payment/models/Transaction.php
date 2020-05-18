@@ -16,7 +16,7 @@ namespace app\modules\payment\models;
 
 use Yii;
 
-class Transaction extends \app\components\TActiveRecord
+class Transaction extends \app\components\SActiveRecord
 {
 
     public $url;
@@ -138,7 +138,7 @@ class Transaction extends \app\components\TActiveRecord
                 [
                     'name'
                 ],
-                'app\components\TNameValidator'
+                'app\components\SNameValidator'
             ],
             [
                 [
@@ -201,7 +201,7 @@ class Transaction extends \app\components\TActiveRecord
     public function getUrl($action = 'view', $id = NULL)
     {
         $params = [
-            'payment/' . $this->getControllerID() . '/' . $action
+            'payment/' . $this->geSControllerID() . '/' . $action
         ];
         $params['id'] = $this->id;
         
@@ -211,7 +211,7 @@ class Transaction extends \app\components\TActiveRecord
         else
             $params['title'] = (string) $this;
         
-        return Yii::$app->getUrlManager()->createAbsoluteUrl($params, true);
+        return Yii::$app->geSUrlManager()->createAbsoluteUrl($params, true);
     }
 
     public function getPaymentResponse()

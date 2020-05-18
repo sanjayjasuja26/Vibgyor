@@ -1,8 +1,5 @@
 <?php
-/**
- *@copyright : ToXSL Technologies Pvt. Ltd. < www.toxsl.com >
- *@author	 : Shiv Charan Panjeta < shiv@toxsl.com >
- */
+
 namespace app\modules\notification\models\search;
 
 use app\modules\notification\models\Notification as NotificationModel;
@@ -12,15 +9,13 @@ use yii\data\ActiveDataProvider;
 /**
  * Notification represents the model behind the search form about `app\modules\notification\models\Notification`.
  */
-class Notification extends NotificationModel
-{
+class Notification extends NotificationModel {
 
     /**
      *
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [
                 [
@@ -50,14 +45,12 @@ class Notification extends NotificationModel
      *
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
-    public function beforeValidate()
-    {
+    public function beforeValidate() {
         return true;
     }
 
@@ -68,8 +61,7 @@ class Notification extends NotificationModel
      *
      * @return ActiveDataProvider
      */
-    public function search($params, $flag = false)
-    {
+    public function search($params, $flag = false) {
         $query = NotificationModel::find();
         if ($flag == true) {
             $query = $query->where([
@@ -84,11 +76,11 @@ class Notification extends NotificationModel
                 ]
             ]
         ]);
-        
-        if (! ($this->load($params) && $this->validate())) {
+
+        if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
-        
+
         $query->andFilterWhere([
             'id' => $this->id,
             'model_id' => $this->model_id,
@@ -98,28 +90,29 @@ class Notification extends NotificationModel
             'to_user_id' => $this->to_user_id,
             'created_by_id' => $this->created_by_id
         ]);
-        
+
         $query->andFilterWhere([
-            'like',
-            'title',
-            $this->title
-        ])
-            ->andFilterWhere([
-            'like',
-            'description',
-            $this->description
-        ])
-            ->andFilterWhere([
-            'like',
-            'model_type',
-            $this->model_type
-        ])
-            ->andFilterWhere([
-            'like',
-            'is_read',
-            $this->is_read
+                    'like',
+                    'title',
+                    $this->title
+                ])
+                ->andFilterWhere([
+                    'like',
+                    'description',
+                    $this->description
+                ])
+                ->andFilterWhere([
+                    'like',
+                    'model_type',
+                    $this->model_type
+                ])
+                ->andFilterWhere([
+                    'like',
+                    'is_read',
+                    $this->is_read
         ]);
-        
+
         return $dataProvider;
     }
+
 }

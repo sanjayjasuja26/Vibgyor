@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Html;
-use app\components\TGridView;
+use app\components\SGridView;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /**
@@ -21,7 +21,7 @@ Pjax::begin([
 ?>
     <?php
 
-    echo TGridView::widget([
+    echo SGridView::widget([
         'id' => 'login-history-ajax-grid-view',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -61,7 +61,7 @@ Pjax::begin([
             'create_time:datetime',
 
             [
-                'class' => 'app\components\TActionColumn',
+                'class' => 'app\components\SActionColumn',
                 'header' => "<a>".Yii::t("app",'Actions')."</a>"
             ]
         ]

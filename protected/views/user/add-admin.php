@@ -1,5 +1,5 @@
 <?php
-use app\components\TActiveForm;
+use app\components\SActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -26,7 +26,7 @@ $this->title = 'Signup';
 
 			<?php
 
-$form = TActiveForm::begin([
+$form = SActiveForm::begin([
     'id' => 'form-add-admin',
     'options' => [
         'class' => 'form-horizontal'
@@ -86,7 +86,7 @@ $form = TActiveForm::begin([
 			   
 			   	<?php
 
-    TActiveForm::end();
+    SActiveForm::end();
     ?>
 		
 </div>

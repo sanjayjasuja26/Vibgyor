@@ -27,7 +27,7 @@ $this->params ['breadcrumbs'] [] = ( string ) $model;
 		<div class=" panel-body ">
     <?php
 				
-				echo \app\components\TDetailView::widget ( [ 
+				echo \app\components\SDetailView::widget ( [ 
 						'id' => 'payment-gateway-detail-view',
 						'model' => $model,
 						'options' => [ 

@@ -22,7 +22,7 @@ use app\models\User;
 use Yii;
 use app\modules\api2\models\DeviceDetail;
 
-class Notification extends \app\components\TActiveRecord
+class Notification extends \app\components\SActiveRecord
 {
 
 
@@ -306,7 +306,7 @@ class Notification extends \app\components\TActiveRecord
             $params['title'] = $this->title;
         else
             $params['title'] = (string) $this;
-        return Yii::$app->getUrlManager()->createAbsoluteUrl($params, true);
+        return Yii::$app->geSUrlManager()->createAbsoluteUrl($params, true);
     }
 
     public function isAllowed()

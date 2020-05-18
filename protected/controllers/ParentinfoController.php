@@ -5,18 +5,18 @@ namespace app\controllers;
 use Yii;
 use app\models\Parentinfo;
 use app\models\search\Parentinfo as ParentinfoSearch;
-use app\components\TController;
+use app\components\SController;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
 use yii\filters\AccessRule;
 use app\models\User;
 use yii\web\HttpException;
-use app\components\TActiveForm;
+use app\components\SActiveForm;
 
 /**
  * ParentinfoController implements the CRUD actions for Parentinfo model.
  */
-class ParentinfoController extends TController {
+class ParentinfoController extends SController {
 
     public function behaviors() {
         return [
@@ -110,7 +110,7 @@ class ParentinfoController extends TController {
         $post = \yii::$app->request->post();
         if (\yii::$app->request->isAjax && $model->load($post)) {
             \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return TActiveForm::validate($model);
+            return SActiveForm::validate($model);
         }
         if ($model->load($post) && $model->save()) {
             return $this->redirect($model->getUrl());
@@ -133,7 +133,7 @@ class ParentinfoController extends TController {
         $post = \yii::$app->request->post();
         if (\yii::$app->request->isAjax && $model->load($post)) {
             \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return TActiveForm::validate($model);
+            return SActiveForm::validate($model);
         }
         if ($model->load($post) && $model->save()) {
             return $this->redirect($model->getUrl());

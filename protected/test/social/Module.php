@@ -1,14 +1,14 @@
 <?php
 namespace app\modules\social;
 
-use app\components\TModule;
+use app\components\SModule;
 use app\modules\social\models\Provider;
 use app\modules\social\models\User;
 
 /**
  * blog module definition class
  */
-class Module extends TModule
+class Module extends SModule
 {
 
     /**

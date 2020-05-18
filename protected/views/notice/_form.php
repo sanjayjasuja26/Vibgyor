@@ -1,5 +1,5 @@
 <?php
-use app\components\TActiveForm;
+use app\components\SActiveForm;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
@@ -15,7 +15,7 @@ use yii\helpers\Html;
 <div class="card-body">
 	
     <?php
-    $form = TActiveForm::begin([
+    $form = SActiveForm::begin([
         // 'layout' => 'horizontal',
         'id' => 'notice-form',
         'options' => [
@@ -31,7 +31,7 @@ echo $form->field($model, 'title')->textInput([
 	 		
 		 <?php
 
-echo $form->field($model, 'content')->widget(app\components\TRichTextEditor::className(), [
+echo $form->field($model, 'content')->widget(app\components\SRichTextEditor::className(), [
     'options' => [
         'rows' => 6
     ],
@@ -60,7 +60,7 @@ echo $form->field($model, 'type_id')->dropDownList($model->getTypeOptions(), [
 </div>
 <?php
 
-TActiveForm::end();
+SActiveForm::end();
 ?>
 
 </div>

@@ -7,10 +7,10 @@ use app\models\EmailQueue;
 use Yii;
 use yii\base\Exception;
 use yii\helpers\FileHelper;
-use app\components\TConsoleController;
+use app\components\SConsoleController;
 use app\modules\file\models\File;
 
-class ClearController extends TConsoleController {
+class ClearController extends SConsoleController {
 
     public function actionChar() {
         self::log('actionChar');
