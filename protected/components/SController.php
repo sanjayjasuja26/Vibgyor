@@ -168,7 +168,7 @@ class SController extends SBaseController {
     }
 
     protected function checkIPAccess() {
-        $ip = Yii::$app->geSRequest()->getUserIP();
+        $ip = Yii::$app->getRequest()->getUserIP();
         foreach ($this->allowedIPs as $filter) {
             if ($filter === '*' || $filter === $ip || (($pos = strpos($filter, '*')) !== false && !strncmp($ip, $filter, $pos))) {
                 return true;

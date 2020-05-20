@@ -18,7 +18,7 @@ use app\modules\installer\models\Mail;
 /**
  * Default controller for the `install` module
  */
-class DefaulSController extends Controller {
+class DefaultController extends Controller {
 
     public $setup;
     public $setupDone = false;
@@ -130,6 +130,7 @@ class DefaulSController extends Controller {
 
     public function handleSetup($model, $mail = null) {
         if ($this->checkDB($model)) {
+
             $success = true;
             try {
 

@@ -1523,10 +1523,10 @@ trait AcceptanceTesterActions
      *
      * @param $uri
      * @param $params
-     * @see \Codeception\Lib\InnerBrowser::sendAjaxGeSRequest()
+     * @see \Codeception\Lib\InnerBrowser::sendAjaxgetRequest()
      */
-    public function sendAjaxGeSRequest($uri, $params = null) {
-        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendAjaxGeSRequest', func_get_args()));
+    public function sendAjaxgetRequest($uri, $params = null) {
+        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendAjaxgetRequest', func_get_args()));
     }
 
  
@@ -1545,7 +1545,7 @@ trait AcceptanceTesterActions
      * ``` php
      * <?php
      * $I->sendAjaxPosSRequest('/updateSettings', array('notifications' => true)); // POST
-     * $I->sendAjaxGeSRequest('/updateSettings', array('notifications' => true)); // GET
+     * $I->sendAjaxgetRequest('/updateSettings', array('notifications' => true)); // GET
      *
      * ```
      *

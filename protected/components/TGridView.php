@@ -128,7 +128,7 @@ class SGridView extends GridView {
      * @return bool whether a download is allowed and requested.
      */
     protected function downloadRequested() {
-        $request = Yii::$app->geSRequest();
+        $request = Yii::$app->getRequest();
 
         $grid = $request->get('export');
 
