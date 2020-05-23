@@ -23,7 +23,7 @@ class SBootstrap implements BootstrapInterface {
                 $sFilePathConfig = $className::getRules();
                 if (!empty($sFilePathConfig)) {
                     Yii::trace($sKey . " :adding rules : " . VarDumper::dumpAsString($sFilePathConfig));
-                    $oApplication->geSUrlManager()->addRules($sFilePathConfig, false);
+                    $oApplication->getUrlManager()->addRules($sFilePathConfig, false);
                 }
             }
         }

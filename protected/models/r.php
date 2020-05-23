@@ -1,13 +1,13 @@
 <?php
 
 /**
- * This is the model class for table "tbl_parent_info".
+ * This is the model class for table "tbl_student_info".
  *
  * @property integer $id
  * @property integer $user_id
- * @property integer $profession
  * @property integer $course_id
- * @property string $child_name
+ * @property string $f_name
+ * @property string $m_name
  * @property integer $caste
  * @property integer $current_studies
  * @property integer $state_id
@@ -29,7 +29,7 @@ use app\models\Course;
 use app\models\User;
 use yii\helpers\ArrayHelper;
 
-class Parentinfo extends \app\components\SActiveRecord {
+class Studentinfo extends \app\components\SActiveRecord {
 
     const SCENARIO_ADD = 'add';
     const SCENARIO_UPDATE = 'update';
@@ -104,7 +104,7 @@ class Parentinfo extends \app\components\SActiveRecord {
      * @inheritdoc
      */
     public static function tableName() {
-        return '{{%parent_info}}';
+        return '{{%student_info}}';
     }
 
     public function scenarios() {
@@ -113,16 +113,17 @@ class Parentinfo extends \app\components\SActiveRecord {
         $scenarios['add'] = [
             'user_id',
             'state_id',
-            'created_on',
+            'created_on'
         ];
 
         $scenarios['update'] = [
-            'profession',
             'course_id',
-            'child_name',
+            'f_name',
+            'm_name',
             'caste',
             'current_studies',
             'state_id',
+            'created_on',
             'created_by_id'
         ];
         return $scenarios;
@@ -137,16 +138,16 @@ class Parentinfo extends \app\components\SActiveRecord {
                 [
                     'user_id',
                     'state_id',
-                    'created_on',
+                    'created_on'
                 ],
                 'required',
                 'on' => 'add'
             ],
             [
                 [
-                    'profession',
                     'course_id',
-                    'child_name',
+                    'f_name',
+                    'm_name',
                     'caste',
                     'current_studies',
                     'state_id',
@@ -155,26 +156,15 @@ class Parentinfo extends \app\components\SActiveRecord {
                 'required',
                 'on' => 'update'
             ],
-            [
-                [
-                    'user_id',
-                    'profession',
-                    'course_id',
-                    'caste',
-                    'current_studies',
-                    'state_id',
-                    'type_id',
-                    'created_by_id'
-                ],
-                'integer'
-            ],
+            [['user_id', 'course_id', 'caste', 'current_studies', 'state_id', 'type_id', 'created_by_id'], 'integer'],
             [['created_on', 'updated_on'], 'safe'],
-            [['child_name'], 'string', 'max' => 255],
+            [['f_name', 'm_name'], 'string', 'max' => 255],
             [['course_id'], 'exist', 'skipOnError' => true, 'targetClass' => Course::className(), 'targetAttribute' => ['course_id' => 'id']],
             [['created_by_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
-            [['child_name'], 'trim'],
-            [['child_name'], 'app\components\SNameValidator'],
+            [['f_name', 'm_name'], 'trim'],
+            [['f_name'], 'app\components\SNameValidator'],
+            [['m_name'], 'app\components\SNameValidator'],
             [['state_id'], 'in', 'range' => array_keys(self::getStateOptions())],
             [['type_id'], 'in', 'range' => array_keys(self::getTypeOptions())]
         ];
@@ -187,9 +177,9 @@ class Parentinfo extends \app\components\SActiveRecord {
         return [
             'id' => Yii::t('app', 'ID'),
             'user_id' => Yii::t('app', 'User'),
-            'profession' => Yii::t('app', 'Profession'),
             'course_id' => Yii::t('app', 'Course'),
-            'child_name' => Yii::t('app', 'Child Name'),
+            'f_name' => Yii::t('app', 'F Name'),
+            'm_name' => Yii::t('app', 'M Name'),
             'caste' => Yii::t('app', 'Caste'),
             'current_studies' => Yii::t('app', 'Current Studies'),
             'state_id' => Yii::t('app', 'State'),
@@ -242,9 +232,9 @@ class Parentinfo extends \app\components\SActiveRecord {
         $json = [];
         $json['id'] = $this->id;
         $json['user_id'] = $this->user_id;
-        $json['profession'] = $this->profession;
         $json['course_id'] = $this->course_id;
-        $json['child_name'] = $this->child_name;
+        $json['f_name'] = $this->f_name;
+        $json['m_name'] = $this->m_name;
         $json['caste'] = $this->caste;
         $json['current_studies'] = $this->current_studies;
         $json['state_id'] = $this->state_id;

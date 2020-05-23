@@ -35,6 +35,13 @@ class DashboardController extends SController {
         if (empty($smtpConfig)) {
             Setting::setDefaultConfig();
         }
+        if (User::isCollege()) {
+            $college_info = \app\models\Collegeinfo::find()->select('title')->where(['user_id' => \Yii::$app->user->id])->one();
+
+            if (empty($college_info->title)) {
+                return $this->redirect(['user/update-college-info', 'id' => \yii->$app->user->id]);
+            }
+        }
         return $this->render('index');
     }
 

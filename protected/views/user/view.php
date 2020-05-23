@@ -73,25 +73,5 @@ $this->params['breadcrumbs'][] = [
             ?>
         </div>
     </div>
-
-    <?php
-    if ($model->role_id != User::ROLE_USER) {
-        ?>
-        <div class="card">
-            <div class="card-body">
-    <?php
-    $this->context->startPanel();
-
-    $this->context->addPanel('Pages', 'pages', 'Page', $model);
-
-    $this->context->endPanel();
-    ?>
-            </div>
-        </div>
-    <?php
-}
-?>
-    <?= DocumentViewerWidget::widget(['model' => $model]); ?>
-
 </div>
 

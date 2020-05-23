@@ -105,7 +105,8 @@ AppAsset::register($this);
                                 <span class="icon-bar"></span>
                             </button>
                             <div class="logo-normal">
-                                <a class="navbar-brand" href="<?php echo Url::toRoute(['/']) ?>"><h3>Vibgyor</h3>
+                                <a class="navbar-brand" href="<?php echo Url::toRoute(['/']) ?>">
+                                    <img src="<?= $this->theme->getUrl('/frontend/images/Vibgyor-1-web.png'); ?>"/>
                                 </a>
                             </div>
                         </div>

@@ -1,9 +1,8 @@
 <?php
 
 /**
-*@author     : Sanjay Jasuja< sanjayjasuja26@gmail.com >
-*/
-
+ * @author     : Sanjay Jasuja< sanjayjasuja26@gmail.com >
+ */
 /**
  * This is the model class for table "tbl_user".
  *
@@ -38,6 +37,7 @@
  * @property integer $created_by_id === Related data ===
  * @property LoginHistory[] $loginHistories
  */
+
 namespace app\models;
 
 use Yii;
@@ -45,74 +45,46 @@ use yii\web\NotFoundHttpException;
 use \thyseus\files\behaviors\HasFilesBehavior;
 use app\modules\page\models\Page;
 
-class User extends \app\components\SActiveRecord implements \yii\web\IdentityInterface
-{
+class User extends \app\components\SActiveRecord implements \yii\web\IdentityInterface {
 
     public $search;
 
     const STATE_INACTIVE = 0;
-
     const STATE_ACTIVE = 1;
-
     const STATE_BANNED = 2;
-
     const STATE_DELETED = 4;
-
     const MALE = 0;
-
     const FEMALE = 1;
-
     const ROLE_ADMIN = 0;
-
     const ROLE_COLLEGE = 1;
-
     const ROLE_UNIVERSITY = 2;
-        
     const ROLE_STUDENT = 3;
-    
     const ROLE_PARENT = 4;
-
     const TYPE_ON = 0;
-
     const TYPE_OFF = 1;
-
     const EMAIL_NOT_VERIFIED = 0;
-
     const EMAIL_VERIFIED = 1;
-
     const LAYOUT_MAIN = 'main';
-
     const LAYOUT_GUEST_MAIN = 'guest-main';
-
     const SCENARIO_CHANGEPASSWORD = 'changepassword';
-
     const SCENARIO_UPDATE = 'update';
-
     const SCENARIO_SIGNUP = 'signup';
-
     const SCENARIO_TOKEN_REQUEST = 'token_request';
-
     const SCENARIO_ADD = 'add';
-
     const SCENARIO_ADD_ADMIN = 'add-admin';
-
     const SCENARIO_RESETPASSWORD = 'resetpassword';
 
     public $confirm_password;
-
     public $newPassword;
-
     public $oldPassword;
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             HasFilesBehavior::class
         ];
     }
 
-    public static function getGenderOptions($id = null)
-    {
+    public static function getGenderOptions($id = null) {
         $list = array(
             self::MALE => "Male",
             self::FEMALE => "Female"
@@ -122,8 +94,7 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
         return isset($list[$id]) ? $list[$id] : 'Not Defined';
     }
 
-    public static function getRoleOptions($id = null)
-    {
+    public static function getRoleOptions($id = null) {
         $list = array(
             self::ROLE_ADMIN => "Admin",
             self::ROLE_COLLEGE => "College",
@@ -136,13 +107,23 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
         return isset($list[$id]) ? $list[$id] : 'Not Defined';
     }
 
-    public function __toString()
-    {
+    public static function getFormRoleOptions($id = null) {
+        $list = array(
+            self::ROLE_COLLEGE => "College",
+            self::ROLE_UNIVERSITY => "University",
+            self::ROLE_STUDENT => "Student",
+            self::ROLE_PARENT => "Parent"
+        );
+        if ($id === null)
+            return $list;
+        return isset($list[$id]) ? $list[$id] : 'Not Defined';
+    }
+
+    public function __toString() {
         return (string) $this->full_name;
     }
 
-    public static function getStateOptions()
-    {
+    public static function getStateOptions() {
         return [
             self::STATE_INACTIVE => "Inactive",
             self::STATE_ACTIVE => "Active",
@@ -151,14 +132,12 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
         ];
     }
 
-    public function getState()
-    {
+    public function getState() {
         $list = self::getStateOptions();
         return isset($list[$this->state_id]) ? $list[$this->state_id] : 'Not Defined';
     }
 
-    public function getStateBadge()
-    {
+    public function getStateBadge() {
         $list = [
             self::STATE_INACTIVE => "info",
             self::STATE_ACTIVE => "success",
@@ -167,12 +146,11 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
         ];
         // return isset($list[$this->state_id])?\yii\helpers\Html::tag('span', $this->getState(), ['class' => 'badge bg-' . $list[$this->state_id]]):'Not Defined';
         return isset($list[$this->state_id]) ? \yii\helpers\Html::tag('span', $this->getState(), [
-            'class' => 'label label-' . $list[$this->state_id]
-        ]) : 'Not Defined';
+                    'class' => 'label label-' . $list[$this->state_id]
+                ]) : 'Not Defined';
     }
 
-    public static function getTypeOptions()
-    {
+    public static function getTypeOptions() {
         return [
             "TYPE1",
             "TYPE2",
@@ -180,25 +158,22 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
         ];
     }
 
-    public function getType()
-    {
+    public function getType() {
         $list = self::getTypeOptions();
         return isset($list[$this->type_id]) ? $list[$this->type_id] : 'Not Defined';
     }
 
-    public function getFullName()
-    {
+    public function getFullName() {
         return $this->full_name;
     }
 
-    public function beforeValidate()
-    {
+    public function beforeValidate() {
         if ($this->isNewRecord) {
-            if (! isset($this->created_on))
+            if (!isset($this->created_on))
                 $this->created_on = date('Y-m-d H:i:s');
-            if (! isset($this->updated_on))
+            if (!isset($this->updated_on))
                 $this->updated_on = date('Y-m-d H:i:s');
-            if (! isset($this->created_by_id))
+            if (!isset($this->created_by_id))
                 $this->created_by_id = Yii::$app->user->id;
             $this->generateAccessToken();
         } else {
@@ -212,8 +187,7 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
      *
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return '{{%user}}';
     }
 
@@ -221,8 +195,7 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
      *
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => Yii::t('app', 'ID'),
             'full_name' => Yii::t('app', 'Full Name'),
@@ -261,10 +234,9 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getLoginHistories()
-    {
+    public function getLoginHistories() {
         return $this->hasMany(LoginHistory::className(), [
-            'user_id' => 'id'
+                    'user_id' => 'id'
         ]);
     }
 
@@ -272,15 +244,13 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPages()
-    {
+    public function getPages() {
         return $this->hasMany(Page::className(), [
-            'created_by_id' => 'id'
+                    'created_by_id' => 'id'
         ]);
     }
 
-    public static function getHasManyRelations()
-    {
+    public static function getHasManyRelations() {
         $relations = [];
         $relations['created_by_id'] = [
             'templates',
@@ -296,61 +266,55 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
         return $relations;
     }
 
-    public static function getHasOneRelations()
-    {
+    public static function getHasOneRelations() {
         $relations = [];
         return $relations;
     }
 
-    public function getLoginUrl()
-    {
+    public function getLoginUrl() {
         return Yii::$app->urlManager->createAbsoluteUrl([
-            'user/login'
+                    'user/login'
         ]);
     }
 
-    public function getVerified()
-    {
+    public function getVerified() {
         return Yii::$app->urlManager->createAbsoluteUrl([
-            'user/confirm-email',
-            'id' => $this->activation_key
+                    'user/confirm-email',
+                    'id' => $this->activation_key
         ]);
     }
 
-    public function sendVerificationMailtoUser()
-    {
+    public function sendVerificationMailtoUser() {
         $sub = "Welcome! You new account is ready " . \Yii::$app->params['company'];
         $to = $this->email;
         $message = \yii::$app->view->renderFile('@app/mail/verification.php', [
             'user' => $this
         ]);
         $admin = self::find()->where([
-            'role_id' => self::ROLE_ADMIN
-        ])->one();
-        if (! empty($admin)) {
+                    'role_id' => self::ROLE_ADMIN
+                ])->one();
+        if (!empty($admin)) {
             $from = $admin->email;
             EmailQueue::sendEmailToAdmins([
                 'from' => $from,
                 'subject' => $sub,
                 'html' => $message
-            ], true);
+                    ], true);
         }
     }
 
-    public function sendEmail()
-    {
+    public function sendEmail() {
         return EmailQueue::add([
-            'to' => $this->email,
-            'subject' => "Recover Your Account at: " . \Yii::$app->params['company'],
-            'view' => 'passwordResetToken',
-            'viewArgs' => [
-                'user' => $this
-            ]
-        ], true);
+                    'to' => $this->email,
+                    'subject' => "Recover Your Account at: " . \Yii::$app->params['company'],
+                    'view' => 'passwordResetToken',
+                    'viewArgs' => [
+                        'user' => $this
+                    ]
+                        ], true);
     }
 
-    public function sendRegistrationMailtoUser($model)
-    {
+    public function sendRegistrationMailtoUser($model) {
         $email = $model->email;
         $view = 'sendPassword';
         $sub = "Welcome! You new account is ready " . \Yii::$app->params['company'];
@@ -363,11 +327,10 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
                 'user' => $model,
                 'pass' => $model->password
             ]
-        ], true);
+                ], true);
     }
 
-    public function sendRegistrationMailtoAdmin()
-    {
+    public function sendRegistrationMailtoAdmin() {
         $sub = 'New User Registerd Successfully';
         $from = $this->email;
         EmailQueue::sendEmailToAdmins([
@@ -377,11 +340,10 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
             'viewArgs' => [
                 'user' => $this
             ]
-        ], true);
+                ], true);
     }
 
-    public function beforeDelete()
-    {
+    public function beforeDelete() {
         if ($this->id == \Yii::$app->user->id)
             return false;
 
@@ -402,8 +364,7 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
         return parent::beforeDelete();
     }
 
-    public function scenarios()
-    {
+    public function scenarios() {
         $scenarios = parent::scenarios();
 
         $scenarios['register'] = [
@@ -429,7 +390,8 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
             'email',
             'password',
             'role_id',
-            'state_id'
+            'state_id',
+            'contact_no'
         ];
 
         $scenarios['add'] = [
@@ -468,12 +430,12 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
      *
      * @inheritdoc
      */
+
     /**
      *
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [
                 [
@@ -574,13 +536,10 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
                 'match',
                 'pattern' => '/^[a-zA-Z ]*$/'
             ],
-
             [
-
                 'email',
                 'email'
             ],
-
             [
                 [
                     'search',
@@ -662,8 +621,7 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
         ];
     }
 
-    public function asJson($with_relations = false)
-    {
+    public function asJson($with_relations = false) {
         $json = [];
         $json['id'] = $this->id;
         $json['full_name'] = $this->full_name;
@@ -673,7 +631,7 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
         $json['about_me'] = $this->about_me;
         $json['contact_no'] = $this->contact_no;
         $json['alternate_contact_no'] = $this->alternate_contact_no;
-        
+
         $json['address'] = $this->address;
         $json['latitude'] = $this->latitude;
         $json['longitude'] = $this->longitude;
@@ -695,7 +653,9 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
         $json['created_on'] = $this->created_on;
         $json['created_by_id'] = $this->created_by_id;
         $json['access_token'] = $this->access_token;
-        if ($with_relations) {}
+        if ($with_relations) {
+            
+        }
         return $json;
     }
 
@@ -703,13 +663,12 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
      *
      * @inheritdoc
      */
-    public static function findIdentity($id)
-    {
+    public static function findIdentity($id) {
         return static::findOne([
-            'id' => $id,
-            'state_id' => [
-                self::STATE_ACTIVE
-            ]
+                    'id' => $id,
+                    'state_id' => [
+                        self::STATE_ACTIVE
+                    ]
         ]);
     }
 
@@ -717,10 +676,9 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
      *
      * @inheritdoc
      */
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
+    public static function findIdentityByAccessToken($token, $type = null) {
         return static::findOne([
-            'access_token' => $token
+                    'access_token' => $token
         ]);
     }
 
@@ -730,11 +688,10 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
      * @param string $email
      * @return static|null
      */
-    public static function findByUsername($username)
-    {
+    public static function findByUsername($username) {
         return static::findOne([
-            'email' => $username,
-            'state_id' => self::STATE_ACTIVE
+                    'email' => $username,
+                    'state_id' => self::STATE_ACTIVE
         ]);
     }
 
@@ -745,24 +702,22 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
      *            password reset token
      * @return static|null
      */
-    public static function findByPasswordResetToken($token)
-    {
-        if (! static::isPasswordResetTokenValid($token)) {
+    public static function findByPasswordResetToken($token) {
+        if (!static::isPasswordResetTokenValid($token)) {
             return null;
         }
         return static::findOne([
-            'activation_key' => $token,
-            'state_id' => self::STATE_ACTIVE
+                    'activation_key' => $token,
+                    'state_id' => self::STATE_ACTIVE
         ]);
     }
 
-    public static function randomPassword($count = 8)
-    {
+    public static function randomPassword($count = 8) {
         $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
         $alphabet = "abcdefghijklmnopqrstuwxyz0123456789";
         $pass = [];
         $alphaLength = strlen($alphabet) - 1;
-        for ($i = 0; $i < $count; $i ++) {
+        for ($i = 0; $i < $count; $i++) {
             $n = rand(0, $alphaLength);
             $pass[] = $alphabet[$n];
         }
@@ -776,16 +731,14 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
      *            password reset token
      * @return boolean
      */
-    public function getResetUrl()
-    {
+    public function getResetUrl() {
         return Yii::$app->urlManager->createAbsoluteUrl([
-            'user/resetpassword',
-            'token' => $this->activation_key
+                    'user/resetpassword',
+                    'token' => $this->activation_key
         ]);
     }
 
-    public static function isPasswordResetTokenValid($token)
-    {
+    public static function isPasswordResetTokenValid($token) {
         if (empty($token)) {
             return false;
         }
@@ -799,8 +752,7 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
      *
      * @inheritdoc
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->getPrimaryKey();
     }
 
@@ -808,8 +760,7 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
      *
      * @inheritdoc
      */
-    public function getAuthKey()
-    {
+    public function getAuthKey() {
         return $this->activation_key;
     }
 
@@ -817,8 +768,7 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
      *
      * @inheritdoc
      */
-    public function validateAuthKey($authKey)
-    {
+    public function validateAuthKey($authKey) {
         return $this->getAuthKey() === $authKey;
     }
 
@@ -827,13 +777,11 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
      *
      * @param string $password
      */
-    public function setPassword($password)
-    {
+    public function setPassword($password) {
         $this->password = $this->hashPassword($password);
     }
 
-    public function hashPassword($password)
-    {
+    public function hashPassword($password) {
         $password = utf8_encode(Yii::$app->security->generatePasswordHash(yii::$app->name . $password));
         return $password;
     }
@@ -845,8 +793,7 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
      *            password to validate
      * @return boolean if password provided is valid for current user
      */
-    public function validatePassword($password)
-    {
+    public function validatePassword($password) {
         if (defined('DISABLED_PASSWORD_MATCH')) {
             return true;
         }
@@ -875,65 +822,57 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
     /**
      * Generates "remember me" authentication key
      */
-    public function generateAuthKey()
-    {
+    public function generateAuthKey() {
         $this->activation_key = Yii::$app->security->generateRandomString();
     }
 
-    public function generateAccessToken()
-    {
+    public function generateAccessToken() {
         $this->access_token = Yii::$app->security->generateRandomString();
     }
 
     /**
      * Generates new password reset token
      */
-    public function generatePasswordResetToken()
-    {
+    public function generatePasswordResetToken() {
         $this->activation_key = Yii::$app->security->generateRandomString() . '_' . time();
     }
 
     /**
      * Removes password reset token
      */
-    public function removePasswordResetToken()
-    {
+    public function removePasswordResetToken() {
         $this->activation_key = null;
     }
 
-    public static function isStudent()
-    {  
+    public static function isStudent() {
         $user = Yii::$app->user->identity;
         if ($user == null)
             return false;
         return ($user->isActive() && $user->role_id == User::ROLE_STUDENT );
     }
-    
-    public static function isParent()
-    {  
+
+    public static function isParent() {
         $user = Yii::$app->user->identity;
         if ($user == null)
             return false;
         return ($user->isActive() && $user->role_id == User::ROLE_PARENT );
-    } 
-    
-    public static function isCollege()
-    {  
+    }
+
+    public static function isCollege() {
         $user = Yii::$app->user->identity;
         if ($user == null)
             return false;
         return ($user->isActive() && $user->role_id == User::ROLE_COLLEGE );
     }
-    public static function isUniversity()
-    {  
+
+    public static function isUniversity() {
         $user = Yii::$app->user->identity;
         if ($user == null)
             return false;
         return ($user->isActive() && $user->role_id == User::ROLE_UNIVERSITY );
     }
 
-    public static function isAdmin()
-    {
+    public static function isAdmin() {
         $user = Yii::$app->user->identity;
         if ($user == null)
             return false;
@@ -941,87 +880,77 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
         return ($user->isActive() && $user->role_id == User::ROLE_ADMIN);
     }
 
-    public static function isGuest()
-    {
+    public static function isGuest() {
         if (Yii::$app->user->isGuest) {
             return true;
         }
         return false;
     }
 
-    public function sendProfileImage()
-    {
+    public function sendProfileImage() {
         $user = Yii::$app->user->identity;
         $image_path = UPLOAD_PATH . $user->profile_file;
 
-        if (! isset($user->profile_file) || ! file_exists($image_path))
+        if (!isset($user->profile_file) || !file_exists($image_path))
             throw new NotFoundHttpException(Yii::t('app', "File not found"));
 
         return \yii::$app->response->sendFile($image_path, $user->profile_file);
     }
 
-    public static function getUserById($id)
-    {
+    public static function getUserById($id) {
         $user = User::find()->where([
             'id' => $id
         ]);
         return $user;
     }
 
-    public static function findByEmail($email)
-    {
+    public static function findByEmail($email) {
         return static::findOne([
-            'email' => $email
+                    'email' => $email
         ]);
     }
 
-    
-    public static function IsEmailVerified($email)
-    {
-       $model =  static::findOne([
-            'email' => $email
+    public static function IsEmailVerified($email) {
+        $model = static::findOne([
+                    'email' => $email
         ]);
-        if($model->email_verified == User::EMAIL_VERIFIED) {
+        if ($model->email_verified == User::EMAIL_VERIFIED) {
             return True;
         }
-       return false;
+        return false;
     }
-    
-    public function isActive()
-    {
+
+    public function isActive() {
         return ($this->state_id == User::STATE_ACTIVE);
     }
 
-    public function getProfileImage()
-    {
+    public function getProfileImage() {
         $user = Yii::$app->user->identity;
         $image_path = UPLOAD_PATH . $user->profile_file;
 
-        if (! isset($user->profile_file) || ! file_exists($image_path))
+        if (!isset($user->profile_file) || !file_exists($image_path))
             throw new NotFoundHttpException(Yii::t('app', "File not found"));
 
         return \yii::$app->response->sendFile($image_path, $user->profile_file);
     }
-    public function isAllowed()
-    {
-      
+
+    public function isAllowed() {
+
         if (User::isAdmin())
             return true;
-            
-            if ($this instanceof User)
-            {
-                return ($this->id == Yii::$app->user->id);
-            }
-            if ($this->hasAttribute('created_by_id'))
-            {
-                return ($this->created_by_id == Yii::$app->user->id);
-            }
-            
-            if ($this->hasAttribute('user_id'))
-            {
-                return ($this->user_id == Yii::$app->user->id);
-            }
-            
-            return false;
+
+        if ($this instanceof User) {
+            return ($this->id == Yii::$app->user->id);
+        }
+        if ($this->hasAttribute('created_by_id')) {
+            return ($this->created_by_id == Yii::$app->user->id);
+        }
+
+        if ($this->hasAttribute('user_id')) {
+            return ($this->user_id == Yii::$app->user->id);
+        }
+
+        return false;
     }
+
 }

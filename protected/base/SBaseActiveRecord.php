@@ -21,11 +21,15 @@ class SBaseActiveRecord extends ActiveRecord {
     public function isAllowed() {
         if (User::isAdmin())
             return true;
+        if (User::isCollege())
+            return true;
+        if (User::isUniversity())
+            return true;
         if ($this instanceof User) {
             return ($this->id == Yii::$app->user->id);
         }
 
-        return User::isUser();
+        return User::isStudent();
     }
 
     public function displayImage($file, $options = [], $defaultImg = 'default.png', $isThumb = false) {

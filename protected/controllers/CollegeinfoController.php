@@ -97,7 +97,7 @@ class CollegeinfoController extends SController {
      * @return mixed
      */
     public function actionView($id) {
-        $model = $this->findModel($id);
+        $model = $this->findModel($id, false);
         $this->updateMenuItems($model);
         return $this->render('view', ['model' => $model]);
     }

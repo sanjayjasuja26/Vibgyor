@@ -50,6 +50,15 @@ class UserController extends SController {
                     ],
                     [
                         'actions' => [
+                            'update-college-info',
+                        ],
+                        'allow' => true,
+                        'matchCallback' => function () {
+                            return User::isCollege() || User::isUniversity();
+                        }
+                    ],
+                    [
+                        'actions' => [
                             'index',
                             'delete',
                             'add',
@@ -344,6 +353,41 @@ class UserController extends SController {
         ]);
     }
 
+    public function actionUpdateCollegeInfo($id) {
+        $this->layout = User::LAYOUT_MAIN;
+        $user_model = $this->findModel($id);
+        $model = \app\models\Collegeinfo::find()->where(['user_id' => $id])->one();
+        $model->scenario = \app\models\Collegeinfo::SCENARIO_UPDATE;
+        $post = \yii::$app->request->post();
+
+
+        if (Yii::$app->request->isAjax && $model->load($post)) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return SActiveForm::validate($model);
+        }
+
+        if ($model->load($post)) {
+            $model->created_by_id = Yii::$app->user->id;
+            if ($model->save()) {
+                \Yii::$app->session->setFlash('success', \Yii::t('app', 'User Updated successfully.'));
+                return $this->redirect($model->getUrl());
+            } else {
+                \Yii::$app->getSession()->setFlash('error', "Error !!" . $model->getErrorsString());
+            }
+        }
+        $this->updateMenuItems($model);
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('update-college-info', [
+                        'model' => $model,
+                        'user_model' => $user_model
+            ]);
+        }
+        return $this->render('update-college-info', [
+                    'model' => $model,
+                    'user_model' => $user_model
+        ]);
+    }
+
     /**
      * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -402,44 +446,64 @@ class UserController extends SController {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return SActiveForm::validate($model);
         }
-        if ($model->load(Yii::$app->request->post())) {
-            $model->state_id = User::STATE_ACTIVE;
-            $model->email_verified = User::EMAIL_NOT_VERIFIED;
-            if ($model->validate()) {
-                $model->scenario = User::SCENARIO_ADD;
-                $model->setPassword($model->password);
-                $model->generatePasswordResetToken();
-                if ($model->save()) {
-                    if ($model->role_id == User::ROLE_PARENT) {
-                        $parent_info_model = new \app\models\Parentinfo([
-                            'scenario' => \app\models\Parentinfo::SCENARIO_ADD
-                        ]);
-                        $parent_info_model->save();
-                    } else if ($model->role_id == User::ROLE_STUDENT) {
-                        $student_info_model = new \app\models\Studentinfo([
-                            'scenario' => \app\models\Parentinfo::SCENARIO_ADD
-                        ]);
-                        $student_info_model->user_id = $model->id;
-                        $student_info_model->save();
-                    } else {
-                        $college_model = new \app\models\Collegeinfo([
-                            'scenario' => \app\models\Parentinfo::SCENARIO_ADD
-                        ]);
-                        $college_model->user_id = $model->id;
-                        $college_model->save();
-                    }
-                    $model->sendVerificationMailtoUser();
-                    \Yii::$app->getSession()->setFlash('success', "You have Signup Successfull.Please verfiy user email for account activation.");
 
-                    return $this->redirect([
-                                '/site/index'
-                    ]);
+        $transaction = \Yii::$app->db->beginTransaction();
+        try {
+            if ($model->load(Yii::$app->request->post())) {
+                $model->state_id = User::STATE_ACTIVE;
+                $model->email_verified = User::EMAIL_NOT_VERIFIED;
+                if ($model->validate()) {
+                    $model->scenario = User::SCENARIO_ADD;
+                    $model->setPassword($model->password);
+                    $model->generatePasswordResetToken();
+                    if ($model->save()) {
+                        if ($model->role_id == User::ROLE_PARENT) {
+                            $parent_info_model = new \app\models\Parentinfo([
+                                'scenario' => \app\models\Parentinfo::SCENARIO_ADD
+                            ]);
+                            if (!$parent_info_model->save()) {
+                                \Yii::$app->getSession()->setFlash('error', "Error:" . $parent_info_model->getErrorsString());
+                            }
+                        } else if ($model->role_id == User::ROLE_STUDENT) {
+                            $student_info_model = new \app\models\Studentinfo([
+                                'scenario' => \app\models\Parentinfo::SCENARIO_ADD
+                            ]);
+                            $student_info_model->user_id = $model->id;
+                            $college_model->state_id = \app\models\Parentinfo::STATE_ACTIVE;
+                            $college_model->state_id = \app\models\Parentinfo::STATE_ACTIVE;
+                            if (!$student_info_model->save()) {
+                                \Yii::$app->getSession()->setFlash('error', "Error:" . $student_info_model->getErrorsString());
+                            }
+                        } else {
+                            $college_model = new \app\models\Collegeinfo([
+                                'scenario' => \app\models\Parentinfo::SCENARIO_ADD
+                            ]);
+                            $college_model->user_id = $model->id;
+
+                            $college_model->state_id = \app\models\Parentinfo::STATE_ACTIVE;
+
+                            if (!$college_model->save()) {
+                                print_R($college_model->getErrorsString());
+                                die;
+                                \Yii::$app->getSession()->setFlash('error', "Error:" . $college_model->getErrorsString());
+                            }
+                        }
+                        $model->sendVerificationMailtoUser();
+                        \Yii::$app->getSession()->setFlash('success', "You have Signup Successfull.Please verfiy user email for account activation.");
+                        $transaction->commit();
+                        return $this->redirect([
+                                    '/site/index'
+                        ]);
+                    } else {
+                        \Yii::$app->getSession()->setFlash('error', "Error !!" . $model->getErrorsString());
+                    }
                 } else {
                     \Yii::$app->getSession()->setFlash('error', "Error !!" . $model->getErrorsString());
                 }
-            } else {
-                \Yii::$app->getSession()->setFlash('error', "Error !!" . $model->getErrorsString());
             }
+        } catch (Exception $e) {
+            $transaction->rollBack();
+            \Yii::$app->getSession()->setFlash('error', "Error !!" . $e->getMessage());
         }
         return $this->render('signup', [
                     'model' => $model

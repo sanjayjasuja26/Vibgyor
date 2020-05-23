@@ -104,17 +104,11 @@ class Collegeinfo extends \app\components\SActiveRecord {
             'user_id',
             'state_id',
             'created_on',
-            'created_by_id'
         ];
 
         $scenarios['update'] = [
-            'course_id',
-            'f_name',
-            'm_name',
-            'caste',
-            'current_studies',
-            'state_id',
-            'created_on',
+            'title',
+            'description',
             'created_by_id'
         ];
         return $scenarios;
@@ -128,8 +122,6 @@ class Collegeinfo extends \app\components\SActiveRecord {
             [
                 [
                     'user_id',
-                    'created_on',
-                    'created_by_id'
                 ],
                 'required',
                 'on' => 'add'
@@ -144,7 +136,7 @@ class Collegeinfo extends \app\components\SActiveRecord {
                 'on' => 'update'
             ],
             [['user_id', 'state_id', 'type_id', 'created_by_id'], 'integer'],
-            [['created_on', 'updated_on'], 'safe'],
+            [['created_on', 'title', 'updated_on'], 'safe'],
             [['title', 'description'], 'string', 'max' => 255],
             [['created_by_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],

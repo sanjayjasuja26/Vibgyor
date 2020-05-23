@@ -183,7 +183,7 @@ class SActiveRecord extends TBaseActiveRecord {
             $params['id'] = $this->id;
         }
         $params['title'] = (string) $this;
-        return Yii::$app->geSUrlManager()->createAbsoluteUrl($params, true);
+        return Yii::$app->getUrlManager()->createAbsoluteUrl($params, true);
     }
 
     public function linkify($title = null, $controller = null, $action = 'view') {
