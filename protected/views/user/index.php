@@ -11,13 +11,13 @@ $this->params ['breadcrumbs'] [] = [
 <div class="wrapper">
     <div class="user-index">
         <div class="card ">
-<?= \app\components\PageHeader::widget(); ?>
+            <?= \app\components\PageHeader::widget(['title' => $title]); ?>
         </div>
 
         <div class="card panel-margin">
             <div class="card-body">
                 <div class="content-section clearfix">
-<?php echo $this->render('_grid', ['dataProvider' => $dataProvider, 'searchModel' => $searchModel]); ?>
+                    <?php echo $this->render('_grid', ['dataProvider' => $dataProvider, 'searchModel' => $searchModel]); ?>
                 </div>
             </div>
         </div>

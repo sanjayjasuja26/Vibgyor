@@ -65,6 +65,25 @@ class Parentinfo extends \app\components\SActiveRecord {
         return isset($list [$this->state_id]) ? $list [$this->state_id] : 'Not Defined';
     }
 
+    const CASTE_GENERAL = 1;
+    const CASTE_OBC = 1;
+    const CASTE_SC = 3;
+    const CASTE_ST = 4;
+
+    public static function getCasteOptions() {
+        return [
+            self::CASTE_GENERAL => "General",
+            self::CASTE_OBC => "OBC",
+            self::CASTE_SC => "SC",
+            self::CASTE_ST => "ST",
+        ];
+    }
+
+    public function getCaste() {
+        $list = self::getCasteOptions();
+        return isset($list [$this->caste]) ? $list [$this->caste] : 'Not Defined';
+    }
+
     public function getStateBadge() {
         $list = [
             self::STATE_INACTIVE => "primary",

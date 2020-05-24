@@ -96,6 +96,9 @@ class LoginForm extends Model {
                 } elseif (!$user->validatePassword($this->password)) {
                     $this->addError('password', 'Incorrect username or password.');
                 }
+                if (!$user->IsEmailVerified()) {
+                    $this->addError('username', 'Error !! Please verfiy your email first.');
+                }
                 if (!$this->hasErrors()) {
                     LoginHistory::add(true, $user, null);
                     return Yii::$app->user->login($user, $this->rememberMe ? 3600 * 24 * 30 : 0);

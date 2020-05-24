@@ -24,7 +24,7 @@ use yii\helpers\Url;
                             <?= $form->field($model, 'email', ['template' => '<div class="col-xs-12">{input}{error}</div>'])->textInput(['maxlength' => true, 'placeholder' => 'Email'])->label(false) ?>
                             <?= $form->field($model, 'password', ['template' => '<div class="col-xs-12">{input}{error}</div>'])->passwordInput(['maxlength' => true, 'placeholder' => 'Password'])->label(false) ?>
                             <?= $form->field($model, 'confirm_password', ['template' => '<div class="col-xs-12">{input}{error}</div>'])->passwordInput(['maxlength' => true, 'placeholder' => 'Confirm Password'])->label(false) ?>
-                            <?= $form->field($model, 'role_id', ['template' => '<div class="col-xs-12">{input}{error}</div>'])->dropDownList($model->getFormRoleOptions(), ['prompt' => 'Select Role Option']); ?>
+                            <?= $form->field($model, 'role_id', ['template' => '<div class="col-xs-12">{input}{error}</div>'])->dropDownList($model->getFormRoleOptions(), ['prompt' => 'Select Role']); ?>
 
                             <div class="form-group text-center m-t-20">
                                 <div class="col-xs-12">
@@ -43,7 +43,6 @@ use yii\helpers\Url;
                             <?php
                             SActiveForm::end();
                             ?>
-
                         </div>
                     </div>
                 </div>

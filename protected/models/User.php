@@ -910,14 +910,10 @@ class User extends \app\components\SActiveRecord implements \yii\web\IdentityInt
         ]);
     }
 
-    public static function IsEmailVerified($email) {
-        $model = static::findOne([
-                    'email' => $email
-        ]);
-        if ($model->email_verified == User::EMAIL_VERIFIED) {
-            return True;
-        }
-        return false;
+    public function IsEmailVerified() {
+
+
+        return ($this->email_verified == User::STATE_ACTIVE);
     }
 
     public function isActive() {

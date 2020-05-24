@@ -74,6 +74,9 @@ class UserController extends SController {
                             'clear',
                             'recover',
                             'add-admin',
+                            'college',
+                            'parent',
+                            'student',
                             'mass'
                         ],
                         'allow' => true,
@@ -141,7 +144,44 @@ class UserController extends SController {
 
         return $this->render('index', [
                     'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider
+                    'dataProvider' => $dataProvider,
+                    'title' => 'Users'
+        ]);
+    }
+
+    public function actionCollege() {
+        $searchModel = new UserSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, User::ROLE_COLLEGE);
+        $this->updateMenuItems();
+
+        return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'title' => 'College'
+        ]);
+    }
+
+    public function actionParent() {
+        $searchModel = new UserSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, User::ROLE_PARENT);
+        $this->updateMenuItems();
+
+        return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'title' => 'College'
+        ]);
+    }
+
+    public function actionStudent() {
+        $searchModel = new UserSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, User::ROLE_STUDENT);
+        $this->updateMenuItems();
+
+        return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'title' => 'Student'
         ]);
     }
 
@@ -519,16 +559,14 @@ class UserController extends SController {
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post())) {
-            if (User::IsEmailVerified($model->username)) {
-                if ($model->login()) {
-                    return $this->goBack([
-                                'dashboard/index'
-                    ]);
-                } else {
-                    \Yii::$app->getSession()->setFlash('error', "Error !!" . $model->getErrorsString());
-                }
+            if ($model->login()) {
+                return $this->goBack([
+                            'dashboard/index'
+                ]);
+            } else {
+                \Yii::$app->getSession()->setFlash('error', "Error !!" . $model->getErrorsString());
             }
-            \Yii::$app->getSession()->setFlash('error', "Error !! Please verfiy your email first.");
+
 //            return $this->goBack([
 //                        'user/login'
 //            ]);

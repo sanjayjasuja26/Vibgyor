@@ -24,14 +24,6 @@ $config = [
         '@npm' => '@vendor/npm-asset'
     ],
     'components' => [
-        'assetManager' => [
-            'bundles' => [
-                'yii\bootstrap\BootstrapAsset' => [
-                    'sourcePath' => 'your-path',
-                    'css' => ['css/bootstrap.css', 'path/to/custom.css']
-                ],
-            ],
-        ],
         'session' => [
             'class' => 'app\components\SSession'
         ],

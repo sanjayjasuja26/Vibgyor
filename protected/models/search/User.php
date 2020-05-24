@@ -1,9 +1,10 @@
 <?php
 
 /**
-*@copyright :Amusoftech Pvt. Ltd. < www.amusoftech.com >
-*@author     : Ram mohamad Singh< er.amudeep@gmail.com >
-*/
+ * @copyright :Amusoftech Pvt. Ltd. < www.amusoftech.com >
+ * @author     : Ram mohamad Singh< er.amudeep@gmail.com >
+ */
+
 namespace app\models\search;
 
 use app\models\User as UserModel;
@@ -13,15 +14,13 @@ use yii\data\ActiveDataProvider;
 /**
  * User represents the model behind the search form about `app\models\User`.
  */
-class User extends UserModel
-{
+class User extends UserModel {
 
     /**
      *
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [
                 [
@@ -69,14 +68,12 @@ class User extends UserModel
      *
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
-    public function beforeValidate()
-    {
+    public function beforeValidate() {
         return true;
     }
 
@@ -87,14 +84,15 @@ class User extends UserModel
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params, $role_id = null) {
         $query = UserModel::find()->where([
             '!=',
             'role_id',
             User::ROLE_ADMIN
         ]);
-
+        if (!empty($role_id)) {
+            $query->andWhere(['role_id' => $role_id]);
+        }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
@@ -104,7 +102,7 @@ class User extends UserModel
             ]
         ]);
 
-        if (! ($this->load($params) && $this->validate())) {
+        if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
 
@@ -120,92 +118,92 @@ class User extends UserModel
             'last_action_time' => $this->last_action_time,
             'last_password_change' => $this->last_password_change,
             'login_error_count' => $this->login_error_count,
-
             'updated_on' => $this->updated_on,
             'created_by_id' => $this->created_by_id
         ]);
 
         $query->andFilterWhere([
-            'like',
-            'full_name',
-            $this->full_name
-        ])
-            ->andFilterWhere([
-            'like',
-            'email',
-            $this->email
-        ])
-            ->andFilterWhere([
-            'like',
-            'password',
-            $this->password
-        ])
-            ->andFilterWhere([
-            'like',
-            'about_me',
-            $this->about_me
-        ])
-            ->andFilterWhere([
-            'like',
-            'contact_no',
-            $this->contact_no
-        ])
-            ->andFilterWhere([
-            'like',
-            'address',
-            $this->address
-        ])
-            ->andFilterWhere([
-            'like',
-            'latitude',
-            $this->latitude
-        ])
-            ->andFilterWhere([
-            'like',
-            'longitude',
-            $this->longitude
-        ])
-            ->andFilterWhere([
-            'like',
-            'city',
-            $this->city
-        ])
-            ->andFilterWhere([
-            'like',
-            'country',
-            $this->country
-        ])
-            ->andFilterWhere([
-            'like',
-            'zipcode',
-            $this->zipcode
-        ])
-            ->andFilterWhere([
-            'like',
-            'language',
-            $this->language
-        ])
-            ->andFilterWhere([
-            'like',
-            'profile_file',
-            $this->profile_file
-        ])
-            ->andFilterWhere([
-            'like',
-            'activation_key',
-            $this->activation_key
-        ])
-            ->andFilterWhere([
-            'like',
-            'timezone',
-            $this->timezone
-        ])
-            ->andFilterWhere([
-            'like',
-            'created_on',
-            $this->created_on
+                    'like',
+                    'full_name',
+                    $this->full_name
+                ])
+                ->andFilterWhere([
+                    'like',
+                    'email',
+                    $this->email
+                ])
+                ->andFilterWhere([
+                    'like',
+                    'password',
+                    $this->password
+                ])
+                ->andFilterWhere([
+                    'like',
+                    'about_me',
+                    $this->about_me
+                ])
+                ->andFilterWhere([
+                    'like',
+                    'contact_no',
+                    $this->contact_no
+                ])
+                ->andFilterWhere([
+                    'like',
+                    'address',
+                    $this->address
+                ])
+                ->andFilterWhere([
+                    'like',
+                    'latitude',
+                    $this->latitude
+                ])
+                ->andFilterWhere([
+                    'like',
+                    'longitude',
+                    $this->longitude
+                ])
+                ->andFilterWhere([
+                    'like',
+                    'city',
+                    $this->city
+                ])
+                ->andFilterWhere([
+                    'like',
+                    'country',
+                    $this->country
+                ])
+                ->andFilterWhere([
+                    'like',
+                    'zipcode',
+                    $this->zipcode
+                ])
+                ->andFilterWhere([
+                    'like',
+                    'language',
+                    $this->language
+                ])
+                ->andFilterWhere([
+                    'like',
+                    'profile_file',
+                    $this->profile_file
+                ])
+                ->andFilterWhere([
+                    'like',
+                    'activation_key',
+                    $this->activation_key
+                ])
+                ->andFilterWhere([
+                    'like',
+                    'timezone',
+                    $this->timezone
+                ])
+                ->andFilterWhere([
+                    'like',
+                    'created_on',
+                    $this->created_on
         ]);
 
         return $dataProvider;
     }
+
 }

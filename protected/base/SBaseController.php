@@ -67,10 +67,15 @@ class SBaseController extends Controller {
     public function renderNav() {
         $this->nav_left = [
             self::addMenu(Yii::t('app', 'Dashboard'), '//dashboard/index', 'home', !User::isGuest()),
-            self::addMenu(Yii::t('app', 'User'), '//user', 'user', (User::isAdmin())),
+            //self::addMenu(Yii::t('app', 'User'), '//user', 'user', (User::isAdmin())),
+            'User' => self::addMenu(Yii::t('app', 'Users'), '#', 'user', User::isAdmin(), [
+                self::addMenu(Yii::t('app', 'College'), '//user/college', 'user', User::isAdmin()),
+                self::addMenu(Yii::t('app', 'Parents'), '//user/parent', 'user', User::isAdmin()),
+                self::addMenu(Yii::t('app', 'Students'), '//user/student', 'user', User::isAdmin()),
+            ]),
             self::addMenu(Yii::t('app', 'Course'), '//course', 'book-reader', (User::isAdmin())),
-            self::addMenu(Yii::t('app', 'Add Course'), '//course', 'book-reader', (User::isCollege() || User::isUniversity())),
-            self::addMenu(Yii::t('app', 'Counsellor'), '//course', 'book-reader', (User::isAdmin())),
+            //self::addMenu(Yii::t('app', 'Add Course'), '//course', 'book-reader', (User::isCollege() || User::isUniversity())),
+            self::addMenu(Yii::t('app', 'Counsellor'), '//course', 'book-reader', (User::isCollege())),
             'Manage' => self::addMenu(Yii::t('app', 'Manage'), '#', 'tasks', User::isAdmin(), [
                 self::addMenu(Yii::t('app', 'Email Queue'), '//email-queue/index', 'envelope', User::isAdmin()),
                 self::addMenu(Yii::t('app', 'Notices'), '//notice/index', 'tasks', User::isAdmin()),
